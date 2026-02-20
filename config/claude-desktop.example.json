@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "kinetic-platform": {
+      "command": "node",
+      "args": ["/ABSOLUTE/PATH/TO/kinetic-platform-mcp/dist/index.js", "--stdio"],
+      "env": {
+        "KINETIC_OAS_DIR": "/ABSOLUTE/PATH/TO/kinetic-platform-mcp/oas",
+        "KINETIC_SERVER_URL": "https://<space-slug>.domain.com",
+        "KINETIC_USERNAME": "tenant-user",
+        "KINETIC_PASSWORD": "tenant-pass",
+        "KINETIC_SYSTEM_URL": "https://platform.domain.com",
+        "KINETIC_SYSTEM_USERNAME": "system-user",
+        "KINETIC_SYSTEM_PASSWORD": "system-pass"
+      }
+    }
+  }
+}

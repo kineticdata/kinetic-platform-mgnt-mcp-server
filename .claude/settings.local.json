@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__kinetic-platform-mcp__list_kapps",
+      "Bash(cat:*)",
+      "Bash(python3:*)",
+      "Bash(npm run build:*)",
+      "Bash(claude mcp:*)",
+      "mcp__kinetic-platform-mcp__connect",
+      "mcp__kinetic-platform-mcp__update_user",
+      "mcp__kinetic-platform-mcp__retrieve_form",
+      "mcp__kinetic-platform-mcp__retrieve_form_workflows",
+      "mcp__kinetic-platform-mcp__list_forms",
+      "mcp__kinetic-platform-mcp__retrieve_form_workflow"
+    ]
+  }
+}
