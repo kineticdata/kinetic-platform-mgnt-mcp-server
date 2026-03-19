@@ -1,5 +1,5 @@
-// Invoke a Core OAS operation using input assembled by generated tool stubs.
-export function invokeDefaultOperation(context, sessionId, op, input) {
+// Invoke an OAS operation using input assembled by generated tool stubs.
+export async function invokeDefaultOperation(context, sessionId, op, input) {
     const path = applyPathParams(op.path, input);
     if (path.includes("{")) {
         throw new Error(`Missing required path parameters for ${op.operationId}`);
@@ -10,7 +10,8 @@ export function invokeDefaultOperation(context, sessionId, op, input) {
     if (op.requestBody?.required && body === undefined) {
         throw new Error(`Request body required for ${op.operationId}`);
     }
-    return context.getClient(sessionId).request(op.method, path, { query, headers, body });
+    const client = await context.getClient(sessionId, op.api);
+    return client.request(op.method, path, { query, headers, body });
 }
 function applyPathParams(pathTemplate, params) {
     if (!params)

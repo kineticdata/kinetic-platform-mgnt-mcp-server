@@ -1,11 +1,15 @@
 {
-  "source": "oas/core.json",
-  "count": 252,
+  "sources": [
+    "oas/core.json",
+    "oas/integrator.json"
+  ],
+  "count": 277,
   "operations": [
     {
       "operationId": "createCategorization",
       "alias": "create_categorization",
       "context": "category",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/categorizations"
@@ -14,6 +18,7 @@
       "operationId": "createCategory",
       "alias": "create_category",
       "context": "category",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/categories"
@@ -22,6 +27,7 @@
       "operationId": "deleteCategorization",
       "alias": "delete_categorization",
       "context": "category",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/categorizations/{categorizationName}"
@@ -30,6 +36,7 @@
       "operationId": "deleteCategory",
       "alias": "delete_category",
       "context": "category",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/categories/{name}"
@@ -38,6 +45,7 @@
       "operationId": "listCategories",
       "alias": "list_categories",
       "context": "category",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/categories"
@@ -46,6 +54,7 @@
       "operationId": "listCategorizations",
       "alias": "list_categorizations",
       "context": "category",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/categorizations"
@@ -54,6 +63,7 @@
       "operationId": "retrieveCategorization",
       "alias": "retrieve_categorization",
       "context": "category",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/categorizations/{categorizationName}"
@@ -62,6 +72,7 @@
       "operationId": "retrieveCategory",
       "alias": "retrieve_category",
       "context": "category",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/categories/{name}"
@@ -70,6 +81,7 @@
       "operationId": "updateCategorization",
       "alias": "update_categorization",
       "context": "category",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/categorizations/{categorizationName}"
@@ -78,6 +90,7 @@
       "operationId": "updateCategory",
       "alias": "update_category",
       "context": "category",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/categories/{name}"
@@ -86,6 +99,7 @@
       "operationId": "createFile",
       "alias": "create_file",
       "context": "fileResource",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/fileResources/{fileResourceSlug}/files/{fileResourcePath}"
@@ -94,6 +108,7 @@
       "operationId": "createFileResource",
       "alias": "create_file_resource",
       "context": "fileResource",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/fileResources"
@@ -102,6 +117,7 @@
       "operationId": "deleteFile",
       "alias": "delete_file",
       "context": "fileResource",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/fileResources/{fileResourceSlug}/files/{fileResourcePath}"
@@ -110,6 +126,7 @@
       "operationId": "deleteFileResource",
       "alias": "delete_file_resource",
       "context": "fileResource",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/fileResources/{fileResourceSlug}"
@@ -118,6 +135,7 @@
       "operationId": "listFileResources",
       "alias": "list_file_resources",
       "context": "fileResource",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/fileResources"
@@ -126,6 +144,7 @@
       "operationId": "retrieveFile",
       "alias": "retrieve_file",
       "context": "fileResource",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/fileResources/{fileResourceSlug}/files/{fileResourcePath}"
@@ -134,6 +153,7 @@
       "operationId": "retrieveFileResource",
       "alias": "retrieve_file_resource",
       "context": "fileResource",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/fileResources/{fileResourceSlug}"
@@ -142,6 +162,7 @@
       "operationId": "updateFileResources",
       "alias": "update_file_resources",
       "context": "fileResource",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/fileResources/{fileResourceSlug}"
@@ -150,6 +171,7 @@
       "operationId": "createForm",
       "alias": "create_form",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/forms"
@@ -158,6 +180,7 @@
       "operationId": "createFormAttributeDefinition",
       "alias": "create_form_attribute_definition",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/formAttributeDefinitions"
@@ -166,6 +189,7 @@
       "operationId": "createFormWorkflow",
       "alias": "create_form_workflow",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/workflows"
@@ -174,6 +198,7 @@
       "operationId": "createKappFormType",
       "alias": "create_kapp_form_type",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/formTypes"
@@ -182,6 +207,7 @@
       "operationId": "deleteForm",
       "alias": "delete_form",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/forms/{formSlug}"
@@ -190,6 +216,7 @@
       "operationId": "deleteFormAttributeDefinition",
       "alias": "delete_form_attribute_definition",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/formAttributeDefinitions/{name}"
@@ -198,6 +225,7 @@
       "operationId": "deleteFormWorkflow",
       "alias": "delete_form_workflow",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/workflows/{id}"
@@ -206,6 +234,7 @@
       "operationId": "deleteKappFormType",
       "alias": "delete_kapp_form_type",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/formTypes/{name}"
@@ -214,6 +243,7 @@
       "operationId": "executeFormIntegration",
       "alias": "execute_form_integration",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/integrations/kapps/{kappSlug}/forms/{formSlug}/{name}"
@@ -222,6 +252,7 @@
       "operationId": "fetchFormActivityMetrics",
       "alias": "fetch_form_activity_metrics",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/activity"
@@ -230,6 +261,7 @@
       "operationId": "listFormAttributeDefinitions",
       "alias": "list_form_attribute_definitions",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/formAttributeDefinitions"
@@ -238,6 +270,7 @@
       "operationId": "listForms",
       "alias": "list_forms",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/forms"
@@ -246,6 +279,7 @@
       "operationId": "listKappFormTypes",
       "alias": "list_kapp_form_types",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/formTypes"
@@ -254,6 +288,7 @@
       "operationId": "repairFormWorkflow",
       "alias": "repair_form_workflow",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/workflows/repair"
@@ -262,6 +297,7 @@
       "operationId": "retrieveForm",
       "alias": "retrieve_form",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/forms/{formSlug}"
@@ -270,6 +306,7 @@
       "operationId": "retrieveFormAttributeDefinition",
       "alias": "retrieve_form_attribute_definition",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/formAttributeDefinitions/{name}"
@@ -278,6 +315,7 @@
       "operationId": "retrieveFormWorkflow",
       "alias": "retrieve_form_workflow",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/workflows/{id}"
@@ -286,6 +324,7 @@
       "operationId": "retrieveFormWorkflows",
       "alias": "retrieve_form_workflows",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/workflows"
@@ -294,6 +333,7 @@
       "operationId": "retrieveKappFormType",
       "alias": "retrieve_kapp_form_type",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/formTypes/{name}"
@@ -302,6 +342,7 @@
       "operationId": "updateForm",
       "alias": "update_form",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/forms/{formSlug}"
@@ -310,6 +351,7 @@
       "operationId": "updateFormAttributeDefinition",
       "alias": "update_form_attribute_definition",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/formAttributeDefinitions/{name}"
@@ -318,6 +360,7 @@
       "operationId": "updateFormWorkflow",
       "alias": "update_form_workflow",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/workflows/{id}"
@@ -326,14 +369,241 @@
       "operationId": "updateKappFormType",
       "alias": "update_kapp_form_type",
       "context": "form",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/formTypes/{name}"
     },
     {
+      "operationId": "createConnection",
+      "alias": "create_connection",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/connections"
+    },
+    {
+      "operationId": "createOperation",
+      "alias": "create_operation",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/connections/{connection_id}/operations"
+    },
+    {
+      "operationId": "deleteConnection",
+      "alias": "delete_connection",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "DELETE",
+      "path": "/api/connections/{id}"
+    },
+    {
+      "operationId": "deleteOperation",
+      "alias": "delete_operation",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "DELETE",
+      "path": "/api/connections/{connection_id}/operations/{id}"
+    },
+    {
+      "operationId": "executeOperation",
+      "alias": "execute_operation",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/execute"
+    },
+    {
+      "operationId": "exportConnection",
+      "alias": "export_connection",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "GET",
+      "path": "/api/export/connections/{id}"
+    },
+    {
+      "operationId": "importConnection",
+      "alias": "import_connection",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/import/connections"
+    },
+    {
+      "operationId": "importOperations",
+      "alias": "import_operations",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/import/connections/{connection_id}/operations"
+    },
+    {
+      "operationId": "inspectOperation",
+      "alias": "inspect_operation",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/inspect"
+    },
+    {
+      "operationId": "integratorHealth",
+      "alias": "integrator_health",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "GET",
+      "path": "/api/healthz"
+    },
+    {
+      "operationId": "integratorVersion",
+      "alias": "integrator_version",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "GET",
+      "path": "/api/version"
+    },
+    {
+      "operationId": "listConnections",
+      "alias": "list_connections",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "GET",
+      "path": "/api/connections"
+    },
+    {
+      "operationId": "listOperations",
+      "alias": "list_operations",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "GET",
+      "path": "/api/connections/{connection_id}/operations"
+    },
+    {
+      "operationId": "patchConnection",
+      "alias": "patch_connection",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "PATCH",
+      "path": "/api/connections/{id}"
+    },
+    {
+      "operationId": "patchOperation",
+      "alias": "patch_operation",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "PATCH",
+      "path": "/api/connections/{connection_id}/operations/{id}"
+    },
+    {
+      "operationId": "restartConnection",
+      "alias": "restart_connection",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/connections/{id}/restart"
+    },
+    {
+      "operationId": "retrieveConnection",
+      "alias": "retrieve_connection",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "GET",
+      "path": "/api/connections/{id}"
+    },
+    {
+      "operationId": "retrieveOperation",
+      "alias": "retrieve_operation",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "GET",
+      "path": "/api/connections/{connection_id}/operations/{id}"
+    },
+    {
+      "operationId": "rotateEncryptionKey",
+      "alias": "rotate_encryption_key",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/rotate-encryption-key"
+    },
+    {
+      "operationId": "searchOperations",
+      "alias": "search_operations",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/operations-search"
+    },
+    {
+      "operationId": "testSavedConnection",
+      "alias": "test_saved_connection",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/connections/{id}/test"
+    },
+    {
+      "operationId": "testTransform",
+      "alias": "test_transform",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/transform"
+    },
+    {
+      "operationId": "testUnsavedConnection",
+      "alias": "test_unsaved_connection",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "POST",
+      "path": "/api/test"
+    },
+    {
+      "operationId": "updateConnection",
+      "alias": "update_connection",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "PUT",
+      "path": "/api/connections/{id}"
+    },
+    {
+      "operationId": "updateOperation",
+      "alias": "update_operation",
+      "context": "integrator",
+      "api": "integrator",
+      "custom": false,
+      "method": "PUT",
+      "path": "/api/connections/{connection_id}/operations/{id}"
+    },
+    {
       "operationId": "createCategoryAttributeDefinition",
       "alias": "create_category_attribute_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/categoryAttributeDefinitions"
@@ -342,6 +612,7 @@
       "operationId": "createKapp",
       "alias": "create_kapp",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps"
@@ -350,6 +621,7 @@
       "operationId": "createKappAttributeDefinition",
       "alias": "create_kapp_attribute_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/kappAttributeDefinitions"
@@ -358,6 +630,7 @@
       "operationId": "createKappIntegration",
       "alias": "create_kapp_integration",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/integrations"
@@ -366,6 +639,7 @@
       "operationId": "createKappSecurityPolicyDefinition",
       "alias": "create_kapp_security_policy_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/securityPolicyDefinitions"
@@ -374,6 +648,7 @@
       "operationId": "createKappWebAPI",
       "alias": "create_kapp_web_api",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/webApis"
@@ -382,6 +657,7 @@
       "operationId": "createKappWebhook",
       "alias": "create_kapp_webhook",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/webhooks"
@@ -390,6 +666,7 @@
       "operationId": "createKappWebhookJob",
       "alias": "create_kapp_webhook_job",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/webhookJobs"
@@ -398,6 +675,7 @@
       "operationId": "createKappWorkflow",
       "alias": "create_kapp_workflow",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/workflows"
@@ -406,6 +684,7 @@
       "operationId": "deleteCategoryAttributeDefinition",
       "alias": "delete_category_attribute_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/categoryAttributeDefinitions/{name}"
@@ -414,6 +693,7 @@
       "operationId": "deleteKapp",
       "alias": "delete_kapp",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}"
@@ -422,6 +702,7 @@
       "operationId": "deleteKappActivityCache",
       "alias": "delete_kapp_activity_cache",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/activity"
@@ -430,6 +711,7 @@
       "operationId": "deleteKappAttributeDefinition",
       "alias": "delete_kapp_attribute_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/kappAttributeDefinitions/{name}"
@@ -438,6 +720,7 @@
       "operationId": "deleteKappIntegration",
       "alias": "delete_kapp_integration",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/integrations/{name}"
@@ -446,6 +729,7 @@
       "operationId": "deleteKappSecurityPolicyDefinition",
       "alias": "delete_kapp_security_policy_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/securityPolicyDefinitions/{name}"
@@ -454,6 +738,7 @@
       "operationId": "deleteKappWebAPI",
       "alias": "delete_kapp_web_api",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/webApis/{webApiSlug}"
@@ -462,6 +747,7 @@
       "operationId": "deleteKappWebhook",
       "alias": "delete_kapp_webhook",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/webhooks/{name}"
@@ -470,6 +756,7 @@
       "operationId": "deleteKappWebhookJob",
       "alias": "delete_kapp_webhook_job",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/webhookJobs/{id}"
@@ -478,6 +765,7 @@
       "operationId": "deleteKappWorkflow",
       "alias": "delete_kapp_workflow",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/kapps/{kappSlug}/workflows/{id}"
@@ -486,6 +774,7 @@
       "operationId": "exportKappWebAPI",
       "alias": "export_kapp_web_api",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/webApis/{webApiSlug}/export"
@@ -494,6 +783,7 @@
       "operationId": "fetchKappActivityMetrics",
       "alias": "fetch_kapp_activity_metrics",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/activity"
@@ -502,6 +792,7 @@
       "operationId": "fetchKappWebAPI",
       "alias": "fetch_kapp_web_api",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/webApis/{webApiSlug}"
@@ -510,6 +801,7 @@
       "operationId": "getKappIntegration",
       "alias": "get_kapp_integration",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/integrations/{name}"
@@ -518,6 +810,7 @@
       "operationId": "importKappWebAPI",
       "alias": "import_kapp_web_api",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/webApiImport"
@@ -526,6 +819,7 @@
       "operationId": "listCategoryAttributeDefinitions",
       "alias": "list_category_attribute_definitions",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/categoryAttributeDefinitions"
@@ -534,6 +828,7 @@
       "operationId": "listKappAttributeDefinitions",
       "alias": "list_kapp_attribute_definitions",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/kappAttributeDefinitions"
@@ -542,6 +837,7 @@
       "operationId": "listKappIntegrations",
       "alias": "list_kapp_integrations",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/integrations"
@@ -550,6 +846,7 @@
       "operationId": "listKapps",
       "alias": "list_kapps",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps"
@@ -558,6 +855,7 @@
       "operationId": "listKappSecurityPolicyDefinitions",
       "alias": "list_kapp_security_policy_definitions",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/securityPolicyDefinitions"
@@ -566,6 +864,7 @@
       "operationId": "listKappWebAPIs",
       "alias": "list_kapp_web_apis",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/webApis"
@@ -574,6 +873,7 @@
       "operationId": "listKappWebhookJobs",
       "alias": "list_kapp_webhook_jobs",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/webhookJobs"
@@ -582,6 +882,7 @@
       "operationId": "listKappWebhooks",
       "alias": "list_kapp_webhooks",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/webhooks"
@@ -590,6 +891,7 @@
       "operationId": "repairKappWorkflow",
       "alias": "repair_kapp_workflow",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/workflows/repair"
@@ -598,6 +900,7 @@
       "operationId": "retrieveCategoryAttributeDefinition",
       "alias": "retrieve_category_attribute_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/categoryAttributeDefinitions/{name}"
@@ -606,6 +909,7 @@
       "operationId": "retrieveKapp",
       "alias": "retrieve_kapp",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}"
@@ -614,6 +918,7 @@
       "operationId": "retrieveKappAttributeDefinition",
       "alias": "retrieve_kapp_attribute_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/kappAttributeDefinitions/{name}"
@@ -622,6 +927,7 @@
       "operationId": "retrieveKappSecurityPolicyDefinition",
       "alias": "retrieve_kapp_security_policy_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/securityPolicyDefinitions/{name}"
@@ -630,6 +936,7 @@
       "operationId": "retrieveKappWebhook",
       "alias": "retrieve_kapp_webhook",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/webhooks/{name}"
@@ -638,6 +945,7 @@
       "operationId": "retrieveKappWebhookJob",
       "alias": "retrieve_kapp_webhook_job",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/webhookJobs/{id}"
@@ -646,6 +954,7 @@
       "operationId": "retrieveKappWorkflow",
       "alias": "retrieve_kapp_workflow",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/workflows/{id}"
@@ -654,6 +963,7 @@
       "operationId": "retrieveKappWorkflows",
       "alias": "retrieve_kapp_workflows",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/workflows"
@@ -662,6 +972,7 @@
       "operationId": "updateCategoryAttributeDefinition",
       "alias": "update_category_attribute_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/categoryAttributeDefinitions/{name}"
@@ -670,6 +981,7 @@
       "operationId": "updateKapp",
       "alias": "update_kapp",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}"
@@ -678,6 +990,7 @@
       "operationId": "updateKappAttributeDefinition",
       "alias": "update_kapp_attribute_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/kappAttributeDefinitions/{name}"
@@ -686,6 +999,7 @@
       "operationId": "updateKappIntegration",
       "alias": "update_kapp_integration",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/integrations/{name}"
@@ -694,6 +1008,7 @@
       "operationId": "updateKappSecurityPolicyDefinition",
       "alias": "update_kapp_security_policy_definition",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/securityPolicyDefinitions/{name}"
@@ -702,6 +1017,7 @@
       "operationId": "updateKappWebAPI",
       "alias": "update_kapp_web_api",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/webApis/{webApiSlug}"
@@ -710,6 +1026,7 @@
       "operationId": "updateKappWebhook",
       "alias": "update_kapp_webhook",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/webhooks/{name}"
@@ -718,6 +1035,7 @@
       "operationId": "updateKappWebhookJob",
       "alias": "update_kapp_webhook_job",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/webhookJobs/{id}"
@@ -726,6 +1044,7 @@
       "operationId": "updateKappWorkflow",
       "alias": "update_kapp_workflow",
       "context": "kapp",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/kapps/{kappSlug}/workflows/{id}"
@@ -734,6 +1053,7 @@
       "operationId": "createModel",
       "alias": "create_model",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/models"
@@ -742,6 +1062,7 @@
       "operationId": "createModelAttribute",
       "alias": "create_model_attribute",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/models/{modelName}/attributes"
@@ -750,6 +1071,7 @@
       "operationId": "createModelMapping",
       "alias": "create_model_mapping",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/models/{modelName}/mappings"
@@ -758,6 +1080,7 @@
       "operationId": "createModelMappingAttribute",
       "alias": "create_model_mapping_attribute",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/models/{modelName}/mappings/{modelMappingName}/attributes"
@@ -766,6 +1089,7 @@
       "operationId": "createModelMappingQualification",
       "alias": "create_model_mapping_qualification",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/models/{modelName}/mappings/{modelMappingName}/qualifications"
@@ -774,6 +1098,7 @@
       "operationId": "createModelQualification",
       "alias": "create_model_qualification",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/models/{modelName}/qualifications"
@@ -782,6 +1107,7 @@
       "operationId": "createModelQualificationParameter",
       "alias": "create_model_qualification_parameter",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/models/{modelName}/qualifications/{modelQualificationName}/parameters"
@@ -790,6 +1116,7 @@
       "operationId": "deleteModel",
       "alias": "delete_model",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/models/{modelName}"
@@ -798,6 +1125,7 @@
       "operationId": "deleteModelAttribute",
       "alias": "delete_model_attribute",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/models/{modelName}/attributes/{modelAttributeName}"
@@ -806,6 +1134,7 @@
       "operationId": "deleteModelMapping",
       "alias": "delete_model_mapping",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/models/{modelName}/mappings/{modelMappingName}"
@@ -814,6 +1143,7 @@
       "operationId": "deleteModelMappingAttribute",
       "alias": "delete_model_mapping_attribute",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}"
@@ -822,6 +1152,7 @@
       "operationId": "deleteModelMappingQualification",
       "alias": "delete_model_mapping_qualification",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}"
@@ -830,6 +1161,7 @@
       "operationId": "deleteModelQualification",
       "alias": "delete_model_qualification",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/models/{modelName}/qualifications/{modelQualificationName}"
@@ -838,6 +1170,7 @@
       "operationId": "deleteModelQualificationParameter",
       "alias": "delete_model_qualification_parameter",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}"
@@ -846,6 +1179,7 @@
       "operationId": "listModelAttributes",
       "alias": "list_model_attributes",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/attributes"
@@ -854,6 +1188,7 @@
       "operationId": "listModelMappingAttributes",
       "alias": "list_model_mapping_attributes",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/mappings/{modelMappingName}/attributes"
@@ -862,6 +1197,7 @@
       "operationId": "listModelMappingQualifications",
       "alias": "list_model_mapping_qualifications",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/mappings/{modelMappingName}/qualifications"
@@ -870,6 +1206,7 @@
       "operationId": "listModelMappings",
       "alias": "list_model_mappings",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/mappings"
@@ -878,6 +1215,7 @@
       "operationId": "listModelQualificationParameters",
       "alias": "list_model_qualification_parameters",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/qualifications/{modelQualificationName}/parameters"
@@ -886,6 +1224,7 @@
       "operationId": "listModelQualifications",
       "alias": "list_model_qualifications",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/qualifications"
@@ -894,6 +1233,7 @@
       "operationId": "listModels",
       "alias": "list_models",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models"
@@ -902,6 +1242,7 @@
       "operationId": "retrieveModel",
       "alias": "retrieve_model",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}"
@@ -910,6 +1251,7 @@
       "operationId": "retrieveModelAttribute",
       "alias": "retrieve_model_attribute",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/attributes/{modelAttributeName}"
@@ -918,6 +1260,7 @@
       "operationId": "retrieveModelMapping",
       "alias": "retrieve_model_mapping",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/mappings/{modelMappingName}"
@@ -926,6 +1269,7 @@
       "operationId": "retrieveModelMappingAttributes",
       "alias": "retrieve_model_mapping_attributes",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}"
@@ -934,6 +1278,7 @@
       "operationId": "retrieveModelMappingQualifications",
       "alias": "retrieve_model_mapping_qualifications",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}"
@@ -942,6 +1287,7 @@
       "operationId": "retrieveModelQualification",
       "alias": "retrieve_model_qualification",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/qualifications/{modelQualificationName}"
@@ -950,6 +1296,7 @@
       "operationId": "retrieveModelQualificationParameter",
       "alias": "retrieve_model_qualification_parameter",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}"
@@ -958,6 +1305,7 @@
       "operationId": "updateModel",
       "alias": "update_model",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/models/{modelName}"
@@ -966,6 +1314,7 @@
       "operationId": "updateModelAttribute",
       "alias": "update_model_attribute",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/models/{modelName}/attributes/{modelAttributeName}"
@@ -974,6 +1323,7 @@
       "operationId": "updateModelMapping",
       "alias": "update_model_mapping",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/models/{modelName}/mappings/{modelMappingName}"
@@ -982,6 +1332,7 @@
       "operationId": "updateModelMappingAttribute",
       "alias": "update_model_mapping_attribute",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}"
@@ -990,6 +1341,7 @@
       "operationId": "updateModelMappingQualification",
       "alias": "update_model_mapping_qualification",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}"
@@ -998,6 +1350,7 @@
       "operationId": "updateModelQualification",
       "alias": "update_model_qualification",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/models/{modelName}/qualifications/{modelQualificationName}"
@@ -1006,6 +1359,7 @@
       "operationId": "updateModelQualificationParameter",
       "alias": "update_model_qualification_parameter",
       "context": "model",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}"
@@ -1014,6 +1368,7 @@
       "operationId": "applicationVersion",
       "alias": "application_version",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/version"
@@ -1022,6 +1377,7 @@
       "operationId": "checkLicense",
       "alias": "check_license",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/license-check"
@@ -1030,6 +1386,7 @@
       "operationId": "clearTranslationsCache",
       "alias": "clear_translations_cache",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/translations/cache"
@@ -1038,6 +1395,7 @@
       "operationId": "createSecurityPolicyDefinition",
       "alias": "create_security_policy_definition",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/securityPolicyDefinitions"
@@ -1046,6 +1404,7 @@
       "operationId": "createSpaceAttributeDefinition",
       "alias": "create_space_attribute_definition",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/spaceAttributeDefinitions"
@@ -1054,6 +1413,7 @@
       "operationId": "createSpaceWebAPI",
       "alias": "create_space_web_api",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/webApis"
@@ -1062,6 +1422,7 @@
       "operationId": "createSpaceWebhook",
       "alias": "create_space_webhook",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/webhooks"
@@ -1070,6 +1431,7 @@
       "operationId": "createSpaceWebhookJob",
       "alias": "create_space_webhook_job",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/webhookJobs"
@@ -1078,6 +1440,7 @@
       "operationId": "createSpaceWorkflow",
       "alias": "create_space_workflow",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/workflows"
@@ -1086,6 +1449,7 @@
       "operationId": "createTranslationContext",
       "alias": "create_translation_context",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/translations/contexts"
@@ -1094,6 +1458,7 @@
       "operationId": "deleteSecurityPolicyDefinition",
       "alias": "delete_security_policy_definition",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/securityPolicyDefinitions/{name}"
@@ -1102,6 +1467,7 @@
       "operationId": "deleteSpaceActivityCache",
       "alias": "delete_space_activity_cache",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/activity"
@@ -1110,6 +1476,7 @@
       "operationId": "deleteSpaceAttributeDefinition",
       "alias": "delete_space_attribute_definition",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/spaceAttributeDefinitions/{name}"
@@ -1118,6 +1485,7 @@
       "operationId": "deleteSpaceWebAPI",
       "alias": "delete_space_web_api",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/webApis/{webApiSlug}"
@@ -1126,6 +1494,7 @@
       "operationId": "deleteSpaceWebhook",
       "alias": "delete_space_webhook",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/webhooks/{name}"
@@ -1134,6 +1503,7 @@
       "operationId": "deleteSpaceWebhookJob",
       "alias": "delete_space_webhook_job",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/webhookJobs/{id}"
@@ -1142,6 +1512,7 @@
       "operationId": "deleteSpaceWorkflow",
       "alias": "delete_space_workflow",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/workflows/{id}"
@@ -1150,6 +1521,7 @@
       "operationId": "deleteTranslationContext",
       "alias": "delete_translation_context",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/translations/contexts/{context}"
@@ -1158,6 +1530,7 @@
       "operationId": "deleteTranslationEntries",
       "alias": "delete_translation_entries",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/translations/entries"
@@ -1166,6 +1539,7 @@
       "operationId": "disableTranslationLocale",
       "alias": "disable_translation_locale",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/translations/settings/locales/{locale}"
@@ -1174,6 +1548,7 @@
       "operationId": "enableTranslationLocale",
       "alias": "enable_translation_locale",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/translations/settings/locales"
@@ -1182,6 +1557,7 @@
       "operationId": "executeKappIntegration",
       "alias": "execute_kapp_integration",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/integrations/kapps/{kappSlug}/{name}"
@@ -1190,6 +1566,7 @@
       "operationId": "exportSpaceWebAPI",
       "alias": "export_space_web_api",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/webApis/{webApiSlug}/export"
@@ -1198,6 +1575,7 @@
       "operationId": "fetchSpaceActivityMetrics",
       "alias": "fetch_space_activity_metrics",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/activity"
@@ -1206,6 +1584,7 @@
       "operationId": "fetchSpaceWebAPI",
       "alias": "fetch_space_web_api",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/webApis/{webApiSlug}"
@@ -1214,6 +1593,7 @@
       "operationId": "importSpaceWebAPI",
       "alias": "import_space_web_api",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/webApiImport"
@@ -1222,6 +1602,7 @@
       "operationId": "importTranslationEntries",
       "alias": "import_translation_entries",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/translations/entries"
@@ -1230,6 +1611,7 @@
       "operationId": "kappWebhookEvents",
       "alias": "kapp_webhook_events",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/meta/webhooks/events/kapp"
@@ -1238,6 +1620,7 @@
       "operationId": "kappWebhookEventsByType",
       "alias": "kapp_webhook_events_by_type",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/meta/webhooks/events/kapp/{type}"
@@ -1246,6 +1629,7 @@
       "operationId": "kappWebhookTypes",
       "alias": "kapp_webhook_types",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/meta/webhooks/types/kapp"
@@ -1254,6 +1638,7 @@
       "operationId": "listBackgroundJobs",
       "alias": "list_background_jobs",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/backgroundJobs"
@@ -1262,6 +1647,7 @@
       "operationId": "listLocales",
       "alias": "list_locales",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/meta/locales"
@@ -1270,6 +1656,7 @@
       "operationId": "listNotices",
       "alias": "list_notices",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/notices"
@@ -1278,6 +1665,7 @@
       "operationId": "listSecurityPolicyDefinitions",
       "alias": "list_security_policy_definitions",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/securityPolicyDefinitions"
@@ -1286,6 +1674,7 @@
       "operationId": "listSpaceAttributeDefinitions",
       "alias": "list_space_attribute_definitions",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/spaceAttributeDefinitions"
@@ -1294,6 +1683,7 @@
       "operationId": "listSpaceWebAPIs",
       "alias": "list_space_web_apis",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/webApis"
@@ -1302,6 +1692,7 @@
       "operationId": "listSpaceWebhookJobs",
       "alias": "list_space_webhook_jobs",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/webhookJobs"
@@ -1310,6 +1701,7 @@
       "operationId": "listSpaceWebhooks",
       "alias": "list_space_webhooks",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/webhooks"
@@ -1318,6 +1710,7 @@
       "operationId": "listTimezones",
       "alias": "list_timezones",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/meta/timezones"
@@ -1326,6 +1719,7 @@
       "operationId": "renameTranslationContext",
       "alias": "rename_translation_context",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/translations/contexts/{context}"
@@ -1334,6 +1728,7 @@
       "operationId": "renameTranslationContextKey",
       "alias": "rename_translation_context_key",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/translations/contexts/{context}/keys/{keyHash}"
@@ -1342,6 +1737,7 @@
       "operationId": "repairSpaceWorkflow",
       "alias": "repair_space_workflow",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/workflows/repair"
@@ -1350,6 +1746,7 @@
       "operationId": "retrieveSecurityPolicyDefinition",
       "alias": "retrieve_security_policy_definition",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/securityPolicyDefinitions/{name}"
@@ -1358,6 +1755,7 @@
       "operationId": "retrieveSpace",
       "alias": "retrieve_space",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/space"
@@ -1366,6 +1764,7 @@
       "operationId": "retrieveSpaceAttributeDefinition",
       "alias": "retrieve_space_attribute_definition",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/spaceAttributeDefinitions/{name}"
@@ -1374,6 +1773,7 @@
       "operationId": "retrieveSpaceWebhook",
       "alias": "retrieve_space_webhook",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/webhooks/{name}"
@@ -1382,6 +1782,7 @@
       "operationId": "retrieveSpaceWebhookJob",
       "alias": "retrieve_space_webhook_job",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/webhookJobs/{id}"
@@ -1390,6 +1791,7 @@
       "operationId": "retrieveSpaceWorkflow",
       "alias": "retrieve_space_workflow",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/workflows/{id}"
@@ -1398,6 +1800,7 @@
       "operationId": "retrieveSpaceWorkflows",
       "alias": "retrieve_space_workflows",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/workflows"
@@ -1406,6 +1809,7 @@
       "operationId": "retrieveTranslationChanges",
       "alias": "retrieve_translation_changes",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/translations/staged"
@@ -1414,6 +1818,7 @@
       "operationId": "retrieveTranslationContextKeys",
       "alias": "retrieve_translation_context_keys",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/translations/contexts/{context}/keys"
@@ -1422,6 +1827,7 @@
       "operationId": "retrieveTranslationContexts",
       "alias": "retrieve_translation_contexts",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/translations/contexts"
@@ -1430,6 +1836,7 @@
       "operationId": "retrieveTranslationDefaultLocale",
       "alias": "retrieve_translation_default_locale",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/translations/settings/defaultLocale"
@@ -1438,6 +1845,7 @@
       "operationId": "retrieveTranslationEntries",
       "alias": "retrieve_translation_entries",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/translations/entries"
@@ -1446,6 +1854,7 @@
       "operationId": "retrieveTranslationLocales",
       "alias": "retrieve_translation_locales",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/translations/settings/locales"
@@ -1454,6 +1863,7 @@
       "operationId": "spaceWebhookEvents",
       "alias": "space_webhook_events",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/meta/webhooks/events/space"
@@ -1462,6 +1872,7 @@
       "operationId": "spaceWebhookEventsByType",
       "alias": "space_webhook_events_by_type",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/meta/webhooks/events/space/{type}"
@@ -1470,6 +1881,7 @@
       "operationId": "spaceWebhookTypes",
       "alias": "space_webhook_types",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/meta/webhooks/types/space"
@@ -1478,6 +1890,7 @@
       "operationId": "updateSecurityPolicyDefinition",
       "alias": "update_security_policy_definition",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/securityPolicyDefinitions/{name}"
@@ -1486,6 +1899,7 @@
       "operationId": "updateSpace",
       "alias": "update_space",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/space"
@@ -1494,6 +1908,7 @@
       "operationId": "updateSpaceAttributeDefinition",
       "alias": "update_space_attribute_definition",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/spaceAttributeDefinitions/{name}"
@@ -1502,6 +1917,7 @@
       "operationId": "updateSpaceWebAPI",
       "alias": "update_space_web_api",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/webApis/{webApiSlug}"
@@ -1510,6 +1926,7 @@
       "operationId": "updateSpaceWebhook",
       "alias": "update_space_webhook",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/webhooks/{name}"
@@ -1518,6 +1935,7 @@
       "operationId": "updateSpaceWebhookJob",
       "alias": "update_space_webhook_job",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/webhookJobs/{id}"
@@ -1526,6 +1944,7 @@
       "operationId": "updateSpaceWorkflow",
       "alias": "update_space_workflow",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/workflows/{id}"
@@ -1534,6 +1953,7 @@
       "operationId": "updateTranslationDefaultLocale",
       "alias": "update_translation_default_locale",
       "context": "space",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/translations/settings/defaultLocale"
@@ -1542,6 +1962,7 @@
       "operationId": "cloneSubmission",
       "alias": "clone_submission",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/submissions/{submissionId}/clone"
@@ -1550,6 +1971,7 @@
       "operationId": "createSubmission",
       "alias": "create_submission",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/submissions"
@@ -1558,6 +1980,7 @@
       "operationId": "createSubmissionActivity",
       "alias": "create_submission_activity",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/submissions/{submissionId}/activities"
@@ -1566,6 +1989,7 @@
       "operationId": "createSubmissionMultipart",
       "alias": "create_submission_multipart",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/submissions-multipart"
@@ -1574,6 +1998,7 @@
       "operationId": "deleteSubmission",
       "alias": "delete_submission",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/submissions/{submissionId}"
@@ -1582,6 +2007,7 @@
       "operationId": "deleteSubmissionActivity",
       "alias": "delete_submission_activity",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/submissions/{submissionId}/activities/{activityId}"
@@ -1590,6 +2016,7 @@
       "operationId": "listFormSubmissions",
       "alias": "list_form_submissions",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/submissions"
@@ -1598,6 +2025,7 @@
       "operationId": "listFormSubmissionsAsPost",
       "alias": "list_form_submissions_as_post",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/submissions-search"
@@ -1606,6 +2034,7 @@
       "operationId": "listKappSubmissions",
       "alias": "list_kapp_submissions",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/kapps/{kappSlug}/submissions"
@@ -1614,6 +2043,7 @@
       "operationId": "listKappSubmissionsAsPost",
       "alias": "list_kapp_submissions_as_post",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/kapps/{kappSlug}/submissions-search"
@@ -1622,6 +2052,7 @@
       "operationId": "listSubmissionActivities",
       "alias": "list_submission_activities",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/submissions/{submissionId}/activities"
@@ -1630,6 +2061,7 @@
       "operationId": "patchExistingSubmission",
       "alias": "patch_existing_submission",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "PATCH",
       "path": "/submissions/{submissionId}"
@@ -1638,6 +2070,7 @@
       "operationId": "patchNewSubmission",
       "alias": "patch_new_submission",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "PATCH",
       "path": "/kapps/{kappSlug}/forms/{formSlug}/submissions"
@@ -1646,6 +2079,7 @@
       "operationId": "reindexSubmissions",
       "alias": "reindex_submissions",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/submissions/{submissionId}/reindex"
@@ -1654,6 +2088,7 @@
       "operationId": "retrieveSubmission",
       "alias": "retrieve_submission",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/submissions/{submissionId}"
@@ -1662,6 +2097,7 @@
       "operationId": "retrieveSubmissionActivity",
       "alias": "retrieve_submission_activity",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/submissions/{submissionId}/activities/{activityId}"
@@ -1670,6 +2106,7 @@
       "operationId": "retrieveSubmissionFileUrl",
       "alias": "retrieve_submission_file_url",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/submissions/{submissionId}/files/{fieldName}/{fileIndex}/{fileName}/url"
@@ -1678,6 +2115,7 @@
       "operationId": "submitSubmissionPage",
       "alias": "submit_submission_page",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/submissions/{submissionId}"
@@ -1686,6 +2124,7 @@
       "operationId": "updateSubmission",
       "alias": "update_submission",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/submissions/{submissionId}"
@@ -1694,6 +2133,7 @@
       "operationId": "updateSubmissionActivity",
       "alias": "update_submission_activity",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/submissions/{submissionId}/activities/{activityId}"
@@ -1702,6 +2142,7 @@
       "operationId": "updateSubmissionMultipart",
       "alias": "update_submission_multipart",
       "context": "submission",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/submissions-multipart/{submissionId}"
@@ -1710,6 +2151,7 @@
       "operationId": "createMembership",
       "alias": "create_membership",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/memberships"
@@ -1718,6 +2160,7 @@
       "operationId": "createTeam",
       "alias": "create_team",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/teams"
@@ -1726,6 +2169,7 @@
       "operationId": "createTeamAttributeDefinition",
       "alias": "create_team_attribute_definition",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/teamAttributeDefinitions"
@@ -1734,6 +2178,7 @@
       "operationId": "deleteMembership",
       "alias": "delete_membership",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/memberships/{slug}"
@@ -1742,6 +2187,7 @@
       "operationId": "deleteTeam",
       "alias": "delete_team",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/teams/{slug}"
@@ -1750,6 +2196,7 @@
       "operationId": "deleteTeamAttributeDefinition",
       "alias": "delete_team_attribute_definition",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/teamAttributeDefinitions/{name}"
@@ -1758,6 +2205,7 @@
       "operationId": "listTeamAttributeDefinitions",
       "alias": "list_team_attribute_definitions",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/teamAttributeDefinitions"
@@ -1766,6 +2214,7 @@
       "operationId": "listTeams",
       "alias": "list_teams",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/teams"
@@ -1774,6 +2223,7 @@
       "operationId": "retrieveTeam",
       "alias": "retrieve_team",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/teams/{slug}"
@@ -1782,6 +2232,7 @@
       "operationId": "retrieveTeamAttributeDefinition",
       "alias": "retrieve_team_attribute_definition",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/teamAttributeDefinitions/{name}"
@@ -1790,6 +2241,7 @@
       "operationId": "updateTeam",
       "alias": "update_team",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/teams/{slug}"
@@ -1798,6 +2250,7 @@
       "operationId": "updateTeamAttributeDefinition",
       "alias": "update_team_attribute_definition",
       "context": "team",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/teamAttributeDefinitions/{name}"
@@ -1806,6 +2259,7 @@
       "operationId": "createUser",
       "alias": "create_user",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/users"
@@ -1814,6 +2268,7 @@
       "operationId": "createUserAttributeDefinition",
       "alias": "create_user_attribute_definition",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/userAttributeDefinitions"
@@ -1822,6 +2277,7 @@
       "operationId": "createUserInvitationToken",
       "alias": "create_user_invitation_token",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/userInvitationTokens"
@@ -1830,6 +2286,7 @@
       "operationId": "createUserProfileAttributeDefinition",
       "alias": "create_user_profile_attribute_definition",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/userProfileAttributeDefinitions"
@@ -1838,6 +2295,7 @@
       "operationId": "deleteUser",
       "alias": "delete_user",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/users/{username}"
@@ -1846,6 +2304,7 @@
       "operationId": "deleteUserAttributeDefinition",
       "alias": "delete_user_attribute_definition",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/userAttributeDefinitions/{name}"
@@ -1854,6 +2313,7 @@
       "operationId": "deleteUserInvitationToken",
       "alias": "delete_user_invitation_token",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/userInvitationTokens/{id}"
@@ -1862,6 +2322,7 @@
       "operationId": "deleteUserPreference",
       "alias": "delete_user_preference",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/userPreferences/{key}"
@@ -1870,6 +2331,7 @@
       "operationId": "deleteUserProfileAttributeDefinition",
       "alias": "delete_user_profile_attribute_definition",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "DELETE",
       "path": "/userProfileAttributeDefinitions/{name}"
@@ -1878,6 +2340,7 @@
       "operationId": "listUserAttributeDefinitions",
       "alias": "list_user_attribute_definitions",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/userAttributeDefinitions"
@@ -1886,6 +2349,7 @@
       "operationId": "listUserInvitationTokens",
       "alias": "list_user_invitation_tokens",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/userInvitationTokens"
@@ -1894,6 +2358,7 @@
       "operationId": "listUserProfileAttributeDefinitions",
       "alias": "list_user_profile_attribute_definitions",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/userProfileAttributeDefinitions"
@@ -1902,6 +2367,7 @@
       "operationId": "listUsers",
       "alias": "list_users",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/users"
@@ -1910,6 +2376,7 @@
       "operationId": "passwordResetToken",
       "alias": "password_reset_token",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/users/{username}/passwordResetToken"
@@ -1918,6 +2385,7 @@
       "operationId": "resetUserPreferences",
       "alias": "reset_user_preferences",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/userPreferences/reset"
@@ -1926,6 +2394,7 @@
       "operationId": "retrieveMe",
       "alias": "retrieve_me",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/me"
@@ -1934,6 +2403,7 @@
       "operationId": "retrieveUser",
       "alias": "retrieve_user",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/users/{username}"
@@ -1942,6 +2412,7 @@
       "operationId": "retrieveUserAttributeDefinition",
       "alias": "retrieve_user_attribute_definition",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/userAttributeDefinitions/{name}"
@@ -1950,6 +2421,7 @@
       "operationId": "retrieveUserInvitationToken",
       "alias": "retrieve_user_invitation_token",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/userInvitationTokens/{id}"
@@ -1958,6 +2430,7 @@
       "operationId": "retrieveUserPreference",
       "alias": "retrieve_user_preference",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/userPreferences/{key}"
@@ -1966,6 +2439,7 @@
       "operationId": "retrieveUserPreferences",
       "alias": "retrieve_user_preferences",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/userPreferences"
@@ -1974,6 +2448,7 @@
       "operationId": "retrieveUserProfileAttributeDefinition",
       "alias": "retrieve_user_profile_attribute_definition",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "GET",
       "path": "/userProfileAttributeDefinitions/{name}"
@@ -1982,6 +2457,7 @@
       "operationId": "updateMe",
       "alias": "update_me",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/me"
@@ -1990,6 +2466,7 @@
       "operationId": "updateUser",
       "alias": "update_user",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/users/{username}"
@@ -1998,6 +2475,7 @@
       "operationId": "updateUserAttributeDefinition",
       "alias": "update_user_attribute_definition",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/userAttributeDefinitions/{name}"
@@ -2006,6 +2484,7 @@
       "operationId": "updateUserProfileAttributeDefinition",
       "alias": "update_user_profile_attribute_definition",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "PUT",
       "path": "/userProfileAttributeDefinitions/{name}"
@@ -2014,6 +2493,7 @@
       "operationId": "upsertUserPreference",
       "alias": "upsert_user_preference",
       "context": "user",
+      "api": "core",
       "custom": false,
       "method": "POST",
       "path": "/userPreferences"

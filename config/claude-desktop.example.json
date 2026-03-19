@@ -4,7 +4,6 @@
       "command": "node",
       "args": ["/ABSOLUTE/PATH/TO/kinetic-platform-mcp/dist/index.js", "--stdio"],
       "env": {
-        "KINETIC_OAS_DIR": "/ABSOLUTE/PATH/TO/kinetic-platform-mcp/oas",
         "KINETIC_SERVER_URL": "https://<space-slug>.domain.com",
         "KINETIC_USERNAME": "tenant-user",
         "KINETIC_PASSWORD": "tenant-pass",

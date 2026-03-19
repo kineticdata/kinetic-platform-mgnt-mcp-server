@@ -1,10 +1,16 @@
 export class KineticApiClient {
     baseUrl;
     authHeader;
-    constructor(baseUrl, username, password) {
+    constructor(baseUrl, authHeader) {
         this.baseUrl = baseUrl.replace(/\/+$/, "");
-        this.authHeader =
-            "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
+        this.authHeader = authHeader;
+    }
+    static withBasicAuth(baseUrl, username, password) {
+        const header = "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
+        return new KineticApiClient(baseUrl, header);
+    }
+    static withBearerToken(baseUrl, token) {
+        return new KineticApiClient(baseUrl, `Bearer ${token}`);
     }
     async request(method, path, options) {
         const url = new URL(this.baseUrl + path);
@@ -46,4 +52,34 @@ export class KineticApiClient {
         }
         return response.text();
     }
+}
+/**
+ * Obtain an OAuth 2.0 bearer token for the Integrator API using the
+ * implicit grant flow. The token is extracted from the redirect Location header.
+ */
+export async function obtainOAuthToken(serverUrl, username, password) {
+    const authUrl = `${serverUrl.replace(/\/+$/, "")}/app/oauth/authorize?grant_type=implicit&response_type=token&client_id=system`;
+    const basicAuth = "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
+    const response = await fetch(authUrl, {
+        method: "GET",
+        headers: { Authorization: basicAuth },
+        redirect: "manual",
+    });
+    const location = response.headers.get("location");
+    if (!location) {
+        throw new Error(`OAuth authorize did not return a redirect (status ${response.status})`);
+    }
+    const fragment = location.split("#")[1];
+    if (!fragment) {
+        throw new Error("OAuth redirect missing fragment with access_token");
+    }
+    const params = new URLSearchParams(fragment);
+    const token = params.get("access_token");
+    if (!token) {
+        throw new Error("OAuth redirect fragment missing access_token");
+    }
+    const expiresIn = parseInt(params.get("expires_in") ?? "43200", 10);
+    // Subtract 30s buffer for safety
+    const expiresAt = Date.now() + (expiresIn - 30) * 1000;
+    return { token, expiresAt };
 }

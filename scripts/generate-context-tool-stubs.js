@@ -1,7 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-// Generates explicit src/tools/contexts/*.ts files from oas/core.json.
+// Generates explicit src/tools/contexts/*.ts files from oas/core.json and oas/integrator.json.
 // Output is deterministic so diffs represent real API changes.
 const CONTEXTS = [
   "space",
@@ -13,6 +14,7 @@ const CONTEXTS = [
   "model",
   "category",
   "fileResource",
+  "integrator",
   "misc",
 ];
 
@@ -62,13 +64,17 @@ const CONTEXT_RULES = [
   { context: "space", pathPrefix: "/integrations", priority: 105 },
 
   { context: "space", tag: "Metadata", priority: 2000 },
+
+  // All integrator API operations go to the "integrator" context
+  { context: "integrator", api: "integrator", priority: 5 },
+
   { context: "misc", priority: 9999 },
 ];
 
-function loadCoreSpec(oasDir) {
-  const fullPath = path.join(oasDir, "core.json");
+function loadSpec(oasDir, filename) {
+  const fullPath = path.join(oasDir, filename);
   if (!fs.existsSync(fullPath)) {
-    throw new Error(`Missing OAS file: ${fullPath}`);
+    return null;
   }
   return JSON.parse(fs.readFileSync(fullPath, "utf8"));
 }
@@ -85,7 +91,7 @@ function resolveParam(param, spec) {
   return param;
 }
 
-function extractOperations(spec) {
+function extractOperations(spec, api) {
   const operations = [];
   const paths = spec.paths ?? {};
 
@@ -103,6 +109,7 @@ function extractOperations(spec) {
       const parameters = [...pathItemParameters, ...(operation.parameters ?? [])].map((param) => resolveParam(param, spec));
 
       operations.push({
+        api,
         method: methodLower.toUpperCase(),
         path: pathKey,
         operationId,
@@ -119,6 +126,12 @@ function extractOperations(spec) {
 }
 
 function matchesRule(op, rule) {
+  if (rule.api && op.api === rule.api) {
+    return true;
+  }
+  if (rule.api && op.api !== rule.api) {
+    return false;
+  }
   if (rule.pathPrefix && op.path.startsWith(rule.pathPrefix)) {
     return true;
   }
@@ -128,7 +141,7 @@ function matchesRule(op, rule) {
   if (rule.tag && op.tags.some((tag) => tag.toLowerCase() === rule.tag.toLowerCase())) {
     return true;
   }
-  return !rule.pathPrefix && !rule.pathRegex && !rule.tag;
+  return !rule.pathPrefix && !rule.pathRegex && !rule.tag && !rule.api;
 }
 
 function resolveContext(op) {
@@ -210,9 +223,16 @@ function contextFunctionName(context) {
   switch (context) {
     case "fileResource":
       return "registerFileResourceTools";
+    case "integrator":
+      return "registerIntegratorTools";
     default:
       return `register${context[0].toUpperCase()}${context.slice(1)}Tools`;
   }
+}
+
+// Determine the tool name prefix based on the API source
+function toolPrefix(op) {
+  return op.api === "integrator" ? "integrator" : "core";
 }
 
 function renderContextFile(context, entries) {
@@ -234,6 +254,7 @@ function renderContextFile(context, entries) {
   } else {
     for (const { op, alias } of entries) {
       const suffix = toPascalCase(op.operationId);
+      const prefix = toolPrefix(op);
       lines.push(`  const op${suffix} = requireOperation(operationMap, "${op.operationId}");`);
       lines.push(`  const operationDescription${suffix} = ${asTsString(buildOperationDescription(op, context))};`);
       lines.push(`  const aliasDescription${suffix} = ${asTsString(buildAliasDescription(op, context))};`);
@@ -254,7 +275,7 @@ function renderContextFile(context, entries) {
       lines.push("    }");
       lines.push("  };");
       lines.push("");
-      lines.push(`  server.tool("core_${op.operationId}", operationDescription${suffix}, inputSchema${suffix}, execute${suffix});`);
+      lines.push(`  server.tool("${prefix}_${op.operationId}", operationDescription${suffix}, inputSchema${suffix}, execute${suffix});`);
       lines.push(`  server.tool("${alias}", aliasDescription${suffix}, inputSchema${suffix}, execute${suffix});`);
       lines.push("");
     }
@@ -338,8 +359,9 @@ function firstSentence(value) {
   return match ? match[0] : normalized;
 }
 
-function summarizeText(summary, description) {
-  const candidate = (summary || "").trim() || firstSentence(description) || "Core API operation";
+function summarizeText(summary, description, api) {
+  const fallback = api === "integrator" ? "Integrator API operation" : "Core API operation";
+  const candidate = (summary || "").trim() || firstSentence(description) || fallback;
   const normalized = candidate.replace(/\s+/g, " ").trim();
   const maxLength = 240;
   const clamped =
@@ -348,7 +370,7 @@ function summarizeText(summary, description) {
 }
 
 function buildOperationDescription(op, contextName) {
-  const summary = summarizeText(op.summary, op.description);
+  const summary = summarizeText(op.summary, op.description, op.api);
   return `[${contextName}] ${summary} (${op.method} ${op.path}). Operation ID: ${op.operationId}. Custom logic: default OAS execution.`;
 }
 
@@ -391,23 +413,24 @@ function renderSharedFile() {
   ].join("\n");
 }
 
-function renderRegisterAllFile() {
+function renderRegisterAllFile(activeContexts) {
+  const imports = [];
+  const calls = [];
+
+  for (const context of activeContexts) {
+    const fileName = contextFileName(context);
+    const fnName = contextFunctionName(context);
+    imports.push(`import { ${fnName} } from "./${fileName}.js";`);
+    calls.push(`  ${fnName}(server, runtime);`);
+  }
+
   return [
     "// AUTO-GENERATED FILE. Do not edit manually.",
     "// Regenerate with: npm run ops:generate-tools",
     'import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";',
     'import { OasOperation } from "../../client/oas.js";',
-    'import { registerCategoryTools } from "./category.js";',
-    'import { registerFileResourceTools } from "./file-resource.js";',
-    'import { registerFormTools } from "./form.js";',
-    'import { registerKappTools } from "./kapp.js";',
-    'import { registerMiscTools } from "./misc.js";',
-    'import { registerModelTools } from "./model.js";',
-    'import { registerSpaceTools } from "./space.js";',
-    'import { registerSubmissionTools } from "./submission.js";',
-    'import { registerTeamTools } from "./team.js";',
+    ...imports,
     'import { ContextToolRuntime } from "./shared.js";',
-    'import { registerUserTools } from "./user.js";',
     "",
     "export type RegisterAllContextToolsArgs = {",
     "  operations: OasOperation[];",
@@ -421,16 +444,7 @@ function renderRegisterAllFile() {
     "    invokeDefaultOperation: args.invokeDefaultOperation,",
     "  };",
     "",
-    "  registerSpaceTools(server, runtime);",
-    "  registerKappTools(server, runtime);",
-    "  registerFormTools(server, runtime);",
-    "  registerSubmissionTools(server, runtime);",
-    "  registerUserTools(server, runtime);",
-    "  registerTeamTools(server, runtime);",
-    "  registerModelTools(server, runtime);",
-    "  registerCategoryTools(server, runtime);",
-    "  registerFileResourceTools(server, runtime);",
-    "  registerMiscTools(server, runtime);",
+    ...calls,
     "}",
     "",
   ].join("\n");
@@ -438,12 +452,13 @@ function renderRegisterAllFile() {
 
 function buildManifest(projectRoot, oasDir, entries) {
   return {
-    source: path.relative(projectRoot, path.join(oasDir, "core.json")),
+    sources: ["oas/core.json", "oas/integrator.json"],
     count: entries.length,
     operations: entries.map(({ op, context, alias }) => ({
       operationId: op.operationId,
       alias,
       context,
+      api: op.api,
       custom: false,
       method: op.method,
       path: op.path,
@@ -452,10 +467,20 @@ function buildManifest(projectRoot, oasDir, entries) {
 }
 
 async function main() {
-  const projectRoot = process.cwd();
-  const oasDir = process.env.KINETIC_OAS_DIR ?? path.resolve(projectRoot, "oas");
-  const spec = loadCoreSpec(oasDir);
-  const operations = extractOperations(spec);
+  const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+  const oasDir = path.resolve(projectRoot, "oas");
+
+  const coreSpec = loadSpec(oasDir, "core.json");
+  if (!coreSpec) {
+    throw new Error(`Missing OAS file: ${path.join(oasDir, "core.json")}`);
+  }
+  const integratorSpec = loadSpec(oasDir, "integrator.json");
+
+  const operations = [
+    ...extractOperations(coreSpec, "core"),
+    ...(integratorSpec ? extractOperations(integratorSpec, "integrator") : []),
+  ];
+
   const entries = createRegistry(operations);
 
   const contextsDir = path.resolve(projectRoot, "src/tools/contexts");
@@ -467,7 +492,10 @@ async function main() {
   }
 
   fs.writeFileSync(path.join(contextsDir, "shared.ts"), renderSharedFile(), "utf8");
-  fs.writeFileSync(path.join(contextsDir, "register-all.ts"), renderRegisterAllFile(), "utf8");
+
+  // Only include contexts that have operations
+  const activeContexts = CONTEXTS.filter((c) => grouped[c].length > 0);
+  fs.writeFileSync(path.join(contextsDir, "register-all.ts"), renderRegisterAllFile(activeContexts), "utf8");
 
   for (const context of CONTEXTS) {
     const filePath = path.join(contextsDir, `${contextFileName(context)}.ts`);
@@ -478,7 +506,9 @@ async function main() {
   const manifestPath = path.resolve(projectRoot, "config/operations.manifest.json");
   fs.writeFileSync(manifestPath, JSON.stringify(buildManifest(projectRoot, oasDir, entries), null, 2) + "\n", "utf8");
 
-  console.log(`Generated explicit context tool stubs for ${entries.length} operations.`);
+  const coreCount = operations.filter((o) => o.api === "core").length;
+  const integratorCount = operations.filter((o) => o.api === "integrator").length;
+  console.log(`Generated explicit context tool stubs for ${entries.length} operations (core: ${coreCount}, integrator: ${integratorCount}).`);
 }
 
 main().catch((error) => {

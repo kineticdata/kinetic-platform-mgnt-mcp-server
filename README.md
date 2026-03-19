@@ -30,7 +30,6 @@ npm run check
 ## Configuration
 Create a `.env` file or set environment variables:
 
-- `KINETIC_OAS_DIR` (optional; default: `./oas` in this repo)
 - `KINETIC_SERVER_URL` (optional; full space URL, e.g. `https://<space-slug>.domain.com`)
 - `KINETIC_USERNAME` (optional; space user)
 - `KINETIC_PASSWORD` (optional; space password)

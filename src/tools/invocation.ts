@@ -1,12 +1,12 @@
-import { OasOperation } from "../client/oas.js";
-import { KineticApiClient } from "../client/kinetic-client.js";
+import type { KineticApi, OasOperation } from "../client/oas.js";
+import type { KineticApiClient } from "../client/kinetic-client.js";
 
 export type InvocationContext = {
-  getClient: (sessionId: string) => KineticApiClient;
+  getClient: (sessionId: string, api: KineticApi) => KineticApiClient | Promise<KineticApiClient>;
 };
 
-// Invoke a Core OAS operation using input assembled by generated tool stubs.
-export function invokeDefaultOperation(context: InvocationContext, sessionId: string, op: OasOperation, input: any): Promise<any> {
+// Invoke an OAS operation using input assembled by generated tool stubs.
+export async function invokeDefaultOperation(context: InvocationContext, sessionId: string, op: OasOperation, input: any): Promise<any> {
   const path = applyPathParams(op.path, input);
   if (path.includes("{")) {
     throw new Error(`Missing required path parameters for ${op.operationId}`);
@@ -20,7 +20,8 @@ export function invokeDefaultOperation(context: InvocationContext, sessionId: st
     throw new Error(`Request body required for ${op.operationId}`);
   }
 
-  return context.getClient(sessionId).request(op.method, path, { query, headers, body });
+  const client = await context.getClient(sessionId, op.api);
+  return client.request(op.method, path, { query, headers, body });
 }
 
 function applyPathParams(pathTemplate: string, params?: Record<string, any>): string {

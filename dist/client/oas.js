@@ -1,9 +1,17 @@
 import fs from "node:fs";
 import path from "node:path";
-export function loadOasSpec(oasDir) {
-    const fullPath = path.join(oasDir, "core.json");
+export function loadOasSpec(oasDir, filename = "core.json") {
+    const fullPath = path.join(oasDir, filename);
     if (!fs.existsSync(fullPath)) {
         throw new Error(`Missing OAS file: ${fullPath}`);
+    }
+    const raw = fs.readFileSync(fullPath, "utf8");
+    return JSON.parse(raw);
+}
+export function loadOasSpecIfExists(oasDir, filename) {
+    const fullPath = path.join(oasDir, filename);
+    if (!fs.existsSync(fullPath)) {
+        return null;
     }
     const raw = fs.readFileSync(fullPath, "utf8");
     return JSON.parse(raw);
@@ -19,7 +27,7 @@ function resolveParam(param, spec) {
     }
     return param;
 }
-export function extractOperations(spec) {
+export function extractOperations(spec, api = "core") {
     const ops = [];
     const paths = spec.paths ?? {};
     for (const [pathKey, methods] of Object.entries(paths)) {
@@ -35,6 +43,7 @@ export function extractOperations(spec) {
                 ...(operation.parameters ?? []),
             ].map((p) => resolveParam(p, spec));
             ops.push({
+                api,
                 method: methodLower.toUpperCase(),
                 path: pathKey,
                 operationId,

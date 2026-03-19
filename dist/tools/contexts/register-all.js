@@ -1,13 +1,13 @@
+import { registerSpaceTools } from "./space.js";
+import { registerKappTools } from "./kapp.js";
+import { registerFormTools } from "./form.js";
+import { registerSubmissionTools } from "./submission.js";
+import { registerUserTools } from "./user.js";
+import { registerTeamTools } from "./team.js";
+import { registerModelTools } from "./model.js";
 import { registerCategoryTools } from "./category.js";
 import { registerFileResourceTools } from "./file-resource.js";
-import { registerFormTools } from "./form.js";
-import { registerKappTools } from "./kapp.js";
-import { registerMiscTools } from "./misc.js";
-import { registerModelTools } from "./model.js";
-import { registerSpaceTools } from "./space.js";
-import { registerSubmissionTools } from "./submission.js";
-import { registerTeamTools } from "./team.js";
-import { registerUserTools } from "./user.js";
+import { registerIntegratorTools } from "./integrator.js";
 export function registerAllContextTools(server, args) {
     const operationMap = new Map(args.operations.map((op) => [op.operationId, op]));
     const runtime = {
@@ -23,5 +23,5 @@ export function registerAllContextTools(server, args) {
     registerModelTools(server, runtime);
     registerCategoryTools(server, runtime);
     registerFileResourceTools(server, runtime);
-    registerMiscTools(server, runtime);
+    registerIntegratorTools(server, runtime);
 }

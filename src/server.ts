@@ -1,32 +1,48 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { z } from "zod";
-import { OasOperation, OasSpec, extractOperations, loadOasSpec } from "./client/oas.js";
-import { KineticApiClient, KineticSessionConfig } from "./client/kinetic-client.js";
+import type { KineticApi, OasOperation, OasSpec } from "./client/oas.js";
+import { extractOperations, loadOasSpec, loadOasSpecIfExists } from "./client/oas.js";
+import { KineticApiClient, obtainOAuthToken } from "./client/kinetic-client.js";
+import type { KineticSessionConfig } from "./client/kinetic-client.js";
 import { registerAllContextTools } from "./tools/contexts/register-all.js";
+import { registerBackgroundJobTools } from "./tools/background-jobs.js";
 import { invokeDefaultOperation } from "./tools/invocation.js";
 
 export type SessionId = string;
 
+export type OAuthTokenCache = {
+  token: string;
+  expiresAt: number;
+};
+
 export type KineticSession = {
   config: KineticSessionConfig;
-  clients: Map<"core", KineticApiClient>;
+  clients: Map<KineticApi, KineticApiClient>;
+  oauthToken?: OAuthTokenCache;
 };
 
 export type ServerContext = {
   sessions: Map<SessionId, KineticSession>;
-  spec: OasSpec;
+  specs: Record<KineticApi, OasSpec | null>;
   operations: OasOperation[];
 };
 
 export function createServerContext(): ServerContext {
-  const oasDir = process.env.KINETIC_OAS_DIR ?? path.resolve(process.cwd(), "oas");
-  const spec = loadOasSpec(oasDir);
+  const oasDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "oas");
+  const coreSpec = loadOasSpec(oasDir, "core.json");
+  const integratorSpec = loadOasSpecIfExists(oasDir, "integrator.json");
+
+  const operations = [
+    ...extractOperations(coreSpec, "core"),
+    ...(integratorSpec ? extractOperations(integratorSpec, "integrator") : []),
+  ];
 
   return {
     sessions: new Map(),
-    spec,
-    operations: extractOperations(spec),
+    specs: { core: coreSpec, integrator: integratorSpec },
+    operations,
   };
 }
 
@@ -37,11 +53,15 @@ export function createKineticMcpServer(context: ServerContext): McpServer {
   });
 
   registerConnectTool(server, context);
-  // Register explicit per-context tool stubs generated from oas/core.json.
+  // Register explicit per-context tool stubs generated from OAS specs.
   registerAllContextTools(server, {
     operations: context.operations,
     invokeDefaultOperation: (sessionId, op, input) =>
-      invokeDefaultOperation({ getClient: (sid) => getClient(context, sid) }, sessionId, op, input),
+      invokeDefaultOperation({ getClient: (sid, api) => getOrCreateClient(context, sid, api) }, sessionId, op, input),
+  });
+
+  registerBackgroundJobTools(server, {
+    getClient: (sessionId) => getOrCreateClient(context, sessionId, "core"),
   });
 
   return server;
@@ -77,7 +97,8 @@ function registerConnectTool(server: McpServer, context: ServerContext) {
       context.sessions.set(sessionId, session);
 
       try {
-        const me = await getClient(context, sessionId).request("GET", "/me");
+        const client = await getOrCreateClient(context, sessionId, "core");
+        const me = await client.request("GET", "/me");
         return {
           content: [
             {
@@ -102,7 +123,7 @@ function registerConnectTool(server: McpServer, context: ServerContext) {
   );
 }
 
-function getClient(context: ServerContext, sessionId: SessionId): KineticApiClient {
+async function getOrCreateClient(context: ServerContext, sessionId: SessionId, api: KineticApi = "core"): Promise<KineticApiClient> {
   let session = context.sessions.get(sessionId);
   if (!session) {
     const serverUrl = process.env.KINETIC_SERVER_URL;
@@ -121,16 +142,44 @@ function getClient(context: ServerContext, sessionId: SessionId): KineticApiClie
     context.sessions.set(sessionId, session);
   }
 
-  const existing = session.clients.get("core");
-  if (existing) return existing;
+  // Check for a cached client that is still valid
+  const existing = session.clients.get(api);
+  if (existing) {
+    // For integrator, check if the OAuth token has expired
+    if (api === "integrator" && session.oauthToken && Date.now() >= session.oauthToken.expiresAt) {
+      session.clients.delete(api);
+    } else {
+      return existing;
+    }
+  }
 
-  const baseUrl = buildCoreBaseUrl(context.spec, session.config.serverUrl);
-  const client = new KineticApiClient(baseUrl, session.config.username, session.config.password);
-  session.clients.set("core", client);
+  const baseUrl = buildBaseUrl(context.specs, api, session.config.serverUrl);
+  let client: KineticApiClient;
+
+  if (api === "integrator") {
+    // Integrator API requires OAuth 2.0 bearer token
+    const { token, expiresAt } = await obtainOAuthToken(
+      session.config.serverUrl,
+      session.config.username,
+      session.config.password,
+    );
+    session.oauthToken = { token, expiresAt };
+    client = KineticApiClient.withBearerToken(baseUrl, token);
+  } else {
+    client = KineticApiClient.withBasicAuth(baseUrl, session.config.username, session.config.password);
+  }
+
+  session.clients.set(api, client);
   return client;
 }
 
-function buildCoreBaseUrl(spec: OasSpec, serverUrl: string): string {
-  const template = spec.servers?.[0]?.url ?? "{serverUrl}/app/api/v1";
+function buildBaseUrl(specs: Record<KineticApi, OasSpec | null>, api: KineticApi, serverUrl: string): string {
+  const defaults: Record<KineticApi, string> = {
+    core: "{serverUrl}/app/api/v1",
+    integrator: "{serverUrl}/app/integrator",
+  };
+
+  const spec = specs[api];
+  const template = spec?.servers?.[0]?.url ?? defaults[api];
   return template.replaceAll("{serverUrl}", serverUrl);
 }

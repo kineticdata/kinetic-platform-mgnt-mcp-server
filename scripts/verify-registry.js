@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 
-// Verifies that generated context stubs fully cover core.json operations.
+// Verifies that generated context stubs fully cover all OAS operations.
 const CONTEXT_FILE = {
   space: "space.ts",
   kapp: "kapp.ts",
@@ -13,6 +13,7 @@ const CONTEXT_FILE = {
   model: "model.ts",
   category: "category.ts",
   fileResource: "file-resource.ts",
+  integrator: "integrator.ts",
   misc: "misc.ts",
 };
 
@@ -21,6 +22,7 @@ async function main() {
   const manifestPath = path.resolve(projectRoot, "config/operations.manifest.json");
   const contextDir = path.resolve(projectRoot, "src/tools/contexts");
   const corePath = path.resolve(projectRoot, "oas/core.json");
+  const integratorPath = path.resolve(projectRoot, "oas/integrator.json");
 
   assert.ok(fs.existsSync(manifestPath), `Missing manifest at ${manifestPath}`);
   assert.ok(fs.existsSync(corePath), `Missing OAS file at ${corePath}`);
@@ -29,10 +31,15 @@ async function main() {
   const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
   assert.ok(Array.isArray(manifest.operations), "Manifest operations array is required");
 
-  const operations = extractOperationIds(JSON.parse(fs.readFileSync(corePath, "utf8")));
-  const operationIdSet = new Set(operations);
-  assert.equal(manifest.operations.length, operations.length, "Manifest operation count must match OAS operation count");
-  assert.equal(manifest.count, operations.length, "Manifest count must match OAS operation count");
+  const coreOperations = extractOperationIds(JSON.parse(fs.readFileSync(corePath, "utf8")));
+  const integratorOperations = fs.existsSync(integratorPath)
+    ? extractOperationIds(JSON.parse(fs.readFileSync(integratorPath, "utf8")))
+    : [];
+  const allOperations = [...coreOperations, ...integratorOperations];
+  const operationIdSet = new Set(allOperations);
+
+  assert.equal(manifest.operations.length, allOperations.length, "Manifest operation count must match OAS operation count");
+  assert.equal(manifest.count, allOperations.length, "Manifest count must match OAS operation count");
 
   const aliasSet = new Set();
   for (const op of manifest.operations) {
@@ -52,12 +59,14 @@ async function main() {
     assert.ok(contextPath, `Unknown context in manifest: ${op.context}`);
     const contextContent = fs.readFileSync(contextPath, "utf8");
 
+    const prefix = op.api === "integrator" ? "integrator" : "core";
+
     assert.ok(
       contextContent.includes(`requireOperation(operationMap, "${op.operationId}")`),
       `Missing operation lookup for ${op.operationId} in ${op.context}`
     );
     assert.ok(
-      contextContent.includes(`server.tool("core_${op.operationId}"`),
+      contextContent.includes(`server.tool("${prefix}_${op.operationId}"`),
       `Missing canonical tool registration for ${op.operationId} in ${op.context}`
     );
     assert.ok(
@@ -69,9 +78,9 @@ async function main() {
   const totalToolRegistrations = Object.values(CONTEXT_FILE)
     .map((fileName) => fs.readFileSync(path.resolve(contextDir, fileName), "utf8"))
     .reduce((count, content) => count + (content.match(/server\.tool\("/g) ?? []).length, 0);
-  assert.equal(totalToolRegistrations, operations.length * 2, "Expected exactly 2 tool registrations per operation");
+  assert.equal(totalToolRegistrations, allOperations.length * 2, "Expected exactly 2 tool registrations per operation");
 
-  console.log(`Registry verification passed for ${operations.length} operations and ${totalToolRegistrations} tool registrations.`);
+  console.log(`Registry verification passed for ${allOperations.length} operations and ${totalToolRegistrations} tool registrations.`);
 }
 
 function extractOperationIds(spec) {

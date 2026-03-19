@@ -2,17 +2,17 @@
 // Regenerate with: npm run ops:generate-tools
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { OasOperation } from "../../client/oas.js";
+import { registerSpaceTools } from "./space.js";
+import { registerKappTools } from "./kapp.js";
+import { registerFormTools } from "./form.js";
+import { registerSubmissionTools } from "./submission.js";
+import { registerUserTools } from "./user.js";
+import { registerTeamTools } from "./team.js";
+import { registerModelTools } from "./model.js";
 import { registerCategoryTools } from "./category.js";
 import { registerFileResourceTools } from "./file-resource.js";
-import { registerFormTools } from "./form.js";
-import { registerKappTools } from "./kapp.js";
-import { registerMiscTools } from "./misc.js";
-import { registerModelTools } from "./model.js";
-import { registerSpaceTools } from "./space.js";
-import { registerSubmissionTools } from "./submission.js";
-import { registerTeamTools } from "./team.js";
+import { registerIntegratorTools } from "./integrator.js";
 import { ContextToolRuntime } from "./shared.js";
-import { registerUserTools } from "./user.js";
 
 export type RegisterAllContextToolsArgs = {
   operations: OasOperation[];
@@ -35,5 +35,5 @@ export function registerAllContextTools(server: McpServer, args: RegisterAllCont
   registerModelTools(server, runtime);
   registerCategoryTools(server, runtime);
   registerFileResourceTools(server, runtime);
-  registerMiscTools(server, runtime);
+  registerIntegratorTools(server, runtime);
 }

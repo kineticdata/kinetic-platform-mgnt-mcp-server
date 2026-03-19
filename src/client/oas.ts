@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
+export type KineticApi = "core" | "integrator";
+
 export type OasSpec = {
   openapi: string;
   info?: { title?: string; version?: string };
@@ -10,6 +12,7 @@ export type OasSpec = {
 };
 
 export type OasOperation = {
+  api: KineticApi;
   method: string;
   path: string;
   operationId: string;
@@ -20,10 +23,19 @@ export type OasOperation = {
   requestBody?: any;
 };
 
-export function loadOasSpec(oasDir: string): OasSpec {
-  const fullPath = path.join(oasDir, "core.json");
+export function loadOasSpec(oasDir: string, filename: string = "core.json"): OasSpec {
+  const fullPath = path.join(oasDir, filename);
   if (!fs.existsSync(fullPath)) {
     throw new Error(`Missing OAS file: ${fullPath}`);
+  }
+  const raw = fs.readFileSync(fullPath, "utf8");
+  return JSON.parse(raw);
+}
+
+export function loadOasSpecIfExists(oasDir: string, filename: string): OasSpec | null {
+  const fullPath = path.join(oasDir, filename);
+  if (!fs.existsSync(fullPath)) {
+    return null;
   }
   const raw = fs.readFileSync(fullPath, "utf8");
   return JSON.parse(raw);
@@ -41,7 +53,7 @@ function resolveParam(param: any, spec: OasSpec): any {
   return param;
 }
 
-export function extractOperations(spec: OasSpec): OasOperation[] {
+export function extractOperations(spec: OasSpec, api: KineticApi = "core"): OasOperation[] {
   const ops: OasOperation[] = [];
   const paths = spec.paths ?? {};
 
@@ -59,6 +71,7 @@ export function extractOperations(spec: OasSpec): OasOperation[] {
       ].map((p) => resolveParam(p, spec));
 
       ops.push({
+        api,
         method: methodLower.toUpperCase(),
         path: pathKey,
         operationId,
