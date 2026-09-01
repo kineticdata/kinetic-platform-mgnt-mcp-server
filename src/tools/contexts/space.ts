@@ -2,7 +2,7 @@
 // Regenerate with: npm run ops:generate-tools
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { ContextToolRuntime, requireOperation } from "./shared.js";
+import { ContextToolRuntime, registerOperationTool, requireOperation } from "./shared.js";
 
 export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntime): void {
   const { operationMap, invokeDefaultOperation } = runtime;
@@ -29,8 +29,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_applicationVersion", operationDescriptionApplicationVersion, inputSchemaApplicationVersion, executeApplicationVersion);
-  server.tool("application_version", aliasDescriptionApplicationVersion, inputSchemaApplicationVersion, executeApplicationVersion);
+  registerOperationTool(server, "core_applicationVersion", "application_version", operationDescriptionApplicationVersion, aliasDescriptionApplicationVersion, inputSchemaApplicationVersion, executeApplicationVersion);
 
   const opCheckLicense = requireOperation(operationMap, "checkLicense");
   const operationDescriptionCheckLicense = "[space] License Retrieve. (GET /license-check). Operation ID: checkLicense. Custom logic: default OAS execution.";
@@ -54,8 +53,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_checkLicense", operationDescriptionCheckLicense, inputSchemaCheckLicense, executeCheckLicense);
-  server.tool("check_license", aliasDescriptionCheckLicense, inputSchemaCheckLicense, executeCheckLicense);
+  registerOperationTool(server, "core_checkLicense", "check_license", operationDescriptionCheckLicense, aliasDescriptionCheckLicense, inputSchemaCheckLicense, executeCheckLicense);
 
   const opClearTranslationsCache = requireOperation(operationMap, "clearTranslationsCache");
   const operationDescriptionClearTranslationsCache = "[space] Translation Cache Delete. (DELETE /translations/cache). Operation ID: clearTranslationsCache. Custom logic: default OAS execution.";
@@ -79,8 +77,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_clearTranslationsCache", operationDescriptionClearTranslationsCache, inputSchemaClearTranslationsCache, executeClearTranslationsCache);
-  server.tool("clear_translations_cache", aliasDescriptionClearTranslationsCache, inputSchemaClearTranslationsCache, executeClearTranslationsCache);
+  registerOperationTool(server, "core_clearTranslationsCache", "clear_translations_cache", operationDescriptionClearTranslationsCache, aliasDescriptionClearTranslationsCache, inputSchemaClearTranslationsCache, executeClearTranslationsCache);
 
   const opCreateSecurityPolicyDefinition = requireOperation(operationMap, "createSecurityPolicyDefinition");
   const operationDescriptionCreateSecurityPolicyDefinition = "[space] Space Security Policy Definition Create. (POST /securityPolicyDefinitions). Operation ID: createSecurityPolicyDefinition. Custom logic: default OAS execution.";
@@ -105,8 +102,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_createSecurityPolicyDefinition", operationDescriptionCreateSecurityPolicyDefinition, inputSchemaCreateSecurityPolicyDefinition, executeCreateSecurityPolicyDefinition);
-  server.tool("create_security_policy_definition", aliasDescriptionCreateSecurityPolicyDefinition, inputSchemaCreateSecurityPolicyDefinition, executeCreateSecurityPolicyDefinition);
+  registerOperationTool(server, "core_createSecurityPolicyDefinition", "create_security_policy_definition", operationDescriptionCreateSecurityPolicyDefinition, aliasDescriptionCreateSecurityPolicyDefinition, inputSchemaCreateSecurityPolicyDefinition, executeCreateSecurityPolicyDefinition);
 
   const opCreateSpaceAttributeDefinition = requireOperation(operationMap, "createSpaceAttributeDefinition");
   const operationDescriptionCreateSpaceAttributeDefinition = "[space] Space Attribute Definition Create. (POST /spaceAttributeDefinitions). Operation ID: createSpaceAttributeDefinition. Custom logic: default OAS execution.";
@@ -131,8 +127,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_createSpaceAttributeDefinition", operationDescriptionCreateSpaceAttributeDefinition, inputSchemaCreateSpaceAttributeDefinition, executeCreateSpaceAttributeDefinition);
-  server.tool("create_space_attribute_definition", aliasDescriptionCreateSpaceAttributeDefinition, inputSchemaCreateSpaceAttributeDefinition, executeCreateSpaceAttributeDefinition);
+  registerOperationTool(server, "core_createSpaceAttributeDefinition", "create_space_attribute_definition", operationDescriptionCreateSpaceAttributeDefinition, aliasDescriptionCreateSpaceAttributeDefinition, inputSchemaCreateSpaceAttributeDefinition, executeCreateSpaceAttributeDefinition);
 
   const opCreateSpaceWebAPI = requireOperation(operationMap, "createSpaceWebAPI");
   const operationDescriptionCreateSpaceWebAPI = "[space] Space WebAPI Create. (POST /webApis). Operation ID: createSpaceWebAPI. Custom logic: default OAS execution.";
@@ -157,8 +152,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_createSpaceWebAPI", operationDescriptionCreateSpaceWebAPI, inputSchemaCreateSpaceWebAPI, executeCreateSpaceWebAPI);
-  server.tool("create_space_web_api", aliasDescriptionCreateSpaceWebAPI, inputSchemaCreateSpaceWebAPI, executeCreateSpaceWebAPI);
+  registerOperationTool(server, "core_createSpaceWebAPI", "create_space_web_api", operationDescriptionCreateSpaceWebAPI, aliasDescriptionCreateSpaceWebAPI, inputSchemaCreateSpaceWebAPI, executeCreateSpaceWebAPI);
 
   const opCreateSpaceWebhook = requireOperation(operationMap, "createSpaceWebhook");
   const operationDescriptionCreateSpaceWebhook = "[space] Space Webhook Create. (POST /webhooks). Operation ID: createSpaceWebhook. Custom logic: default OAS execution.";
@@ -183,8 +177,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_createSpaceWebhook", operationDescriptionCreateSpaceWebhook, inputSchemaCreateSpaceWebhook, executeCreateSpaceWebhook);
-  server.tool("create_space_webhook", aliasDescriptionCreateSpaceWebhook, inputSchemaCreateSpaceWebhook, executeCreateSpaceWebhook);
+  registerOperationTool(server, "core_createSpaceWebhook", "create_space_webhook", operationDescriptionCreateSpaceWebhook, aliasDescriptionCreateSpaceWebhook, inputSchemaCreateSpaceWebhook, executeCreateSpaceWebhook);
 
   const opCreateSpaceWebhookJob = requireOperation(operationMap, "createSpaceWebhookJob");
   const operationDescriptionCreateSpaceWebhookJob = "[space] Space Webhook Job Create. (POST /webhookJobs). Operation ID: createSpaceWebhookJob. Custom logic: default OAS execution.";
@@ -209,8 +202,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_createSpaceWebhookJob", operationDescriptionCreateSpaceWebhookJob, inputSchemaCreateSpaceWebhookJob, executeCreateSpaceWebhookJob);
-  server.tool("create_space_webhook_job", aliasDescriptionCreateSpaceWebhookJob, inputSchemaCreateSpaceWebhookJob, executeCreateSpaceWebhookJob);
+  registerOperationTool(server, "core_createSpaceWebhookJob", "create_space_webhook_job", operationDescriptionCreateSpaceWebhookJob, aliasDescriptionCreateSpaceWebhookJob, inputSchemaCreateSpaceWebhookJob, executeCreateSpaceWebhookJob);
 
   const opCreateSpaceWorkflow = requireOperation(operationMap, "createSpaceWorkflow");
   const operationDescriptionCreateSpaceWorkflow = "[space] Space Workflow Create. (POST /workflows). Operation ID: createSpaceWorkflow. Custom logic: default OAS execution.";
@@ -235,8 +227,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_createSpaceWorkflow", operationDescriptionCreateSpaceWorkflow, inputSchemaCreateSpaceWorkflow, executeCreateSpaceWorkflow);
-  server.tool("create_space_workflow", aliasDescriptionCreateSpaceWorkflow, inputSchemaCreateSpaceWorkflow, executeCreateSpaceWorkflow);
+  registerOperationTool(server, "core_createSpaceWorkflow", "create_space_workflow", operationDescriptionCreateSpaceWorkflow, aliasDescriptionCreateSpaceWorkflow, inputSchemaCreateSpaceWorkflow, executeCreateSpaceWorkflow);
 
   const opCreateTranslationContext = requireOperation(operationMap, "createTranslationContext");
   const operationDescriptionCreateTranslationContext = "[space] Translation Context Create. (POST /translations/contexts). Operation ID: createTranslationContext. Custom logic: default OAS execution.";
@@ -263,8 +254,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_createTranslationContext", operationDescriptionCreateTranslationContext, inputSchemaCreateTranslationContext, executeCreateTranslationContext);
-  server.tool("create_translation_context", aliasDescriptionCreateTranslationContext, inputSchemaCreateTranslationContext, executeCreateTranslationContext);
+  registerOperationTool(server, "core_createTranslationContext", "create_translation_context", operationDescriptionCreateTranslationContext, aliasDescriptionCreateTranslationContext, inputSchemaCreateTranslationContext, executeCreateTranslationContext);
 
   const opDeleteSecurityPolicyDefinition = requireOperation(operationMap, "deleteSecurityPolicyDefinition");
   const operationDescriptionDeleteSecurityPolicyDefinition = "[space] Space Security Policy Definition Delete. (DELETE /securityPolicyDefinitions/{name}). Operation ID: deleteSecurityPolicyDefinition. Custom logic: default OAS execution.";
@@ -290,8 +280,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_deleteSecurityPolicyDefinition", operationDescriptionDeleteSecurityPolicyDefinition, inputSchemaDeleteSecurityPolicyDefinition, executeDeleteSecurityPolicyDefinition);
-  server.tool("delete_security_policy_definition", aliasDescriptionDeleteSecurityPolicyDefinition, inputSchemaDeleteSecurityPolicyDefinition, executeDeleteSecurityPolicyDefinition);
+  registerOperationTool(server, "core_deleteSecurityPolicyDefinition", "delete_security_policy_definition", operationDescriptionDeleteSecurityPolicyDefinition, aliasDescriptionDeleteSecurityPolicyDefinition, inputSchemaDeleteSecurityPolicyDefinition, executeDeleteSecurityPolicyDefinition);
 
   const opDeleteSpaceActivityCache = requireOperation(operationMap, "deleteSpaceActivityCache");
   const operationDescriptionDeleteSpaceActivityCache = "[space] Space Submission Metrics Delete. (DELETE /activity). Operation ID: deleteSpaceActivityCache. Custom logic: default OAS execution.";
@@ -315,8 +304,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_deleteSpaceActivityCache", operationDescriptionDeleteSpaceActivityCache, inputSchemaDeleteSpaceActivityCache, executeDeleteSpaceActivityCache);
-  server.tool("delete_space_activity_cache", aliasDescriptionDeleteSpaceActivityCache, inputSchemaDeleteSpaceActivityCache, executeDeleteSpaceActivityCache);
+  registerOperationTool(server, "core_deleteSpaceActivityCache", "delete_space_activity_cache", operationDescriptionDeleteSpaceActivityCache, aliasDescriptionDeleteSpaceActivityCache, inputSchemaDeleteSpaceActivityCache, executeDeleteSpaceActivityCache);
 
   const opDeleteSpaceAttributeDefinition = requireOperation(operationMap, "deleteSpaceAttributeDefinition");
   const operationDescriptionDeleteSpaceAttributeDefinition = "[space] Space Attribute Definition Delete. (DELETE /spaceAttributeDefinitions/{name}). Operation ID: deleteSpaceAttributeDefinition. Custom logic: default OAS execution.";
@@ -342,8 +330,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_deleteSpaceAttributeDefinition", operationDescriptionDeleteSpaceAttributeDefinition, inputSchemaDeleteSpaceAttributeDefinition, executeDeleteSpaceAttributeDefinition);
-  server.tool("delete_space_attribute_definition", aliasDescriptionDeleteSpaceAttributeDefinition, inputSchemaDeleteSpaceAttributeDefinition, executeDeleteSpaceAttributeDefinition);
+  registerOperationTool(server, "core_deleteSpaceAttributeDefinition", "delete_space_attribute_definition", operationDescriptionDeleteSpaceAttributeDefinition, aliasDescriptionDeleteSpaceAttributeDefinition, inputSchemaDeleteSpaceAttributeDefinition, executeDeleteSpaceAttributeDefinition);
 
   const opDeleteSpaceWebAPI = requireOperation(operationMap, "deleteSpaceWebAPI");
   const operationDescriptionDeleteSpaceWebAPI = "[space] Space WebAPI Delete. (DELETE /webApis/{webApiSlug}). Operation ID: deleteSpaceWebAPI. Custom logic: default OAS execution.";
@@ -369,8 +356,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_deleteSpaceWebAPI", operationDescriptionDeleteSpaceWebAPI, inputSchemaDeleteSpaceWebAPI, executeDeleteSpaceWebAPI);
-  server.tool("delete_space_web_api", aliasDescriptionDeleteSpaceWebAPI, inputSchemaDeleteSpaceWebAPI, executeDeleteSpaceWebAPI);
+  registerOperationTool(server, "core_deleteSpaceWebAPI", "delete_space_web_api", operationDescriptionDeleteSpaceWebAPI, aliasDescriptionDeleteSpaceWebAPI, inputSchemaDeleteSpaceWebAPI, executeDeleteSpaceWebAPI);
 
   const opDeleteSpaceWebhook = requireOperation(operationMap, "deleteSpaceWebhook");
   const operationDescriptionDeleteSpaceWebhook = "[space] Space Webhook Delete. (DELETE /webhooks/{name}). Operation ID: deleteSpaceWebhook. Custom logic: default OAS execution.";
@@ -396,8 +382,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_deleteSpaceWebhook", operationDescriptionDeleteSpaceWebhook, inputSchemaDeleteSpaceWebhook, executeDeleteSpaceWebhook);
-  server.tool("delete_space_webhook", aliasDescriptionDeleteSpaceWebhook, inputSchemaDeleteSpaceWebhook, executeDeleteSpaceWebhook);
+  registerOperationTool(server, "core_deleteSpaceWebhook", "delete_space_webhook", operationDescriptionDeleteSpaceWebhook, aliasDescriptionDeleteSpaceWebhook, inputSchemaDeleteSpaceWebhook, executeDeleteSpaceWebhook);
 
   const opDeleteSpaceWebhookJob = requireOperation(operationMap, "deleteSpaceWebhookJob");
   const operationDescriptionDeleteSpaceWebhookJob = "[space] Space Webhook Job Delete. (DELETE /webhookJobs/{id}). Operation ID: deleteSpaceWebhookJob. Custom logic: default OAS execution.";
@@ -423,8 +408,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_deleteSpaceWebhookJob", operationDescriptionDeleteSpaceWebhookJob, inputSchemaDeleteSpaceWebhookJob, executeDeleteSpaceWebhookJob);
-  server.tool("delete_space_webhook_job", aliasDescriptionDeleteSpaceWebhookJob, inputSchemaDeleteSpaceWebhookJob, executeDeleteSpaceWebhookJob);
+  registerOperationTool(server, "core_deleteSpaceWebhookJob", "delete_space_webhook_job", operationDescriptionDeleteSpaceWebhookJob, aliasDescriptionDeleteSpaceWebhookJob, inputSchemaDeleteSpaceWebhookJob, executeDeleteSpaceWebhookJob);
 
   const opDeleteSpaceWorkflow = requireOperation(operationMap, "deleteSpaceWorkflow");
   const operationDescriptionDeleteSpaceWorkflow = "[space] Space Workflow Delete. (DELETE /workflows/{id}). Operation ID: deleteSpaceWorkflow. Custom logic: default OAS execution.";
@@ -449,8 +433,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_deleteSpaceWorkflow", operationDescriptionDeleteSpaceWorkflow, inputSchemaDeleteSpaceWorkflow, executeDeleteSpaceWorkflow);
-  server.tool("delete_space_workflow", aliasDescriptionDeleteSpaceWorkflow, inputSchemaDeleteSpaceWorkflow, executeDeleteSpaceWorkflow);
+  registerOperationTool(server, "core_deleteSpaceWorkflow", "delete_space_workflow", operationDescriptionDeleteSpaceWorkflow, aliasDescriptionDeleteSpaceWorkflow, inputSchemaDeleteSpaceWorkflow, executeDeleteSpaceWorkflow);
 
   const opDeleteTranslationContext = requireOperation(operationMap, "deleteTranslationContext");
   const operationDescriptionDeleteTranslationContext = "[space] Translation Context Delete. (DELETE /translations/contexts/{context}). Operation ID: deleteTranslationContext. Custom logic: default OAS execution.";
@@ -475,8 +458,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_deleteTranslationContext", operationDescriptionDeleteTranslationContext, inputSchemaDeleteTranslationContext, executeDeleteTranslationContext);
-  server.tool("delete_translation_context", aliasDescriptionDeleteTranslationContext, inputSchemaDeleteTranslationContext, executeDeleteTranslationContext);
+  registerOperationTool(server, "core_deleteTranslationContext", "delete_translation_context", operationDescriptionDeleteTranslationContext, aliasDescriptionDeleteTranslationContext, inputSchemaDeleteTranslationContext, executeDeleteTranslationContext);
 
   const opDeleteTranslationEntries = requireOperation(operationMap, "deleteTranslationEntries");
   const operationDescriptionDeleteTranslationEntries = "[space] Translation Entry Delete. (DELETE /translations/entries). Operation ID: deleteTranslationEntries. Custom logic: default OAS execution.";
@@ -503,8 +485,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_deleteTranslationEntries", operationDescriptionDeleteTranslationEntries, inputSchemaDeleteTranslationEntries, executeDeleteTranslationEntries);
-  server.tool("delete_translation_entries", aliasDescriptionDeleteTranslationEntries, inputSchemaDeleteTranslationEntries, executeDeleteTranslationEntries);
+  registerOperationTool(server, "core_deleteTranslationEntries", "delete_translation_entries", operationDescriptionDeleteTranslationEntries, aliasDescriptionDeleteTranslationEntries, inputSchemaDeleteTranslationEntries, executeDeleteTranslationEntries);
 
   const opDisableTranslationLocale = requireOperation(operationMap, "disableTranslationLocale");
   const operationDescriptionDisableTranslationLocale = "[space] Locale Disable. (DELETE /translations/settings/locales/{locale}). Operation ID: disableTranslationLocale. Custom logic: default OAS execution.";
@@ -529,8 +510,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_disableTranslationLocale", operationDescriptionDisableTranslationLocale, inputSchemaDisableTranslationLocale, executeDisableTranslationLocale);
-  server.tool("disable_translation_locale", aliasDescriptionDisableTranslationLocale, inputSchemaDisableTranslationLocale, executeDisableTranslationLocale);
+  registerOperationTool(server, "core_disableTranslationLocale", "disable_translation_locale", operationDescriptionDisableTranslationLocale, aliasDescriptionDisableTranslationLocale, inputSchemaDisableTranslationLocale, executeDisableTranslationLocale);
 
   const opEnableTranslationLocale = requireOperation(operationMap, "enableTranslationLocale");
   const operationDescriptionEnableTranslationLocale = "[space] Locale Enable. (POST /translations/settings/locales). Operation ID: enableTranslationLocale. Custom logic: default OAS execution.";
@@ -554,8 +534,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_enableTranslationLocale", operationDescriptionEnableTranslationLocale, inputSchemaEnableTranslationLocale, executeEnableTranslationLocale);
-  server.tool("enable_translation_locale", aliasDescriptionEnableTranslationLocale, inputSchemaEnableTranslationLocale, executeEnableTranslationLocale);
+  registerOperationTool(server, "core_enableTranslationLocale", "enable_translation_locale", operationDescriptionEnableTranslationLocale, aliasDescriptionEnableTranslationLocale, inputSchemaEnableTranslationLocale, executeEnableTranslationLocale);
 
   const opExecuteKappIntegration = requireOperation(operationMap, "executeKappIntegration");
   const operationDescriptionExecuteKappIntegration = "[space] Kapp Integration Execute. (POST /integrations/kapps/{kappSlug}/{name}). Operation ID: executeKappIntegration. Custom logic: default OAS execution.";
@@ -581,8 +560,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_executeKappIntegration", operationDescriptionExecuteKappIntegration, inputSchemaExecuteKappIntegration, executeExecuteKappIntegration);
-  server.tool("execute_kapp_integration", aliasDescriptionExecuteKappIntegration, inputSchemaExecuteKappIntegration, executeExecuteKappIntegration);
+  registerOperationTool(server, "core_executeKappIntegration", "execute_kapp_integration", operationDescriptionExecuteKappIntegration, aliasDescriptionExecuteKappIntegration, inputSchemaExecuteKappIntegration, executeExecuteKappIntegration);
 
   const opExportSpaceWebAPI = requireOperation(operationMap, "exportSpaceWebAPI");
   const operationDescriptionExportSpaceWebAPI = "[space] Space WebAPI Export. (GET /webApis/{webApiSlug}/export). Operation ID: exportSpaceWebAPI. Custom logic: default OAS execution.";
@@ -607,8 +585,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_exportSpaceWebAPI", operationDescriptionExportSpaceWebAPI, inputSchemaExportSpaceWebAPI, executeExportSpaceWebAPI);
-  server.tool("export_space_web_api", aliasDescriptionExportSpaceWebAPI, inputSchemaExportSpaceWebAPI, executeExportSpaceWebAPI);
+  registerOperationTool(server, "core_exportSpaceWebAPI", "export_space_web_api", operationDescriptionExportSpaceWebAPI, aliasDescriptionExportSpaceWebAPI, inputSchemaExportSpaceWebAPI, executeExportSpaceWebAPI);
 
   const opFetchSpaceActivityMetrics = requireOperation(operationMap, "fetchSpaceActivityMetrics");
   const operationDescriptionFetchSpaceActivityMetrics = "[space] Space Submission Metrics Retrieve. (GET /activity). Operation ID: fetchSpaceActivityMetrics. Custom logic: default OAS execution.";
@@ -634,8 +611,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_fetchSpaceActivityMetrics", operationDescriptionFetchSpaceActivityMetrics, inputSchemaFetchSpaceActivityMetrics, executeFetchSpaceActivityMetrics);
-  server.tool("fetch_space_activity_metrics", aliasDescriptionFetchSpaceActivityMetrics, inputSchemaFetchSpaceActivityMetrics, executeFetchSpaceActivityMetrics);
+  registerOperationTool(server, "core_fetchSpaceActivityMetrics", "fetch_space_activity_metrics", operationDescriptionFetchSpaceActivityMetrics, aliasDescriptionFetchSpaceActivityMetrics, inputSchemaFetchSpaceActivityMetrics, executeFetchSpaceActivityMetrics);
 
   const opFetchSpaceWebAPI = requireOperation(operationMap, "fetchSpaceWebAPI");
   const operationDescriptionFetchSpaceWebAPI = "[space] Space WebAPI Retrieve. (GET /webApis/{webApiSlug}). Operation ID: fetchSpaceWebAPI. Custom logic: default OAS execution.";
@@ -661,8 +637,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_fetchSpaceWebAPI", operationDescriptionFetchSpaceWebAPI, inputSchemaFetchSpaceWebAPI, executeFetchSpaceWebAPI);
-  server.tool("fetch_space_web_api", aliasDescriptionFetchSpaceWebAPI, inputSchemaFetchSpaceWebAPI, executeFetchSpaceWebAPI);
+  registerOperationTool(server, "core_fetchSpaceWebAPI", "fetch_space_web_api", operationDescriptionFetchSpaceWebAPI, aliasDescriptionFetchSpaceWebAPI, inputSchemaFetchSpaceWebAPI, executeFetchSpaceWebAPI);
 
   const opImportSpaceWebAPI = requireOperation(operationMap, "importSpaceWebAPI");
   const operationDescriptionImportSpaceWebAPI = "[space] Space WebAPI Import. (POST /webApiImport). Operation ID: importSpaceWebAPI. Custom logic: default OAS execution.";
@@ -688,8 +663,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_importSpaceWebAPI", operationDescriptionImportSpaceWebAPI, inputSchemaImportSpaceWebAPI, executeImportSpaceWebAPI);
-  server.tool("import_space_web_api", aliasDescriptionImportSpaceWebAPI, inputSchemaImportSpaceWebAPI, executeImportSpaceWebAPI);
+  registerOperationTool(server, "core_importSpaceWebAPI", "import_space_web_api", operationDescriptionImportSpaceWebAPI, aliasDescriptionImportSpaceWebAPI, inputSchemaImportSpaceWebAPI, executeImportSpaceWebAPI);
 
   const opImportTranslationEntries = requireOperation(operationMap, "importTranslationEntries");
   const operationDescriptionImportTranslationEntries = "[space] Translation Entry Import. (POST /translations/entries). Operation ID: importTranslationEntries. Custom logic: default OAS execution.";
@@ -714,8 +688,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_importTranslationEntries", operationDescriptionImportTranslationEntries, inputSchemaImportTranslationEntries, executeImportTranslationEntries);
-  server.tool("import_translation_entries", aliasDescriptionImportTranslationEntries, inputSchemaImportTranslationEntries, executeImportTranslationEntries);
+  registerOperationTool(server, "core_importTranslationEntries", "import_translation_entries", operationDescriptionImportTranslationEntries, aliasDescriptionImportTranslationEntries, inputSchemaImportTranslationEntries, executeImportTranslationEntries);
 
   const opKappWebhookEvents = requireOperation(operationMap, "kappWebhookEvents");
   const operationDescriptionKappWebhookEvents = "[space] Kapp Webhook Event List. (GET /meta/webhooks/events/kapp). Operation ID: kappWebhookEvents. Custom logic: default OAS execution.";
@@ -739,8 +712,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_kappWebhookEvents", operationDescriptionKappWebhookEvents, inputSchemaKappWebhookEvents, executeKappWebhookEvents);
-  server.tool("kapp_webhook_events", aliasDescriptionKappWebhookEvents, inputSchemaKappWebhookEvents, executeKappWebhookEvents);
+  registerOperationTool(server, "core_kappWebhookEvents", "kapp_webhook_events", operationDescriptionKappWebhookEvents, aliasDescriptionKappWebhookEvents, inputSchemaKappWebhookEvents, executeKappWebhookEvents);
 
   const opKappWebhookEventsByType = requireOperation(operationMap, "kappWebhookEventsByType");
   const operationDescriptionKappWebhookEventsByType = "[space] Kapp Webhook Event List by Type. (GET /meta/webhooks/events/kapp/{type}). Operation ID: kappWebhookEventsByType. Custom logic: default OAS execution.";
@@ -765,8 +737,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_kappWebhookEventsByType", operationDescriptionKappWebhookEventsByType, inputSchemaKappWebhookEventsByType, executeKappWebhookEventsByType);
-  server.tool("kapp_webhook_events_by_type", aliasDescriptionKappWebhookEventsByType, inputSchemaKappWebhookEventsByType, executeKappWebhookEventsByType);
+  registerOperationTool(server, "core_kappWebhookEventsByType", "kapp_webhook_events_by_type", operationDescriptionKappWebhookEventsByType, aliasDescriptionKappWebhookEventsByType, inputSchemaKappWebhookEventsByType, executeKappWebhookEventsByType);
 
   const opKappWebhookTypes = requireOperation(operationMap, "kappWebhookTypes");
   const operationDescriptionKappWebhookTypes = "[space] Kapp Webhook Type List. (GET /meta/webhooks/types/kapp). Operation ID: kappWebhookTypes. Custom logic: default OAS execution.";
@@ -790,8 +761,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_kappWebhookTypes", operationDescriptionKappWebhookTypes, inputSchemaKappWebhookTypes, executeKappWebhookTypes);
-  server.tool("kapp_webhook_types", aliasDescriptionKappWebhookTypes, inputSchemaKappWebhookTypes, executeKappWebhookTypes);
+  registerOperationTool(server, "core_kappWebhookTypes", "kapp_webhook_types", operationDescriptionKappWebhookTypes, aliasDescriptionKappWebhookTypes, inputSchemaKappWebhookTypes, executeKappWebhookTypes);
 
   const opListBackgroundJobs = requireOperation(operationMap, "listBackgroundJobs");
   const operationDescriptionListBackgroundJobs = "[space] Background Job List. (GET /backgroundJobs). Operation ID: listBackgroundJobs. Custom logic: default OAS execution.";
@@ -816,8 +786,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_listBackgroundJobs", operationDescriptionListBackgroundJobs, inputSchemaListBackgroundJobs, executeListBackgroundJobs);
-  server.tool("list_background_jobs", aliasDescriptionListBackgroundJobs, inputSchemaListBackgroundJobs, executeListBackgroundJobs);
+  registerOperationTool(server, "core_listBackgroundJobs", "list_background_jobs", operationDescriptionListBackgroundJobs, aliasDescriptionListBackgroundJobs, inputSchemaListBackgroundJobs, executeListBackgroundJobs);
 
   const opListLocales = requireOperation(operationMap, "listLocales");
   const operationDescriptionListLocales = "[space] Locale List. (GET /meta/locales). Operation ID: listLocales. Custom logic: default OAS execution.";
@@ -841,8 +810,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_listLocales", operationDescriptionListLocales, inputSchemaListLocales, executeListLocales);
-  server.tool("list_locales", aliasDescriptionListLocales, inputSchemaListLocales, executeListLocales);
+  registerOperationTool(server, "core_listLocales", "list_locales", operationDescriptionListLocales, aliasDescriptionListLocales, inputSchemaListLocales, executeListLocales);
 
   const opListNotices = requireOperation(operationMap, "listNotices");
   const operationDescriptionListNotices = "[space] Notices List. (GET /notices). Operation ID: listNotices. Custom logic: default OAS execution.";
@@ -867,8 +835,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_listNotices", operationDescriptionListNotices, inputSchemaListNotices, executeListNotices);
-  server.tool("list_notices", aliasDescriptionListNotices, inputSchemaListNotices, executeListNotices);
+  registerOperationTool(server, "core_listNotices", "list_notices", operationDescriptionListNotices, aliasDescriptionListNotices, inputSchemaListNotices, executeListNotices);
 
   const opListSecurityPolicyDefinitions = requireOperation(operationMap, "listSecurityPolicyDefinitions");
   const operationDescriptionListSecurityPolicyDefinitions = "[space] Space Security Policy Definition List. (GET /securityPolicyDefinitions). Operation ID: listSecurityPolicyDefinitions. Custom logic: default OAS execution.";
@@ -893,8 +860,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_listSecurityPolicyDefinitions", operationDescriptionListSecurityPolicyDefinitions, inputSchemaListSecurityPolicyDefinitions, executeListSecurityPolicyDefinitions);
-  server.tool("list_security_policy_definitions", aliasDescriptionListSecurityPolicyDefinitions, inputSchemaListSecurityPolicyDefinitions, executeListSecurityPolicyDefinitions);
+  registerOperationTool(server, "core_listSecurityPolicyDefinitions", "list_security_policy_definitions", operationDescriptionListSecurityPolicyDefinitions, aliasDescriptionListSecurityPolicyDefinitions, inputSchemaListSecurityPolicyDefinitions, executeListSecurityPolicyDefinitions);
 
   const opListSpaceAttributeDefinitions = requireOperation(operationMap, "listSpaceAttributeDefinitions");
   const operationDescriptionListSpaceAttributeDefinitions = "[space] Space Attribute Definition List. (GET /spaceAttributeDefinitions). Operation ID: listSpaceAttributeDefinitions. Custom logic: default OAS execution.";
@@ -919,8 +885,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_listSpaceAttributeDefinitions", operationDescriptionListSpaceAttributeDefinitions, inputSchemaListSpaceAttributeDefinitions, executeListSpaceAttributeDefinitions);
-  server.tool("list_space_attribute_definitions", aliasDescriptionListSpaceAttributeDefinitions, inputSchemaListSpaceAttributeDefinitions, executeListSpaceAttributeDefinitions);
+  registerOperationTool(server, "core_listSpaceAttributeDefinitions", "list_space_attribute_definitions", operationDescriptionListSpaceAttributeDefinitions, aliasDescriptionListSpaceAttributeDefinitions, inputSchemaListSpaceAttributeDefinitions, executeListSpaceAttributeDefinitions);
 
   const opListSpaceWebAPIs = requireOperation(operationMap, "listSpaceWebAPIs");
   const operationDescriptionListSpaceWebAPIs = "[space] Space WebAPI List. (GET /webApis). Operation ID: listSpaceWebAPIs. Custom logic: default OAS execution.";
@@ -945,8 +910,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_listSpaceWebAPIs", operationDescriptionListSpaceWebAPIs, inputSchemaListSpaceWebAPIs, executeListSpaceWebAPIs);
-  server.tool("list_space_web_apis", aliasDescriptionListSpaceWebAPIs, inputSchemaListSpaceWebAPIs, executeListSpaceWebAPIs);
+  registerOperationTool(server, "core_listSpaceWebAPIs", "list_space_web_apis", operationDescriptionListSpaceWebAPIs, aliasDescriptionListSpaceWebAPIs, inputSchemaListSpaceWebAPIs, executeListSpaceWebAPIs);
 
   const opListSpaceWebhookJobs = requireOperation(operationMap, "listSpaceWebhookJobs");
   const operationDescriptionListSpaceWebhookJobs = "[space] Space Webhook Job Search. (GET /webhookJobs). Operation ID: listSpaceWebhookJobs. Custom logic: default OAS execution.";
@@ -980,8 +944,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_listSpaceWebhookJobs", operationDescriptionListSpaceWebhookJobs, inputSchemaListSpaceWebhookJobs, executeListSpaceWebhookJobs);
-  server.tool("list_space_webhook_jobs", aliasDescriptionListSpaceWebhookJobs, inputSchemaListSpaceWebhookJobs, executeListSpaceWebhookJobs);
+  registerOperationTool(server, "core_listSpaceWebhookJobs", "list_space_webhook_jobs", operationDescriptionListSpaceWebhookJobs, aliasDescriptionListSpaceWebhookJobs, inputSchemaListSpaceWebhookJobs, executeListSpaceWebhookJobs);
 
   const opListSpaceWebhooks = requireOperation(operationMap, "listSpaceWebhooks");
   const operationDescriptionListSpaceWebhooks = "[space] Space Webhook List. (GET /webhooks). Operation ID: listSpaceWebhooks. Custom logic: default OAS execution.";
@@ -1006,8 +969,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_listSpaceWebhooks", operationDescriptionListSpaceWebhooks, inputSchemaListSpaceWebhooks, executeListSpaceWebhooks);
-  server.tool("list_space_webhooks", aliasDescriptionListSpaceWebhooks, inputSchemaListSpaceWebhooks, executeListSpaceWebhooks);
+  registerOperationTool(server, "core_listSpaceWebhooks", "list_space_webhooks", operationDescriptionListSpaceWebhooks, aliasDescriptionListSpaceWebhooks, inputSchemaListSpaceWebhooks, executeListSpaceWebhooks);
 
   const opListTimezones = requireOperation(operationMap, "listTimezones");
   const operationDescriptionListTimezones = "[space] Timezone List. (GET /meta/timezones). Operation ID: listTimezones. Custom logic: default OAS execution.";
@@ -1031,8 +993,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_listTimezones", operationDescriptionListTimezones, inputSchemaListTimezones, executeListTimezones);
-  server.tool("list_timezones", aliasDescriptionListTimezones, inputSchemaListTimezones, executeListTimezones);
+  registerOperationTool(server, "core_listTimezones", "list_timezones", operationDescriptionListTimezones, aliasDescriptionListTimezones, inputSchemaListTimezones, executeListTimezones);
 
   const opRenameTranslationContext = requireOperation(operationMap, "renameTranslationContext");
   const operationDescriptionRenameTranslationContext = "[space] Translation Context Update. (PUT /translations/contexts/{context}). Operation ID: renameTranslationContext. Custom logic: default OAS execution.";
@@ -1057,8 +1018,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_renameTranslationContext", operationDescriptionRenameTranslationContext, inputSchemaRenameTranslationContext, executeRenameTranslationContext);
-  server.tool("rename_translation_context", aliasDescriptionRenameTranslationContext, inputSchemaRenameTranslationContext, executeRenameTranslationContext);
+  registerOperationTool(server, "core_renameTranslationContext", "rename_translation_context", operationDescriptionRenameTranslationContext, aliasDescriptionRenameTranslationContext, inputSchemaRenameTranslationContext, executeRenameTranslationContext);
 
   const opRenameTranslationContextKey = requireOperation(operationMap, "renameTranslationContextKey");
   const operationDescriptionRenameTranslationContextKey = "[space] Translation Context Key Update. (PUT /translations/contexts/{context}/keys/{keyHash}). Operation ID: renameTranslationContextKey. Custom logic: default OAS execution.";
@@ -1084,8 +1044,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_renameTranslationContextKey", operationDescriptionRenameTranslationContextKey, inputSchemaRenameTranslationContextKey, executeRenameTranslationContextKey);
-  server.tool("rename_translation_context_key", aliasDescriptionRenameTranslationContextKey, inputSchemaRenameTranslationContextKey, executeRenameTranslationContextKey);
+  registerOperationTool(server, "core_renameTranslationContextKey", "rename_translation_context_key", operationDescriptionRenameTranslationContextKey, aliasDescriptionRenameTranslationContextKey, inputSchemaRenameTranslationContextKey, executeRenameTranslationContextKey);
 
   const opRepairSpaceWorkflow = requireOperation(operationMap, "repairSpaceWorkflow");
   const operationDescriptionRepairSpaceWorkflow = "[space] Space Workflow Repair. (POST /workflows/repair). Operation ID: repairSpaceWorkflow. Custom logic: default OAS execution.";
@@ -1109,8 +1068,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_repairSpaceWorkflow", operationDescriptionRepairSpaceWorkflow, inputSchemaRepairSpaceWorkflow, executeRepairSpaceWorkflow);
-  server.tool("repair_space_workflow", aliasDescriptionRepairSpaceWorkflow, inputSchemaRepairSpaceWorkflow, executeRepairSpaceWorkflow);
+  registerOperationTool(server, "core_repairSpaceWorkflow", "repair_space_workflow", operationDescriptionRepairSpaceWorkflow, aliasDescriptionRepairSpaceWorkflow, inputSchemaRepairSpaceWorkflow, executeRepairSpaceWorkflow);
 
   const opRetrieveSecurityPolicyDefinition = requireOperation(operationMap, "retrieveSecurityPolicyDefinition");
   const operationDescriptionRetrieveSecurityPolicyDefinition = "[space] Space Security Policy Definition Retrieve. (GET /securityPolicyDefinitions/{name}). Operation ID: retrieveSecurityPolicyDefinition. Custom logic: default OAS execution.";
@@ -1136,8 +1094,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveSecurityPolicyDefinition", operationDescriptionRetrieveSecurityPolicyDefinition, inputSchemaRetrieveSecurityPolicyDefinition, executeRetrieveSecurityPolicyDefinition);
-  server.tool("retrieve_security_policy_definition", aliasDescriptionRetrieveSecurityPolicyDefinition, inputSchemaRetrieveSecurityPolicyDefinition, executeRetrieveSecurityPolicyDefinition);
+  registerOperationTool(server, "core_retrieveSecurityPolicyDefinition", "retrieve_security_policy_definition", operationDescriptionRetrieveSecurityPolicyDefinition, aliasDescriptionRetrieveSecurityPolicyDefinition, inputSchemaRetrieveSecurityPolicyDefinition, executeRetrieveSecurityPolicyDefinition);
 
   const opRetrieveSpace = requireOperation(operationMap, "retrieveSpace");
   const operationDescriptionRetrieveSpace = "[space] Space Retrieve. (GET /space). Operation ID: retrieveSpace. Custom logic: default OAS execution.";
@@ -1163,8 +1120,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveSpace", operationDescriptionRetrieveSpace, inputSchemaRetrieveSpace, executeRetrieveSpace);
-  server.tool("retrieve_space", aliasDescriptionRetrieveSpace, inputSchemaRetrieveSpace, executeRetrieveSpace);
+  registerOperationTool(server, "core_retrieveSpace", "retrieve_space", operationDescriptionRetrieveSpace, aliasDescriptionRetrieveSpace, inputSchemaRetrieveSpace, executeRetrieveSpace);
 
   const opRetrieveSpaceAttributeDefinition = requireOperation(operationMap, "retrieveSpaceAttributeDefinition");
   const operationDescriptionRetrieveSpaceAttributeDefinition = "[space] Space Attribute Definition Retrieve. (GET /spaceAttributeDefinitions/{name}). Operation ID: retrieveSpaceAttributeDefinition. Custom logic: default OAS execution.";
@@ -1190,8 +1146,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveSpaceAttributeDefinition", operationDescriptionRetrieveSpaceAttributeDefinition, inputSchemaRetrieveSpaceAttributeDefinition, executeRetrieveSpaceAttributeDefinition);
-  server.tool("retrieve_space_attribute_definition", aliasDescriptionRetrieveSpaceAttributeDefinition, inputSchemaRetrieveSpaceAttributeDefinition, executeRetrieveSpaceAttributeDefinition);
+  registerOperationTool(server, "core_retrieveSpaceAttributeDefinition", "retrieve_space_attribute_definition", operationDescriptionRetrieveSpaceAttributeDefinition, aliasDescriptionRetrieveSpaceAttributeDefinition, inputSchemaRetrieveSpaceAttributeDefinition, executeRetrieveSpaceAttributeDefinition);
 
   const opRetrieveSpaceWebhook = requireOperation(operationMap, "retrieveSpaceWebhook");
   const operationDescriptionRetrieveSpaceWebhook = "[space] Space Webhook Retrieve. (GET /webhooks/{name}). Operation ID: retrieveSpaceWebhook. Custom logic: default OAS execution.";
@@ -1217,8 +1172,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveSpaceWebhook", operationDescriptionRetrieveSpaceWebhook, inputSchemaRetrieveSpaceWebhook, executeRetrieveSpaceWebhook);
-  server.tool("retrieve_space_webhook", aliasDescriptionRetrieveSpaceWebhook, inputSchemaRetrieveSpaceWebhook, executeRetrieveSpaceWebhook);
+  registerOperationTool(server, "core_retrieveSpaceWebhook", "retrieve_space_webhook", operationDescriptionRetrieveSpaceWebhook, aliasDescriptionRetrieveSpaceWebhook, inputSchemaRetrieveSpaceWebhook, executeRetrieveSpaceWebhook);
 
   const opRetrieveSpaceWebhookJob = requireOperation(operationMap, "retrieveSpaceWebhookJob");
   const operationDescriptionRetrieveSpaceWebhookJob = "[space] Space Webhook Job Retrieve. (GET /webhookJobs/{id}). Operation ID: retrieveSpaceWebhookJob. Custom logic: default OAS execution.";
@@ -1244,8 +1198,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveSpaceWebhookJob", operationDescriptionRetrieveSpaceWebhookJob, inputSchemaRetrieveSpaceWebhookJob, executeRetrieveSpaceWebhookJob);
-  server.tool("retrieve_space_webhook_job", aliasDescriptionRetrieveSpaceWebhookJob, inputSchemaRetrieveSpaceWebhookJob, executeRetrieveSpaceWebhookJob);
+  registerOperationTool(server, "core_retrieveSpaceWebhookJob", "retrieve_space_webhook_job", operationDescriptionRetrieveSpaceWebhookJob, aliasDescriptionRetrieveSpaceWebhookJob, inputSchemaRetrieveSpaceWebhookJob, executeRetrieveSpaceWebhookJob);
 
   const opRetrieveSpaceWorkflow = requireOperation(operationMap, "retrieveSpaceWorkflow");
   const operationDescriptionRetrieveSpaceWorkflow = "[space] Space Workflow Retrieve. (GET /workflows/{id}). Operation ID: retrieveSpaceWorkflow. Custom logic: default OAS execution.";
@@ -1270,8 +1223,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveSpaceWorkflow", operationDescriptionRetrieveSpaceWorkflow, inputSchemaRetrieveSpaceWorkflow, executeRetrieveSpaceWorkflow);
-  server.tool("retrieve_space_workflow", aliasDescriptionRetrieveSpaceWorkflow, inputSchemaRetrieveSpaceWorkflow, executeRetrieveSpaceWorkflow);
+  registerOperationTool(server, "core_retrieveSpaceWorkflow", "retrieve_space_workflow", operationDescriptionRetrieveSpaceWorkflow, aliasDescriptionRetrieveSpaceWorkflow, inputSchemaRetrieveSpaceWorkflow, executeRetrieveSpaceWorkflow);
 
   const opRetrieveSpaceWorkflows = requireOperation(operationMap, "retrieveSpaceWorkflows");
   const operationDescriptionRetrieveSpaceWorkflows = "[space] Space Workflows Retrieve. (GET /workflows). Operation ID: retrieveSpaceWorkflows. Custom logic: default OAS execution.";
@@ -1295,8 +1247,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveSpaceWorkflows", operationDescriptionRetrieveSpaceWorkflows, inputSchemaRetrieveSpaceWorkflows, executeRetrieveSpaceWorkflows);
-  server.tool("retrieve_space_workflows", aliasDescriptionRetrieveSpaceWorkflows, inputSchemaRetrieveSpaceWorkflows, executeRetrieveSpaceWorkflows);
+  registerOperationTool(server, "core_retrieveSpaceWorkflows", "retrieve_space_workflows", operationDescriptionRetrieveSpaceWorkflows, aliasDescriptionRetrieveSpaceWorkflows, inputSchemaRetrieveSpaceWorkflows, executeRetrieveSpaceWorkflows);
 
   const opRetrieveTranslationChanges = requireOperation(operationMap, "retrieveTranslationChanges");
   const operationDescriptionRetrieveTranslationChanges = "[space] Staged Translations Retrieve. (GET /translations/staged). Operation ID: retrieveTranslationChanges. Custom logic: default OAS execution.";
@@ -1321,8 +1272,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveTranslationChanges", operationDescriptionRetrieveTranslationChanges, inputSchemaRetrieveTranslationChanges, executeRetrieveTranslationChanges);
-  server.tool("retrieve_translation_changes", aliasDescriptionRetrieveTranslationChanges, inputSchemaRetrieveTranslationChanges, executeRetrieveTranslationChanges);
+  registerOperationTool(server, "core_retrieveTranslationChanges", "retrieve_translation_changes", operationDescriptionRetrieveTranslationChanges, aliasDescriptionRetrieveTranslationChanges, inputSchemaRetrieveTranslationChanges, executeRetrieveTranslationChanges);
 
   const opRetrieveTranslationContextKeys = requireOperation(operationMap, "retrieveTranslationContextKeys");
   const operationDescriptionRetrieveTranslationContextKeys = "[space] Translation Context Key List. (GET /translations/contexts/{context}/keys). Operation ID: retrieveTranslationContextKeys. Custom logic: default OAS execution.";
@@ -1347,8 +1297,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveTranslationContextKeys", operationDescriptionRetrieveTranslationContextKeys, inputSchemaRetrieveTranslationContextKeys, executeRetrieveTranslationContextKeys);
-  server.tool("retrieve_translation_context_keys", aliasDescriptionRetrieveTranslationContextKeys, inputSchemaRetrieveTranslationContextKeys, executeRetrieveTranslationContextKeys);
+  registerOperationTool(server, "core_retrieveTranslationContextKeys", "retrieve_translation_context_keys", operationDescriptionRetrieveTranslationContextKeys, aliasDescriptionRetrieveTranslationContextKeys, inputSchemaRetrieveTranslationContextKeys, executeRetrieveTranslationContextKeys);
 
   const opRetrieveTranslationContexts = requireOperation(operationMap, "retrieveTranslationContexts");
   const operationDescriptionRetrieveTranslationContexts = "[space] Translation Context List. (GET /translations/contexts). Operation ID: retrieveTranslationContexts. Custom logic: default OAS execution.";
@@ -1375,8 +1324,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveTranslationContexts", operationDescriptionRetrieveTranslationContexts, inputSchemaRetrieveTranslationContexts, executeRetrieveTranslationContexts);
-  server.tool("retrieve_translation_contexts", aliasDescriptionRetrieveTranslationContexts, inputSchemaRetrieveTranslationContexts, executeRetrieveTranslationContexts);
+  registerOperationTool(server, "core_retrieveTranslationContexts", "retrieve_translation_contexts", operationDescriptionRetrieveTranslationContexts, aliasDescriptionRetrieveTranslationContexts, inputSchemaRetrieveTranslationContexts, executeRetrieveTranslationContexts);
 
   const opRetrieveTranslationDefaultLocale = requireOperation(operationMap, "retrieveTranslationDefaultLocale");
   const operationDescriptionRetrieveTranslationDefaultLocale = "[space] Default Locale Retrieve. (GET /translations/settings/defaultLocale). Operation ID: retrieveTranslationDefaultLocale. Custom logic: default OAS execution.";
@@ -1400,8 +1348,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveTranslationDefaultLocale", operationDescriptionRetrieveTranslationDefaultLocale, inputSchemaRetrieveTranslationDefaultLocale, executeRetrieveTranslationDefaultLocale);
-  server.tool("retrieve_translation_default_locale", aliasDescriptionRetrieveTranslationDefaultLocale, inputSchemaRetrieveTranslationDefaultLocale, executeRetrieveTranslationDefaultLocale);
+  registerOperationTool(server, "core_retrieveTranslationDefaultLocale", "retrieve_translation_default_locale", operationDescriptionRetrieveTranslationDefaultLocale, aliasDescriptionRetrieveTranslationDefaultLocale, inputSchemaRetrieveTranslationDefaultLocale, executeRetrieveTranslationDefaultLocale);
 
   const opRetrieveTranslationEntries = requireOperation(operationMap, "retrieveTranslationEntries");
   const operationDescriptionRetrieveTranslationEntries = "[space] Translation Entry Retrieve. (GET /translations/entries). Operation ID: retrieveTranslationEntries. Custom logic: default OAS execution.";
@@ -1432,8 +1379,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveTranslationEntries", operationDescriptionRetrieveTranslationEntries, inputSchemaRetrieveTranslationEntries, executeRetrieveTranslationEntries);
-  server.tool("retrieve_translation_entries", aliasDescriptionRetrieveTranslationEntries, inputSchemaRetrieveTranslationEntries, executeRetrieveTranslationEntries);
+  registerOperationTool(server, "core_retrieveTranslationEntries", "retrieve_translation_entries", operationDescriptionRetrieveTranslationEntries, aliasDescriptionRetrieveTranslationEntries, inputSchemaRetrieveTranslationEntries, executeRetrieveTranslationEntries);
 
   const opRetrieveTranslationLocales = requireOperation(operationMap, "retrieveTranslationLocales");
   const operationDescriptionRetrieveTranslationLocales = "[space] Enabled Locale List. (GET /translations/settings/locales). Operation ID: retrieveTranslationLocales. Custom logic: default OAS execution.";
@@ -1457,8 +1403,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_retrieveTranslationLocales", operationDescriptionRetrieveTranslationLocales, inputSchemaRetrieveTranslationLocales, executeRetrieveTranslationLocales);
-  server.tool("retrieve_translation_locales", aliasDescriptionRetrieveTranslationLocales, inputSchemaRetrieveTranslationLocales, executeRetrieveTranslationLocales);
+  registerOperationTool(server, "core_retrieveTranslationLocales", "retrieve_translation_locales", operationDescriptionRetrieveTranslationLocales, aliasDescriptionRetrieveTranslationLocales, inputSchemaRetrieveTranslationLocales, executeRetrieveTranslationLocales);
 
   const opSpaceWebhookEvents = requireOperation(operationMap, "spaceWebhookEvents");
   const operationDescriptionSpaceWebhookEvents = "[space] Space Webhook Event List. (GET /meta/webhooks/events/space). Operation ID: spaceWebhookEvents. Custom logic: default OAS execution.";
@@ -1482,8 +1427,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_spaceWebhookEvents", operationDescriptionSpaceWebhookEvents, inputSchemaSpaceWebhookEvents, executeSpaceWebhookEvents);
-  server.tool("space_webhook_events", aliasDescriptionSpaceWebhookEvents, inputSchemaSpaceWebhookEvents, executeSpaceWebhookEvents);
+  registerOperationTool(server, "core_spaceWebhookEvents", "space_webhook_events", operationDescriptionSpaceWebhookEvents, aliasDescriptionSpaceWebhookEvents, inputSchemaSpaceWebhookEvents, executeSpaceWebhookEvents);
 
   const opSpaceWebhookEventsByType = requireOperation(operationMap, "spaceWebhookEventsByType");
   const operationDescriptionSpaceWebhookEventsByType = "[space] Space Webhook Event List by Type. (GET /meta/webhooks/events/space/{type}). Operation ID: spaceWebhookEventsByType. Custom logic: default OAS execution.";
@@ -1508,8 +1452,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_spaceWebhookEventsByType", operationDescriptionSpaceWebhookEventsByType, inputSchemaSpaceWebhookEventsByType, executeSpaceWebhookEventsByType);
-  server.tool("space_webhook_events_by_type", aliasDescriptionSpaceWebhookEventsByType, inputSchemaSpaceWebhookEventsByType, executeSpaceWebhookEventsByType);
+  registerOperationTool(server, "core_spaceWebhookEventsByType", "space_webhook_events_by_type", operationDescriptionSpaceWebhookEventsByType, aliasDescriptionSpaceWebhookEventsByType, inputSchemaSpaceWebhookEventsByType, executeSpaceWebhookEventsByType);
 
   const opSpaceWebhookTypes = requireOperation(operationMap, "spaceWebhookTypes");
   const operationDescriptionSpaceWebhookTypes = "[space] Space Webhook Type List. (GET /meta/webhooks/types/space). Operation ID: spaceWebhookTypes. Custom logic: default OAS execution.";
@@ -1533,8 +1476,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_spaceWebhookTypes", operationDescriptionSpaceWebhookTypes, inputSchemaSpaceWebhookTypes, executeSpaceWebhookTypes);
-  server.tool("space_webhook_types", aliasDescriptionSpaceWebhookTypes, inputSchemaSpaceWebhookTypes, executeSpaceWebhookTypes);
+  registerOperationTool(server, "core_spaceWebhookTypes", "space_webhook_types", operationDescriptionSpaceWebhookTypes, aliasDescriptionSpaceWebhookTypes, inputSchemaSpaceWebhookTypes, executeSpaceWebhookTypes);
 
   const opUpdateSecurityPolicyDefinition = requireOperation(operationMap, "updateSecurityPolicyDefinition");
   const operationDescriptionUpdateSecurityPolicyDefinition = "[space] Space Security Policy Definition Update. (PUT /securityPolicyDefinitions/{name}). Operation ID: updateSecurityPolicyDefinition. Custom logic: default OAS execution.";
@@ -1560,8 +1502,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_updateSecurityPolicyDefinition", operationDescriptionUpdateSecurityPolicyDefinition, inputSchemaUpdateSecurityPolicyDefinition, executeUpdateSecurityPolicyDefinition);
-  server.tool("update_security_policy_definition", aliasDescriptionUpdateSecurityPolicyDefinition, inputSchemaUpdateSecurityPolicyDefinition, executeUpdateSecurityPolicyDefinition);
+  registerOperationTool(server, "core_updateSecurityPolicyDefinition", "update_security_policy_definition", operationDescriptionUpdateSecurityPolicyDefinition, aliasDescriptionUpdateSecurityPolicyDefinition, inputSchemaUpdateSecurityPolicyDefinition, executeUpdateSecurityPolicyDefinition);
 
   const opUpdateSpace = requireOperation(operationMap, "updateSpace");
   const operationDescriptionUpdateSpace = "[space] Space Update. (PUT /space). Operation ID: updateSpace. Custom logic: default OAS execution.";
@@ -1586,8 +1527,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_updateSpace", operationDescriptionUpdateSpace, inputSchemaUpdateSpace, executeUpdateSpace);
-  server.tool("update_space", aliasDescriptionUpdateSpace, inputSchemaUpdateSpace, executeUpdateSpace);
+  registerOperationTool(server, "core_updateSpace", "update_space", operationDescriptionUpdateSpace, aliasDescriptionUpdateSpace, inputSchemaUpdateSpace, executeUpdateSpace);
 
   const opUpdateSpaceAttributeDefinition = requireOperation(operationMap, "updateSpaceAttributeDefinition");
   const operationDescriptionUpdateSpaceAttributeDefinition = "[space] Space Attribute Definition Update. (PUT /spaceAttributeDefinitions/{name}). Operation ID: updateSpaceAttributeDefinition. Custom logic: default OAS execution.";
@@ -1613,8 +1553,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_updateSpaceAttributeDefinition", operationDescriptionUpdateSpaceAttributeDefinition, inputSchemaUpdateSpaceAttributeDefinition, executeUpdateSpaceAttributeDefinition);
-  server.tool("update_space_attribute_definition", aliasDescriptionUpdateSpaceAttributeDefinition, inputSchemaUpdateSpaceAttributeDefinition, executeUpdateSpaceAttributeDefinition);
+  registerOperationTool(server, "core_updateSpaceAttributeDefinition", "update_space_attribute_definition", operationDescriptionUpdateSpaceAttributeDefinition, aliasDescriptionUpdateSpaceAttributeDefinition, inputSchemaUpdateSpaceAttributeDefinition, executeUpdateSpaceAttributeDefinition);
 
   const opUpdateSpaceWebAPI = requireOperation(operationMap, "updateSpaceWebAPI");
   const operationDescriptionUpdateSpaceWebAPI = "[space] Space WebAPI Update. (PUT /webApis/{webApiSlug}). Operation ID: updateSpaceWebAPI. Custom logic: default OAS execution.";
@@ -1640,8 +1579,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_updateSpaceWebAPI", operationDescriptionUpdateSpaceWebAPI, inputSchemaUpdateSpaceWebAPI, executeUpdateSpaceWebAPI);
-  server.tool("update_space_web_api", aliasDescriptionUpdateSpaceWebAPI, inputSchemaUpdateSpaceWebAPI, executeUpdateSpaceWebAPI);
+  registerOperationTool(server, "core_updateSpaceWebAPI", "update_space_web_api", operationDescriptionUpdateSpaceWebAPI, aliasDescriptionUpdateSpaceWebAPI, inputSchemaUpdateSpaceWebAPI, executeUpdateSpaceWebAPI);
 
   const opUpdateSpaceWebhook = requireOperation(operationMap, "updateSpaceWebhook");
   const operationDescriptionUpdateSpaceWebhook = "[space] Space Webhook Update. (PUT /webhooks/{name}). Operation ID: updateSpaceWebhook. Custom logic: default OAS execution.";
@@ -1667,8 +1605,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_updateSpaceWebhook", operationDescriptionUpdateSpaceWebhook, inputSchemaUpdateSpaceWebhook, executeUpdateSpaceWebhook);
-  server.tool("update_space_webhook", aliasDescriptionUpdateSpaceWebhook, inputSchemaUpdateSpaceWebhook, executeUpdateSpaceWebhook);
+  registerOperationTool(server, "core_updateSpaceWebhook", "update_space_webhook", operationDescriptionUpdateSpaceWebhook, aliasDescriptionUpdateSpaceWebhook, inputSchemaUpdateSpaceWebhook, executeUpdateSpaceWebhook);
 
   const opUpdateSpaceWebhookJob = requireOperation(operationMap, "updateSpaceWebhookJob");
   const operationDescriptionUpdateSpaceWebhookJob = "[space] Space Webhook Job Update. (PUT /webhookJobs/{id}). Operation ID: updateSpaceWebhookJob. Custom logic: default OAS execution.";
@@ -1694,8 +1631,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_updateSpaceWebhookJob", operationDescriptionUpdateSpaceWebhookJob, inputSchemaUpdateSpaceWebhookJob, executeUpdateSpaceWebhookJob);
-  server.tool("update_space_webhook_job", aliasDescriptionUpdateSpaceWebhookJob, inputSchemaUpdateSpaceWebhookJob, executeUpdateSpaceWebhookJob);
+  registerOperationTool(server, "core_updateSpaceWebhookJob", "update_space_webhook_job", operationDescriptionUpdateSpaceWebhookJob, aliasDescriptionUpdateSpaceWebhookJob, inputSchemaUpdateSpaceWebhookJob, executeUpdateSpaceWebhookJob);
 
   const opUpdateSpaceWorkflow = requireOperation(operationMap, "updateSpaceWorkflow");
   const operationDescriptionUpdateSpaceWorkflow = "[space] Space Workflow Update. (PUT /workflows/{id}). Operation ID: updateSpaceWorkflow. Custom logic: default OAS execution.";
@@ -1720,8 +1656,7 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_updateSpaceWorkflow", operationDescriptionUpdateSpaceWorkflow, inputSchemaUpdateSpaceWorkflow, executeUpdateSpaceWorkflow);
-  server.tool("update_space_workflow", aliasDescriptionUpdateSpaceWorkflow, inputSchemaUpdateSpaceWorkflow, executeUpdateSpaceWorkflow);
+  registerOperationTool(server, "core_updateSpaceWorkflow", "update_space_workflow", operationDescriptionUpdateSpaceWorkflow, aliasDescriptionUpdateSpaceWorkflow, inputSchemaUpdateSpaceWorkflow, executeUpdateSpaceWorkflow);
 
   const opUpdateTranslationDefaultLocale = requireOperation(operationMap, "updateTranslationDefaultLocale");
   const operationDescriptionUpdateTranslationDefaultLocale = "[space] Default Locale Update. (PUT /translations/settings/defaultLocale). Operation ID: updateTranslationDefaultLocale. Custom logic: default OAS execution.";
@@ -1745,7 +1680,6 @@ export function registerSpaceTools(server: McpServer, runtime: ContextToolRuntim
     }
   };
 
-  server.tool("core_updateTranslationDefaultLocale", operationDescriptionUpdateTranslationDefaultLocale, inputSchemaUpdateTranslationDefaultLocale, executeUpdateTranslationDefaultLocale);
-  server.tool("update_translation_default_locale", aliasDescriptionUpdateTranslationDefaultLocale, inputSchemaUpdateTranslationDefaultLocale, executeUpdateTranslationDefaultLocale);
+  registerOperationTool(server, "core_updateTranslationDefaultLocale", "update_translation_default_locale", operationDescriptionUpdateTranslationDefaultLocale, aliasDescriptionUpdateTranslationDefaultLocale, inputSchemaUpdateTranslationDefaultLocale, executeUpdateTranslationDefaultLocale);
 
 }

@@ -2,7 +2,7 @@
 // Regenerate with: npm run ops:generate-tools
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { ContextToolRuntime, requireOperation } from "./shared.js";
+import { ContextToolRuntime, registerOperationTool, requireOperation } from "./shared.js";
 
 export function registerKappTools(server: McpServer, runtime: ContextToolRuntime): void {
   const { operationMap, invokeDefaultOperation } = runtime;
@@ -31,8 +31,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createCategoryAttributeDefinition", operationDescriptionCreateCategoryAttributeDefinition, inputSchemaCreateCategoryAttributeDefinition, executeCreateCategoryAttributeDefinition);
-  server.tool("create_category_attribute_definition", aliasDescriptionCreateCategoryAttributeDefinition, inputSchemaCreateCategoryAttributeDefinition, executeCreateCategoryAttributeDefinition);
+  registerOperationTool(server, "core_createCategoryAttributeDefinition", "create_category_attribute_definition", operationDescriptionCreateCategoryAttributeDefinition, aliasDescriptionCreateCategoryAttributeDefinition, inputSchemaCreateCategoryAttributeDefinition, executeCreateCategoryAttributeDefinition);
 
   const opCreateKapp = requireOperation(operationMap, "createKapp");
   const operationDescriptionCreateKapp = "[kapp] Kapp Create. (POST /kapps). Operation ID: createKapp. Custom logic: default OAS execution.";
@@ -57,8 +56,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createKapp", operationDescriptionCreateKapp, inputSchemaCreateKapp, executeCreateKapp);
-  server.tool("create_kapp", aliasDescriptionCreateKapp, inputSchemaCreateKapp, executeCreateKapp);
+  registerOperationTool(server, "core_createKapp", "create_kapp", operationDescriptionCreateKapp, aliasDescriptionCreateKapp, inputSchemaCreateKapp, executeCreateKapp);
 
   const opCreateKappAttributeDefinition = requireOperation(operationMap, "createKappAttributeDefinition");
   const operationDescriptionCreateKappAttributeDefinition = "[kapp] Kapp Attribute Definition Create. (POST /kapps/{kappSlug}/kappAttributeDefinitions). Operation ID: createKappAttributeDefinition. Custom logic: default OAS execution.";
@@ -84,8 +82,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createKappAttributeDefinition", operationDescriptionCreateKappAttributeDefinition, inputSchemaCreateKappAttributeDefinition, executeCreateKappAttributeDefinition);
-  server.tool("create_kapp_attribute_definition", aliasDescriptionCreateKappAttributeDefinition, inputSchemaCreateKappAttributeDefinition, executeCreateKappAttributeDefinition);
+  registerOperationTool(server, "core_createKappAttributeDefinition", "create_kapp_attribute_definition", operationDescriptionCreateKappAttributeDefinition, aliasDescriptionCreateKappAttributeDefinition, inputSchemaCreateKappAttributeDefinition, executeCreateKappAttributeDefinition);
 
   const opCreateKappIntegration = requireOperation(operationMap, "createKappIntegration");
   const operationDescriptionCreateKappIntegration = "[kapp] Kapp Integration Create. (POST /kapps/{kappSlug}/integrations). Operation ID: createKappIntegration. Custom logic: default OAS execution.";
@@ -111,8 +108,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createKappIntegration", operationDescriptionCreateKappIntegration, inputSchemaCreateKappIntegration, executeCreateKappIntegration);
-  server.tool("create_kapp_integration", aliasDescriptionCreateKappIntegration, inputSchemaCreateKappIntegration, executeCreateKappIntegration);
+  registerOperationTool(server, "core_createKappIntegration", "create_kapp_integration", operationDescriptionCreateKappIntegration, aliasDescriptionCreateKappIntegration, inputSchemaCreateKappIntegration, executeCreateKappIntegration);
 
   const opCreateKappSecurityPolicyDefinition = requireOperation(operationMap, "createKappSecurityPolicyDefinition");
   const operationDescriptionCreateKappSecurityPolicyDefinition = "[kapp] Kapp Security Policy Definition Create. (POST /kapps/{kappSlug}/securityPolicyDefinitions). Operation ID: createKappSecurityPolicyDefinition. Custom logic: default OAS execution.";
@@ -138,8 +134,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createKappSecurityPolicyDefinition", operationDescriptionCreateKappSecurityPolicyDefinition, inputSchemaCreateKappSecurityPolicyDefinition, executeCreateKappSecurityPolicyDefinition);
-  server.tool("create_kapp_security_policy_definition", aliasDescriptionCreateKappSecurityPolicyDefinition, inputSchemaCreateKappSecurityPolicyDefinition, executeCreateKappSecurityPolicyDefinition);
+  registerOperationTool(server, "core_createKappSecurityPolicyDefinition", "create_kapp_security_policy_definition", operationDescriptionCreateKappSecurityPolicyDefinition, aliasDescriptionCreateKappSecurityPolicyDefinition, inputSchemaCreateKappSecurityPolicyDefinition, executeCreateKappSecurityPolicyDefinition);
 
   const opCreateKappWebAPI = requireOperation(operationMap, "createKappWebAPI");
   const operationDescriptionCreateKappWebAPI = "[kapp] Kapp WebAPI Create. (POST /kapps/{kappSlug}/webApis). Operation ID: createKappWebAPI. Custom logic: default OAS execution.";
@@ -165,8 +160,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createKappWebAPI", operationDescriptionCreateKappWebAPI, inputSchemaCreateKappWebAPI, executeCreateKappWebAPI);
-  server.tool("create_kapp_web_api", aliasDescriptionCreateKappWebAPI, inputSchemaCreateKappWebAPI, executeCreateKappWebAPI);
+  registerOperationTool(server, "core_createKappWebAPI", "create_kapp_web_api", operationDescriptionCreateKappWebAPI, aliasDescriptionCreateKappWebAPI, inputSchemaCreateKappWebAPI, executeCreateKappWebAPI);
 
   const opCreateKappWebhook = requireOperation(operationMap, "createKappWebhook");
   const operationDescriptionCreateKappWebhook = "[kapp] Kapp Webhook Create. (POST /kapps/{kappSlug}/webhooks). Operation ID: createKappWebhook. Custom logic: default OAS execution.";
@@ -192,8 +186,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createKappWebhook", operationDescriptionCreateKappWebhook, inputSchemaCreateKappWebhook, executeCreateKappWebhook);
-  server.tool("create_kapp_webhook", aliasDescriptionCreateKappWebhook, inputSchemaCreateKappWebhook, executeCreateKappWebhook);
+  registerOperationTool(server, "core_createKappWebhook", "create_kapp_webhook", operationDescriptionCreateKappWebhook, aliasDescriptionCreateKappWebhook, inputSchemaCreateKappWebhook, executeCreateKappWebhook);
 
   const opCreateKappWebhookJob = requireOperation(operationMap, "createKappWebhookJob");
   const operationDescriptionCreateKappWebhookJob = "[kapp] Kapp Webhook Job Create. (POST /kapps/{kappSlug}/webhookJobs). Operation ID: createKappWebhookJob. Custom logic: default OAS execution.";
@@ -219,8 +212,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createKappWebhookJob", operationDescriptionCreateKappWebhookJob, inputSchemaCreateKappWebhookJob, executeCreateKappWebhookJob);
-  server.tool("create_kapp_webhook_job", aliasDescriptionCreateKappWebhookJob, inputSchemaCreateKappWebhookJob, executeCreateKappWebhookJob);
+  registerOperationTool(server, "core_createKappWebhookJob", "create_kapp_webhook_job", operationDescriptionCreateKappWebhookJob, aliasDescriptionCreateKappWebhookJob, inputSchemaCreateKappWebhookJob, executeCreateKappWebhookJob);
 
   const opCreateKappWorkflow = requireOperation(operationMap, "createKappWorkflow");
   const operationDescriptionCreateKappWorkflow = "[kapp] Kapp Workflow Create. (POST /kapps/{kappSlug}/workflows). Operation ID: createKappWorkflow. Custom logic: default OAS execution.";
@@ -246,8 +238,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createKappWorkflow", operationDescriptionCreateKappWorkflow, inputSchemaCreateKappWorkflow, executeCreateKappWorkflow);
-  server.tool("create_kapp_workflow", aliasDescriptionCreateKappWorkflow, inputSchemaCreateKappWorkflow, executeCreateKappWorkflow);
+  registerOperationTool(server, "core_createKappWorkflow", "create_kapp_workflow", operationDescriptionCreateKappWorkflow, aliasDescriptionCreateKappWorkflow, inputSchemaCreateKappWorkflow, executeCreateKappWorkflow);
 
   const opDeleteCategoryAttributeDefinition = requireOperation(operationMap, "deleteCategoryAttributeDefinition");
   const operationDescriptionDeleteCategoryAttributeDefinition = "[kapp] Kapp Category Attribute Definition Delete. (DELETE /kapps/{kappSlug}/categoryAttributeDefinitions/{name}). Operation ID: deleteCategoryAttributeDefinition. Custom logic: default OAS execution.";
@@ -274,8 +265,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteCategoryAttributeDefinition", operationDescriptionDeleteCategoryAttributeDefinition, inputSchemaDeleteCategoryAttributeDefinition, executeDeleteCategoryAttributeDefinition);
-  server.tool("delete_category_attribute_definition", aliasDescriptionDeleteCategoryAttributeDefinition, inputSchemaDeleteCategoryAttributeDefinition, executeDeleteCategoryAttributeDefinition);
+  registerOperationTool(server, "core_deleteCategoryAttributeDefinition", "delete_category_attribute_definition", operationDescriptionDeleteCategoryAttributeDefinition, aliasDescriptionDeleteCategoryAttributeDefinition, inputSchemaDeleteCategoryAttributeDefinition, executeDeleteCategoryAttributeDefinition);
 
   const opDeleteKapp = requireOperation(operationMap, "deleteKapp");
   const operationDescriptionDeleteKapp = "[kapp] Kapp Delete. (DELETE /kapps/{kappSlug}). Operation ID: deleteKapp. Custom logic: default OAS execution.";
@@ -301,8 +291,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteKapp", operationDescriptionDeleteKapp, inputSchemaDeleteKapp, executeDeleteKapp);
-  server.tool("delete_kapp", aliasDescriptionDeleteKapp, inputSchemaDeleteKapp, executeDeleteKapp);
+  registerOperationTool(server, "core_deleteKapp", "delete_kapp", operationDescriptionDeleteKapp, aliasDescriptionDeleteKapp, inputSchemaDeleteKapp, executeDeleteKapp);
 
   const opDeleteKappActivityCache = requireOperation(operationMap, "deleteKappActivityCache");
   const operationDescriptionDeleteKappActivityCache = "[kapp] Kapp Submission Metrics Delete. (DELETE /kapps/{kappSlug}/activity). Operation ID: deleteKappActivityCache. Custom logic: default OAS execution.";
@@ -327,8 +316,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteKappActivityCache", operationDescriptionDeleteKappActivityCache, inputSchemaDeleteKappActivityCache, executeDeleteKappActivityCache);
-  server.tool("delete_kapp_activity_cache", aliasDescriptionDeleteKappActivityCache, inputSchemaDeleteKappActivityCache, executeDeleteKappActivityCache);
+  registerOperationTool(server, "core_deleteKappActivityCache", "delete_kapp_activity_cache", operationDescriptionDeleteKappActivityCache, aliasDescriptionDeleteKappActivityCache, inputSchemaDeleteKappActivityCache, executeDeleteKappActivityCache);
 
   const opDeleteKappAttributeDefinition = requireOperation(operationMap, "deleteKappAttributeDefinition");
   const operationDescriptionDeleteKappAttributeDefinition = "[kapp] Kapp Attribute Definition Delete. (DELETE /kapps/{kappSlug}/kappAttributeDefinitions/{name}). Operation ID: deleteKappAttributeDefinition. Custom logic: default OAS execution.";
@@ -355,8 +343,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteKappAttributeDefinition", operationDescriptionDeleteKappAttributeDefinition, inputSchemaDeleteKappAttributeDefinition, executeDeleteKappAttributeDefinition);
-  server.tool("delete_kapp_attribute_definition", aliasDescriptionDeleteKappAttributeDefinition, inputSchemaDeleteKappAttributeDefinition, executeDeleteKappAttributeDefinition);
+  registerOperationTool(server, "core_deleteKappAttributeDefinition", "delete_kapp_attribute_definition", operationDescriptionDeleteKappAttributeDefinition, aliasDescriptionDeleteKappAttributeDefinition, inputSchemaDeleteKappAttributeDefinition, executeDeleteKappAttributeDefinition);
 
   const opDeleteKappIntegration = requireOperation(operationMap, "deleteKappIntegration");
   const operationDescriptionDeleteKappIntegration = "[kapp] Kapp Integration Delete. (DELETE /kapps/{kappSlug}/integrations/{name}). Operation ID: deleteKappIntegration. Custom logic: default OAS execution.";
@@ -383,8 +370,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteKappIntegration", operationDescriptionDeleteKappIntegration, inputSchemaDeleteKappIntegration, executeDeleteKappIntegration);
-  server.tool("delete_kapp_integration", aliasDescriptionDeleteKappIntegration, inputSchemaDeleteKappIntegration, executeDeleteKappIntegration);
+  registerOperationTool(server, "core_deleteKappIntegration", "delete_kapp_integration", operationDescriptionDeleteKappIntegration, aliasDescriptionDeleteKappIntegration, inputSchemaDeleteKappIntegration, executeDeleteKappIntegration);
 
   const opDeleteKappSecurityPolicyDefinition = requireOperation(operationMap, "deleteKappSecurityPolicyDefinition");
   const operationDescriptionDeleteKappSecurityPolicyDefinition = "[kapp] Kapp Security Policy Definition Delete. (DELETE /kapps/{kappSlug}/securityPolicyDefinitions/{name}). Operation ID: deleteKappSecurityPolicyDefinition. Custom logic: default OAS execution.";
@@ -411,8 +397,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteKappSecurityPolicyDefinition", operationDescriptionDeleteKappSecurityPolicyDefinition, inputSchemaDeleteKappSecurityPolicyDefinition, executeDeleteKappSecurityPolicyDefinition);
-  server.tool("delete_kapp_security_policy_definition", aliasDescriptionDeleteKappSecurityPolicyDefinition, inputSchemaDeleteKappSecurityPolicyDefinition, executeDeleteKappSecurityPolicyDefinition);
+  registerOperationTool(server, "core_deleteKappSecurityPolicyDefinition", "delete_kapp_security_policy_definition", operationDescriptionDeleteKappSecurityPolicyDefinition, aliasDescriptionDeleteKappSecurityPolicyDefinition, inputSchemaDeleteKappSecurityPolicyDefinition, executeDeleteKappSecurityPolicyDefinition);
 
   const opDeleteKappWebAPI = requireOperation(operationMap, "deleteKappWebAPI");
   const operationDescriptionDeleteKappWebAPI = "[kapp] Kapp WebAPI Delete. (DELETE /kapps/{kappSlug}/webApis/{webApiSlug}). Operation ID: deleteKappWebAPI. Custom logic: default OAS execution.";
@@ -439,8 +424,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteKappWebAPI", operationDescriptionDeleteKappWebAPI, inputSchemaDeleteKappWebAPI, executeDeleteKappWebAPI);
-  server.tool("delete_kapp_web_api", aliasDescriptionDeleteKappWebAPI, inputSchemaDeleteKappWebAPI, executeDeleteKappWebAPI);
+  registerOperationTool(server, "core_deleteKappWebAPI", "delete_kapp_web_api", operationDescriptionDeleteKappWebAPI, aliasDescriptionDeleteKappWebAPI, inputSchemaDeleteKappWebAPI, executeDeleteKappWebAPI);
 
   const opDeleteKappWebhook = requireOperation(operationMap, "deleteKappWebhook");
   const operationDescriptionDeleteKappWebhook = "[kapp] Kapp Webhook Delete. (DELETE /kapps/{kappSlug}/webhooks/{name}). Operation ID: deleteKappWebhook. Custom logic: default OAS execution.";
@@ -467,8 +451,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteKappWebhook", operationDescriptionDeleteKappWebhook, inputSchemaDeleteKappWebhook, executeDeleteKappWebhook);
-  server.tool("delete_kapp_webhook", aliasDescriptionDeleteKappWebhook, inputSchemaDeleteKappWebhook, executeDeleteKappWebhook);
+  registerOperationTool(server, "core_deleteKappWebhook", "delete_kapp_webhook", operationDescriptionDeleteKappWebhook, aliasDescriptionDeleteKappWebhook, inputSchemaDeleteKappWebhook, executeDeleteKappWebhook);
 
   const opDeleteKappWebhookJob = requireOperation(operationMap, "deleteKappWebhookJob");
   const operationDescriptionDeleteKappWebhookJob = "[kapp] Kapp Webhook Job Delete. (DELETE /kapps/{kappSlug}/webhookJobs/{id}). Operation ID: deleteKappWebhookJob. Custom logic: default OAS execution.";
@@ -495,8 +478,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteKappWebhookJob", operationDescriptionDeleteKappWebhookJob, inputSchemaDeleteKappWebhookJob, executeDeleteKappWebhookJob);
-  server.tool("delete_kapp_webhook_job", aliasDescriptionDeleteKappWebhookJob, inputSchemaDeleteKappWebhookJob, executeDeleteKappWebhookJob);
+  registerOperationTool(server, "core_deleteKappWebhookJob", "delete_kapp_webhook_job", operationDescriptionDeleteKappWebhookJob, aliasDescriptionDeleteKappWebhookJob, inputSchemaDeleteKappWebhookJob, executeDeleteKappWebhookJob);
 
   const opDeleteKappWorkflow = requireOperation(operationMap, "deleteKappWorkflow");
   const operationDescriptionDeleteKappWorkflow = "[kapp] Kapp Workflow Delete. (DELETE /kapps/{kappSlug}/workflows/{id}). Operation ID: deleteKappWorkflow. Custom logic: default OAS execution.";
@@ -522,8 +504,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteKappWorkflow", operationDescriptionDeleteKappWorkflow, inputSchemaDeleteKappWorkflow, executeDeleteKappWorkflow);
-  server.tool("delete_kapp_workflow", aliasDescriptionDeleteKappWorkflow, inputSchemaDeleteKappWorkflow, executeDeleteKappWorkflow);
+  registerOperationTool(server, "core_deleteKappWorkflow", "delete_kapp_workflow", operationDescriptionDeleteKappWorkflow, aliasDescriptionDeleteKappWorkflow, inputSchemaDeleteKappWorkflow, executeDeleteKappWorkflow);
 
   const opExportKappWebAPI = requireOperation(operationMap, "exportKappWebAPI");
   const operationDescriptionExportKappWebAPI = "[kapp] Kapp WebAPI Export. (GET /kapps/{kappSlug}/webApis/{webApiSlug}/export). Operation ID: exportKappWebAPI. Custom logic: default OAS execution.";
@@ -549,8 +530,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_exportKappWebAPI", operationDescriptionExportKappWebAPI, inputSchemaExportKappWebAPI, executeExportKappWebAPI);
-  server.tool("export_kapp_web_api", aliasDescriptionExportKappWebAPI, inputSchemaExportKappWebAPI, executeExportKappWebAPI);
+  registerOperationTool(server, "core_exportKappWebAPI", "export_kapp_web_api", operationDescriptionExportKappWebAPI, aliasDescriptionExportKappWebAPI, inputSchemaExportKappWebAPI, executeExportKappWebAPI);
 
   const opFetchKappActivityMetrics = requireOperation(operationMap, "fetchKappActivityMetrics");
   const operationDescriptionFetchKappActivityMetrics = "[kapp] Kapp Submission Metrics Retrieve. (GET /kapps/{kappSlug}/activity). Operation ID: fetchKappActivityMetrics. Custom logic: default OAS execution.";
@@ -577,8 +557,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_fetchKappActivityMetrics", operationDescriptionFetchKappActivityMetrics, inputSchemaFetchKappActivityMetrics, executeFetchKappActivityMetrics);
-  server.tool("fetch_kapp_activity_metrics", aliasDescriptionFetchKappActivityMetrics, inputSchemaFetchKappActivityMetrics, executeFetchKappActivityMetrics);
+  registerOperationTool(server, "core_fetchKappActivityMetrics", "fetch_kapp_activity_metrics", operationDescriptionFetchKappActivityMetrics, aliasDescriptionFetchKappActivityMetrics, inputSchemaFetchKappActivityMetrics, executeFetchKappActivityMetrics);
 
   const opFetchKappWebAPI = requireOperation(operationMap, "fetchKappWebAPI");
   const operationDescriptionFetchKappWebAPI = "[kapp] Kapp WebAPI Retrieve. (GET /kapps/{kappSlug}/webApis/{webApiSlug}). Operation ID: fetchKappWebAPI. Custom logic: default OAS execution.";
@@ -605,8 +584,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_fetchKappWebAPI", operationDescriptionFetchKappWebAPI, inputSchemaFetchKappWebAPI, executeFetchKappWebAPI);
-  server.tool("fetch_kapp_web_api", aliasDescriptionFetchKappWebAPI, inputSchemaFetchKappWebAPI, executeFetchKappWebAPI);
+  registerOperationTool(server, "core_fetchKappWebAPI", "fetch_kapp_web_api", operationDescriptionFetchKappWebAPI, aliasDescriptionFetchKappWebAPI, inputSchemaFetchKappWebAPI, executeFetchKappWebAPI);
 
   const opGetKappIntegration = requireOperation(operationMap, "getKappIntegration");
   const operationDescriptionGetKappIntegration = "[kapp] Kapp Integration Retrieve. (GET /kapps/{kappSlug}/integrations/{name}). Operation ID: getKappIntegration. Custom logic: default OAS execution.";
@@ -633,8 +611,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_getKappIntegration", operationDescriptionGetKappIntegration, inputSchemaGetKappIntegration, executeGetKappIntegration);
-  server.tool("get_kapp_integration", aliasDescriptionGetKappIntegration, inputSchemaGetKappIntegration, executeGetKappIntegration);
+  registerOperationTool(server, "core_getKappIntegration", "get_kapp_integration", operationDescriptionGetKappIntegration, aliasDescriptionGetKappIntegration, inputSchemaGetKappIntegration, executeGetKappIntegration);
 
   const opImportKappWebAPI = requireOperation(operationMap, "importKappWebAPI");
   const operationDescriptionImportKappWebAPI = "[kapp] Kapp WebAPI Import. (POST /kapps/{kappSlug}/webApiImport). Operation ID: importKappWebAPI. Custom logic: default OAS execution.";
@@ -660,8 +637,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_importKappWebAPI", operationDescriptionImportKappWebAPI, inputSchemaImportKappWebAPI, executeImportKappWebAPI);
-  server.tool("import_kapp_web_api", aliasDescriptionImportKappWebAPI, inputSchemaImportKappWebAPI, executeImportKappWebAPI);
+  registerOperationTool(server, "core_importKappWebAPI", "import_kapp_web_api", operationDescriptionImportKappWebAPI, aliasDescriptionImportKappWebAPI, inputSchemaImportKappWebAPI, executeImportKappWebAPI);
 
   const opListCategoryAttributeDefinitions = requireOperation(operationMap, "listCategoryAttributeDefinitions");
   const operationDescriptionListCategoryAttributeDefinitions = "[kapp] Kapp Category Attribute Definition List. (GET /kapps/{kappSlug}/categoryAttributeDefinitions). Operation ID: listCategoryAttributeDefinitions. Custom logic: default OAS execution.";
@@ -687,8 +663,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listCategoryAttributeDefinitions", operationDescriptionListCategoryAttributeDefinitions, inputSchemaListCategoryAttributeDefinitions, executeListCategoryAttributeDefinitions);
-  server.tool("list_category_attribute_definitions", aliasDescriptionListCategoryAttributeDefinitions, inputSchemaListCategoryAttributeDefinitions, executeListCategoryAttributeDefinitions);
+  registerOperationTool(server, "core_listCategoryAttributeDefinitions", "list_category_attribute_definitions", operationDescriptionListCategoryAttributeDefinitions, aliasDescriptionListCategoryAttributeDefinitions, inputSchemaListCategoryAttributeDefinitions, executeListCategoryAttributeDefinitions);
 
   const opListKappAttributeDefinitions = requireOperation(operationMap, "listKappAttributeDefinitions");
   const operationDescriptionListKappAttributeDefinitions = "[kapp] Kapp Attribute Definition List. (GET /kapps/{kappSlug}/kappAttributeDefinitions). Operation ID: listKappAttributeDefinitions. Custom logic: default OAS execution.";
@@ -714,8 +689,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listKappAttributeDefinitions", operationDescriptionListKappAttributeDefinitions, inputSchemaListKappAttributeDefinitions, executeListKappAttributeDefinitions);
-  server.tool("list_kapp_attribute_definitions", aliasDescriptionListKappAttributeDefinitions, inputSchemaListKappAttributeDefinitions, executeListKappAttributeDefinitions);
+  registerOperationTool(server, "core_listKappAttributeDefinitions", "list_kapp_attribute_definitions", operationDescriptionListKappAttributeDefinitions, aliasDescriptionListKappAttributeDefinitions, inputSchemaListKappAttributeDefinitions, executeListKappAttributeDefinitions);
 
   const opListKappIntegrations = requireOperation(operationMap, "listKappIntegrations");
   const operationDescriptionListKappIntegrations = "[kapp] Kapp Integrations List. (GET /kapps/{kappSlug}/integrations). Operation ID: listKappIntegrations. Custom logic: default OAS execution.";
@@ -741,8 +715,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listKappIntegrations", operationDescriptionListKappIntegrations, inputSchemaListKappIntegrations, executeListKappIntegrations);
-  server.tool("list_kapp_integrations", aliasDescriptionListKappIntegrations, inputSchemaListKappIntegrations, executeListKappIntegrations);
+  registerOperationTool(server, "core_listKappIntegrations", "list_kapp_integrations", operationDescriptionListKappIntegrations, aliasDescriptionListKappIntegrations, inputSchemaListKappIntegrations, executeListKappIntegrations);
 
   const opListKapps = requireOperation(operationMap, "listKapps");
   const operationDescriptionListKapps = "[kapp] Kapp Search. (GET /kapps). Operation ID: listKapps. Custom logic: default OAS execution.";
@@ -773,8 +746,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listKapps", operationDescriptionListKapps, inputSchemaListKapps, executeListKapps);
-  server.tool("list_kapps", aliasDescriptionListKapps, inputSchemaListKapps, executeListKapps);
+  registerOperationTool(server, "core_listKapps", "list_kapps", operationDescriptionListKapps, aliasDescriptionListKapps, inputSchemaListKapps, executeListKapps);
 
   const opListKappSecurityPolicyDefinitions = requireOperation(operationMap, "listKappSecurityPolicyDefinitions");
   const operationDescriptionListKappSecurityPolicyDefinitions = "[kapp] Kapp Security Policy Definition List. (GET /kapps/{kappSlug}/securityPolicyDefinitions). Operation ID: listKappSecurityPolicyDefinitions. Custom logic: default OAS execution.";
@@ -800,8 +772,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listKappSecurityPolicyDefinitions", operationDescriptionListKappSecurityPolicyDefinitions, inputSchemaListKappSecurityPolicyDefinitions, executeListKappSecurityPolicyDefinitions);
-  server.tool("list_kapp_security_policy_definitions", aliasDescriptionListKappSecurityPolicyDefinitions, inputSchemaListKappSecurityPolicyDefinitions, executeListKappSecurityPolicyDefinitions);
+  registerOperationTool(server, "core_listKappSecurityPolicyDefinitions", "list_kapp_security_policy_definitions", operationDescriptionListKappSecurityPolicyDefinitions, aliasDescriptionListKappSecurityPolicyDefinitions, inputSchemaListKappSecurityPolicyDefinitions, executeListKappSecurityPolicyDefinitions);
 
   const opListKappWebAPIs = requireOperation(operationMap, "listKappWebAPIs");
   const operationDescriptionListKappWebAPIs = "[kapp] Kapp WebAPI List. (GET /kapps/{kappSlug}/webApis). Operation ID: listKappWebAPIs. Custom logic: default OAS execution.";
@@ -827,8 +798,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listKappWebAPIs", operationDescriptionListKappWebAPIs, inputSchemaListKappWebAPIs, executeListKappWebAPIs);
-  server.tool("list_kapp_web_apis", aliasDescriptionListKappWebAPIs, inputSchemaListKappWebAPIs, executeListKappWebAPIs);
+  registerOperationTool(server, "core_listKappWebAPIs", "list_kapp_web_apis", operationDescriptionListKappWebAPIs, aliasDescriptionListKappWebAPIs, inputSchemaListKappWebAPIs, executeListKappWebAPIs);
 
   const opListKappWebhookJobs = requireOperation(operationMap, "listKappWebhookJobs");
   const operationDescriptionListKappWebhookJobs = "[kapp] Kapp Webhook Job Search. (GET /kapps/{kappSlug}/webhookJobs). Operation ID: listKappWebhookJobs. Custom logic: default OAS execution.";
@@ -863,8 +833,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listKappWebhookJobs", operationDescriptionListKappWebhookJobs, inputSchemaListKappWebhookJobs, executeListKappWebhookJobs);
-  server.tool("list_kapp_webhook_jobs", aliasDescriptionListKappWebhookJobs, inputSchemaListKappWebhookJobs, executeListKappWebhookJobs);
+  registerOperationTool(server, "core_listKappWebhookJobs", "list_kapp_webhook_jobs", operationDescriptionListKappWebhookJobs, aliasDescriptionListKappWebhookJobs, inputSchemaListKappWebhookJobs, executeListKappWebhookJobs);
 
   const opListKappWebhooks = requireOperation(operationMap, "listKappWebhooks");
   const operationDescriptionListKappWebhooks = "[kapp] Kapp Webhook List. (GET /kapps/{kappSlug}/webhooks). Operation ID: listKappWebhooks. Custom logic: default OAS execution.";
@@ -890,8 +859,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listKappWebhooks", operationDescriptionListKappWebhooks, inputSchemaListKappWebhooks, executeListKappWebhooks);
-  server.tool("list_kapp_webhooks", aliasDescriptionListKappWebhooks, inputSchemaListKappWebhooks, executeListKappWebhooks);
+  registerOperationTool(server, "core_listKappWebhooks", "list_kapp_webhooks", operationDescriptionListKappWebhooks, aliasDescriptionListKappWebhooks, inputSchemaListKappWebhooks, executeListKappWebhooks);
 
   const opRepairKappWorkflow = requireOperation(operationMap, "repairKappWorkflow");
   const operationDescriptionRepairKappWorkflow = "[kapp] Kapp Workflow Repair. (POST /kapps/{kappSlug}/workflows/repair). Operation ID: repairKappWorkflow. Custom logic: default OAS execution.";
@@ -916,8 +884,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_repairKappWorkflow", operationDescriptionRepairKappWorkflow, inputSchemaRepairKappWorkflow, executeRepairKappWorkflow);
-  server.tool("repair_kapp_workflow", aliasDescriptionRepairKappWorkflow, inputSchemaRepairKappWorkflow, executeRepairKappWorkflow);
+  registerOperationTool(server, "core_repairKappWorkflow", "repair_kapp_workflow", operationDescriptionRepairKappWorkflow, aliasDescriptionRepairKappWorkflow, inputSchemaRepairKappWorkflow, executeRepairKappWorkflow);
 
   const opRetrieveCategoryAttributeDefinition = requireOperation(operationMap, "retrieveCategoryAttributeDefinition");
   const operationDescriptionRetrieveCategoryAttributeDefinition = "[kapp] Kapp Category Attribute Definition Retrieve. (GET /kapps/{kappSlug}/categoryAttributeDefinitions/{name}). Operation ID: retrieveCategoryAttributeDefinition. Custom logic: default OAS execution.";
@@ -944,8 +911,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveCategoryAttributeDefinition", operationDescriptionRetrieveCategoryAttributeDefinition, inputSchemaRetrieveCategoryAttributeDefinition, executeRetrieveCategoryAttributeDefinition);
-  server.tool("retrieve_category_attribute_definition", aliasDescriptionRetrieveCategoryAttributeDefinition, inputSchemaRetrieveCategoryAttributeDefinition, executeRetrieveCategoryAttributeDefinition);
+  registerOperationTool(server, "core_retrieveCategoryAttributeDefinition", "retrieve_category_attribute_definition", operationDescriptionRetrieveCategoryAttributeDefinition, aliasDescriptionRetrieveCategoryAttributeDefinition, inputSchemaRetrieveCategoryAttributeDefinition, executeRetrieveCategoryAttributeDefinition);
 
   const opRetrieveKapp = requireOperation(operationMap, "retrieveKapp");
   const operationDescriptionRetrieveKapp = "[kapp] Kapp Retrieve. (GET /kapps/{kappSlug}). Operation ID: retrieveKapp. Custom logic: default OAS execution.";
@@ -972,8 +938,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveKapp", operationDescriptionRetrieveKapp, inputSchemaRetrieveKapp, executeRetrieveKapp);
-  server.tool("retrieve_kapp", aliasDescriptionRetrieveKapp, inputSchemaRetrieveKapp, executeRetrieveKapp);
+  registerOperationTool(server, "core_retrieveKapp", "retrieve_kapp", operationDescriptionRetrieveKapp, aliasDescriptionRetrieveKapp, inputSchemaRetrieveKapp, executeRetrieveKapp);
 
   const opRetrieveKappAttributeDefinition = requireOperation(operationMap, "retrieveKappAttributeDefinition");
   const operationDescriptionRetrieveKappAttributeDefinition = "[kapp] Kapp Attribute Definition Retrieve. (GET /kapps/{kappSlug}/kappAttributeDefinitions/{name}). Operation ID: retrieveKappAttributeDefinition. Custom logic: default OAS execution.";
@@ -1000,8 +965,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveKappAttributeDefinition", operationDescriptionRetrieveKappAttributeDefinition, inputSchemaRetrieveKappAttributeDefinition, executeRetrieveKappAttributeDefinition);
-  server.tool("retrieve_kapp_attribute_definition", aliasDescriptionRetrieveKappAttributeDefinition, inputSchemaRetrieveKappAttributeDefinition, executeRetrieveKappAttributeDefinition);
+  registerOperationTool(server, "core_retrieveKappAttributeDefinition", "retrieve_kapp_attribute_definition", operationDescriptionRetrieveKappAttributeDefinition, aliasDescriptionRetrieveKappAttributeDefinition, inputSchemaRetrieveKappAttributeDefinition, executeRetrieveKappAttributeDefinition);
 
   const opRetrieveKappSecurityPolicyDefinition = requireOperation(operationMap, "retrieveKappSecurityPolicyDefinition");
   const operationDescriptionRetrieveKappSecurityPolicyDefinition = "[kapp] Kapp Security Policy Definition Retrieve. (GET /kapps/{kappSlug}/securityPolicyDefinitions/{name}). Operation ID: retrieveKappSecurityPolicyDefinition. Custom logic: default OAS execution.";
@@ -1028,8 +992,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveKappSecurityPolicyDefinition", operationDescriptionRetrieveKappSecurityPolicyDefinition, inputSchemaRetrieveKappSecurityPolicyDefinition, executeRetrieveKappSecurityPolicyDefinition);
-  server.tool("retrieve_kapp_security_policy_definition", aliasDescriptionRetrieveKappSecurityPolicyDefinition, inputSchemaRetrieveKappSecurityPolicyDefinition, executeRetrieveKappSecurityPolicyDefinition);
+  registerOperationTool(server, "core_retrieveKappSecurityPolicyDefinition", "retrieve_kapp_security_policy_definition", operationDescriptionRetrieveKappSecurityPolicyDefinition, aliasDescriptionRetrieveKappSecurityPolicyDefinition, inputSchemaRetrieveKappSecurityPolicyDefinition, executeRetrieveKappSecurityPolicyDefinition);
 
   const opRetrieveKappWebhook = requireOperation(operationMap, "retrieveKappWebhook");
   const operationDescriptionRetrieveKappWebhook = "[kapp] Kapp Webhook Retrieve. (GET /kapps/{kappSlug}/webhooks/{name}). Operation ID: retrieveKappWebhook. Custom logic: default OAS execution.";
@@ -1056,8 +1019,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveKappWebhook", operationDescriptionRetrieveKappWebhook, inputSchemaRetrieveKappWebhook, executeRetrieveKappWebhook);
-  server.tool("retrieve_kapp_webhook", aliasDescriptionRetrieveKappWebhook, inputSchemaRetrieveKappWebhook, executeRetrieveKappWebhook);
+  registerOperationTool(server, "core_retrieveKappWebhook", "retrieve_kapp_webhook", operationDescriptionRetrieveKappWebhook, aliasDescriptionRetrieveKappWebhook, inputSchemaRetrieveKappWebhook, executeRetrieveKappWebhook);
 
   const opRetrieveKappWebhookJob = requireOperation(operationMap, "retrieveKappWebhookJob");
   const operationDescriptionRetrieveKappWebhookJob = "[kapp] Kapp Webhook Job Retrieve. (GET /kapps/{kappSlug}/webhookJobs/{id}). Operation ID: retrieveKappWebhookJob. Custom logic: default OAS execution.";
@@ -1084,8 +1046,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveKappWebhookJob", operationDescriptionRetrieveKappWebhookJob, inputSchemaRetrieveKappWebhookJob, executeRetrieveKappWebhookJob);
-  server.tool("retrieve_kapp_webhook_job", aliasDescriptionRetrieveKappWebhookJob, inputSchemaRetrieveKappWebhookJob, executeRetrieveKappWebhookJob);
+  registerOperationTool(server, "core_retrieveKappWebhookJob", "retrieve_kapp_webhook_job", operationDescriptionRetrieveKappWebhookJob, aliasDescriptionRetrieveKappWebhookJob, inputSchemaRetrieveKappWebhookJob, executeRetrieveKappWebhookJob);
 
   const opRetrieveKappWorkflow = requireOperation(operationMap, "retrieveKappWorkflow");
   const operationDescriptionRetrieveKappWorkflow = "[kapp] Kapp Workflow Retrieve. (GET /kapps/{kappSlug}/workflows/{id}). Operation ID: retrieveKappWorkflow. Custom logic: default OAS execution.";
@@ -1111,8 +1072,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveKappWorkflow", operationDescriptionRetrieveKappWorkflow, inputSchemaRetrieveKappWorkflow, executeRetrieveKappWorkflow);
-  server.tool("retrieve_kapp_workflow", aliasDescriptionRetrieveKappWorkflow, inputSchemaRetrieveKappWorkflow, executeRetrieveKappWorkflow);
+  registerOperationTool(server, "core_retrieveKappWorkflow", "retrieve_kapp_workflow", operationDescriptionRetrieveKappWorkflow, aliasDescriptionRetrieveKappWorkflow, inputSchemaRetrieveKappWorkflow, executeRetrieveKappWorkflow);
 
   const opRetrieveKappWorkflows = requireOperation(operationMap, "retrieveKappWorkflows");
   const operationDescriptionRetrieveKappWorkflows = "[kapp] Kapp Workflows Retrieve. (GET /kapps/{kappSlug}/workflows). Operation ID: retrieveKappWorkflows. Custom logic: default OAS execution.";
@@ -1137,8 +1097,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveKappWorkflows", operationDescriptionRetrieveKappWorkflows, inputSchemaRetrieveKappWorkflows, executeRetrieveKappWorkflows);
-  server.tool("retrieve_kapp_workflows", aliasDescriptionRetrieveKappWorkflows, inputSchemaRetrieveKappWorkflows, executeRetrieveKappWorkflows);
+  registerOperationTool(server, "core_retrieveKappWorkflows", "retrieve_kapp_workflows", operationDescriptionRetrieveKappWorkflows, aliasDescriptionRetrieveKappWorkflows, inputSchemaRetrieveKappWorkflows, executeRetrieveKappWorkflows);
 
   const opUpdateCategoryAttributeDefinition = requireOperation(operationMap, "updateCategoryAttributeDefinition");
   const operationDescriptionUpdateCategoryAttributeDefinition = "[kapp] Kapp Category Attribute Definition Update. (PUT /kapps/{kappSlug}/categoryAttributeDefinitions/{name}). Operation ID: updateCategoryAttributeDefinition. Custom logic: default OAS execution.";
@@ -1165,8 +1124,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateCategoryAttributeDefinition", operationDescriptionUpdateCategoryAttributeDefinition, inputSchemaUpdateCategoryAttributeDefinition, executeUpdateCategoryAttributeDefinition);
-  server.tool("update_category_attribute_definition", aliasDescriptionUpdateCategoryAttributeDefinition, inputSchemaUpdateCategoryAttributeDefinition, executeUpdateCategoryAttributeDefinition);
+  registerOperationTool(server, "core_updateCategoryAttributeDefinition", "update_category_attribute_definition", operationDescriptionUpdateCategoryAttributeDefinition, aliasDescriptionUpdateCategoryAttributeDefinition, inputSchemaUpdateCategoryAttributeDefinition, executeUpdateCategoryAttributeDefinition);
 
   const opUpdateKapp = requireOperation(operationMap, "updateKapp");
   const operationDescriptionUpdateKapp = "[kapp] Kapp Update. (PUT /kapps/{kappSlug}). Operation ID: updateKapp. Custom logic: default OAS execution.";
@@ -1192,8 +1150,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateKapp", operationDescriptionUpdateKapp, inputSchemaUpdateKapp, executeUpdateKapp);
-  server.tool("update_kapp", aliasDescriptionUpdateKapp, inputSchemaUpdateKapp, executeUpdateKapp);
+  registerOperationTool(server, "core_updateKapp", "update_kapp", operationDescriptionUpdateKapp, aliasDescriptionUpdateKapp, inputSchemaUpdateKapp, executeUpdateKapp);
 
   const opUpdateKappAttributeDefinition = requireOperation(operationMap, "updateKappAttributeDefinition");
   const operationDescriptionUpdateKappAttributeDefinition = "[kapp] Kapp Attribute Definition Update. (PUT /kapps/{kappSlug}/kappAttributeDefinitions/{name}). Operation ID: updateKappAttributeDefinition. Custom logic: default OAS execution.";
@@ -1220,8 +1177,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateKappAttributeDefinition", operationDescriptionUpdateKappAttributeDefinition, inputSchemaUpdateKappAttributeDefinition, executeUpdateKappAttributeDefinition);
-  server.tool("update_kapp_attribute_definition", aliasDescriptionUpdateKappAttributeDefinition, inputSchemaUpdateKappAttributeDefinition, executeUpdateKappAttributeDefinition);
+  registerOperationTool(server, "core_updateKappAttributeDefinition", "update_kapp_attribute_definition", operationDescriptionUpdateKappAttributeDefinition, aliasDescriptionUpdateKappAttributeDefinition, inputSchemaUpdateKappAttributeDefinition, executeUpdateKappAttributeDefinition);
 
   const opUpdateKappIntegration = requireOperation(operationMap, "updateKappIntegration");
   const operationDescriptionUpdateKappIntegration = "[kapp] Kapp Integration Update. (PUT /kapps/{kappSlug}/integrations/{name}). Operation ID: updateKappIntegration. Custom logic: default OAS execution.";
@@ -1248,8 +1204,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateKappIntegration", operationDescriptionUpdateKappIntegration, inputSchemaUpdateKappIntegration, executeUpdateKappIntegration);
-  server.tool("update_kapp_integration", aliasDescriptionUpdateKappIntegration, inputSchemaUpdateKappIntegration, executeUpdateKappIntegration);
+  registerOperationTool(server, "core_updateKappIntegration", "update_kapp_integration", operationDescriptionUpdateKappIntegration, aliasDescriptionUpdateKappIntegration, inputSchemaUpdateKappIntegration, executeUpdateKappIntegration);
 
   const opUpdateKappSecurityPolicyDefinition = requireOperation(operationMap, "updateKappSecurityPolicyDefinition");
   const operationDescriptionUpdateKappSecurityPolicyDefinition = "[kapp] Kapp Security Policy Definition Update. (PUT /kapps/{kappSlug}/securityPolicyDefinitions/{name}). Operation ID: updateKappSecurityPolicyDefinition. Custom logic: default OAS execution.";
@@ -1276,8 +1231,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateKappSecurityPolicyDefinition", operationDescriptionUpdateKappSecurityPolicyDefinition, inputSchemaUpdateKappSecurityPolicyDefinition, executeUpdateKappSecurityPolicyDefinition);
-  server.tool("update_kapp_security_policy_definition", aliasDescriptionUpdateKappSecurityPolicyDefinition, inputSchemaUpdateKappSecurityPolicyDefinition, executeUpdateKappSecurityPolicyDefinition);
+  registerOperationTool(server, "core_updateKappSecurityPolicyDefinition", "update_kapp_security_policy_definition", operationDescriptionUpdateKappSecurityPolicyDefinition, aliasDescriptionUpdateKappSecurityPolicyDefinition, inputSchemaUpdateKappSecurityPolicyDefinition, executeUpdateKappSecurityPolicyDefinition);
 
   const opUpdateKappWebAPI = requireOperation(operationMap, "updateKappWebAPI");
   const operationDescriptionUpdateKappWebAPI = "[kapp] Kapp WebAPI Update. (PUT /kapps/{kappSlug}/webApis/{webApiSlug}). Operation ID: updateKappWebAPI. Custom logic: default OAS execution.";
@@ -1304,8 +1258,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateKappWebAPI", operationDescriptionUpdateKappWebAPI, inputSchemaUpdateKappWebAPI, executeUpdateKappWebAPI);
-  server.tool("update_kapp_web_api", aliasDescriptionUpdateKappWebAPI, inputSchemaUpdateKappWebAPI, executeUpdateKappWebAPI);
+  registerOperationTool(server, "core_updateKappWebAPI", "update_kapp_web_api", operationDescriptionUpdateKappWebAPI, aliasDescriptionUpdateKappWebAPI, inputSchemaUpdateKappWebAPI, executeUpdateKappWebAPI);
 
   const opUpdateKappWebhook = requireOperation(operationMap, "updateKappWebhook");
   const operationDescriptionUpdateKappWebhook = "[kapp] Kapp Webhook Update. (PUT /kapps/{kappSlug}/webhooks/{name}). Operation ID: updateKappWebhook. Custom logic: default OAS execution.";
@@ -1332,8 +1285,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateKappWebhook", operationDescriptionUpdateKappWebhook, inputSchemaUpdateKappWebhook, executeUpdateKappWebhook);
-  server.tool("update_kapp_webhook", aliasDescriptionUpdateKappWebhook, inputSchemaUpdateKappWebhook, executeUpdateKappWebhook);
+  registerOperationTool(server, "core_updateKappWebhook", "update_kapp_webhook", operationDescriptionUpdateKappWebhook, aliasDescriptionUpdateKappWebhook, inputSchemaUpdateKappWebhook, executeUpdateKappWebhook);
 
   const opUpdateKappWebhookJob = requireOperation(operationMap, "updateKappWebhookJob");
   const operationDescriptionUpdateKappWebhookJob = "[kapp] Kapp Webhook Job Update. (PUT /kapps/{kappSlug}/webhookJobs/{id}). Operation ID: updateKappWebhookJob. Custom logic: default OAS execution.";
@@ -1360,8 +1312,7 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateKappWebhookJob", operationDescriptionUpdateKappWebhookJob, inputSchemaUpdateKappWebhookJob, executeUpdateKappWebhookJob);
-  server.tool("update_kapp_webhook_job", aliasDescriptionUpdateKappWebhookJob, inputSchemaUpdateKappWebhookJob, executeUpdateKappWebhookJob);
+  registerOperationTool(server, "core_updateKappWebhookJob", "update_kapp_webhook_job", operationDescriptionUpdateKappWebhookJob, aliasDescriptionUpdateKappWebhookJob, inputSchemaUpdateKappWebhookJob, executeUpdateKappWebhookJob);
 
   const opUpdateKappWorkflow = requireOperation(operationMap, "updateKappWorkflow");
   const operationDescriptionUpdateKappWorkflow = "[kapp] Kapp Workflow Update. (PUT /kapps/{kappSlug}/workflows/{id}). Operation ID: updateKappWorkflow. Custom logic: default OAS execution.";
@@ -1387,7 +1338,6 @@ export function registerKappTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateKappWorkflow", operationDescriptionUpdateKappWorkflow, inputSchemaUpdateKappWorkflow, executeUpdateKappWorkflow);
-  server.tool("update_kapp_workflow", aliasDescriptionUpdateKappWorkflow, inputSchemaUpdateKappWorkflow, executeUpdateKappWorkflow);
+  registerOperationTool(server, "core_updateKappWorkflow", "update_kapp_workflow", operationDescriptionUpdateKappWorkflow, aliasDescriptionUpdateKappWorkflow, inputSchemaUpdateKappWorkflow, executeUpdateKappWorkflow);
 
 }

@@ -2,7 +2,7 @@
 // Regenerate with: npm run ops:generate-tools
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { ContextToolRuntime, requireOperation } from "./shared.js";
+import { ContextToolRuntime, registerOperationTool, requireOperation } from "./shared.js";
 
 export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime): void {
   const { operationMap, invokeDefaultOperation } = runtime;
@@ -30,8 +30,7 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createMembership", operationDescriptionCreateMembership, inputSchemaCreateMembership, executeCreateMembership);
-  server.tool("create_membership", aliasDescriptionCreateMembership, inputSchemaCreateMembership, executeCreateMembership);
+  registerOperationTool(server, "core_createMembership", "create_membership", operationDescriptionCreateMembership, aliasDescriptionCreateMembership, inputSchemaCreateMembership, executeCreateMembership);
 
   const opCreateTeam = requireOperation(operationMap, "createTeam");
   const operationDescriptionCreateTeam = "[team] Team Create. (POST /teams). Operation ID: createTeam. Custom logic: default OAS execution.";
@@ -57,8 +56,7 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createTeam", operationDescriptionCreateTeam, inputSchemaCreateTeam, executeCreateTeam);
-  server.tool("create_team", aliasDescriptionCreateTeam, inputSchemaCreateTeam, executeCreateTeam);
+  registerOperationTool(server, "core_createTeam", "create_team", operationDescriptionCreateTeam, aliasDescriptionCreateTeam, inputSchemaCreateTeam, executeCreateTeam);
 
   const opCreateTeamAttributeDefinition = requireOperation(operationMap, "createTeamAttributeDefinition");
   const operationDescriptionCreateTeamAttributeDefinition = "[team] Team Attribute Definition Create. (POST /teamAttributeDefinitions). Operation ID: createTeamAttributeDefinition. Custom logic: default OAS execution.";
@@ -83,8 +81,7 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createTeamAttributeDefinition", operationDescriptionCreateTeamAttributeDefinition, inputSchemaCreateTeamAttributeDefinition, executeCreateTeamAttributeDefinition);
-  server.tool("create_team_attribute_definition", aliasDescriptionCreateTeamAttributeDefinition, inputSchemaCreateTeamAttributeDefinition, executeCreateTeamAttributeDefinition);
+  registerOperationTool(server, "core_createTeamAttributeDefinition", "create_team_attribute_definition", operationDescriptionCreateTeamAttributeDefinition, aliasDescriptionCreateTeamAttributeDefinition, inputSchemaCreateTeamAttributeDefinition, executeCreateTeamAttributeDefinition);
 
   const opDeleteMembership = requireOperation(operationMap, "deleteMembership");
   const operationDescriptionDeleteMembership = "[team] Team Membership Delete. (DELETE /memberships/{slug}). Operation ID: deleteMembership. Custom logic: default OAS execution.";
@@ -110,8 +107,7 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteMembership", operationDescriptionDeleteMembership, inputSchemaDeleteMembership, executeDeleteMembership);
-  server.tool("delete_membership", aliasDescriptionDeleteMembership, inputSchemaDeleteMembership, executeDeleteMembership);
+  registerOperationTool(server, "core_deleteMembership", "delete_membership", operationDescriptionDeleteMembership, aliasDescriptionDeleteMembership, inputSchemaDeleteMembership, executeDeleteMembership);
 
   const opDeleteTeam = requireOperation(operationMap, "deleteTeam");
   const operationDescriptionDeleteTeam = "[team] Team Delete. (DELETE /teams/{slug}). Operation ID: deleteTeam. Custom logic: default OAS execution.";
@@ -137,8 +133,7 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteTeam", operationDescriptionDeleteTeam, inputSchemaDeleteTeam, executeDeleteTeam);
-  server.tool("delete_team", aliasDescriptionDeleteTeam, inputSchemaDeleteTeam, executeDeleteTeam);
+  registerOperationTool(server, "core_deleteTeam", "delete_team", operationDescriptionDeleteTeam, aliasDescriptionDeleteTeam, inputSchemaDeleteTeam, executeDeleteTeam);
 
   const opDeleteTeamAttributeDefinition = requireOperation(operationMap, "deleteTeamAttributeDefinition");
   const operationDescriptionDeleteTeamAttributeDefinition = "[team] Team Attribute Definition Delete. (DELETE /teamAttributeDefinitions/{name}). Operation ID: deleteTeamAttributeDefinition. Custom logic: default OAS execution.";
@@ -164,8 +159,7 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteTeamAttributeDefinition", operationDescriptionDeleteTeamAttributeDefinition, inputSchemaDeleteTeamAttributeDefinition, executeDeleteTeamAttributeDefinition);
-  server.tool("delete_team_attribute_definition", aliasDescriptionDeleteTeamAttributeDefinition, inputSchemaDeleteTeamAttributeDefinition, executeDeleteTeamAttributeDefinition);
+  registerOperationTool(server, "core_deleteTeamAttributeDefinition", "delete_team_attribute_definition", operationDescriptionDeleteTeamAttributeDefinition, aliasDescriptionDeleteTeamAttributeDefinition, inputSchemaDeleteTeamAttributeDefinition, executeDeleteTeamAttributeDefinition);
 
   const opListTeamAttributeDefinitions = requireOperation(operationMap, "listTeamAttributeDefinitions");
   const operationDescriptionListTeamAttributeDefinitions = "[team] Team Attribute Definition List. (GET /teamAttributeDefinitions). Operation ID: listTeamAttributeDefinitions. Custom logic: default OAS execution.";
@@ -190,8 +184,7 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listTeamAttributeDefinitions", operationDescriptionListTeamAttributeDefinitions, inputSchemaListTeamAttributeDefinitions, executeListTeamAttributeDefinitions);
-  server.tool("list_team_attribute_definitions", aliasDescriptionListTeamAttributeDefinitions, inputSchemaListTeamAttributeDefinitions, executeListTeamAttributeDefinitions);
+  registerOperationTool(server, "core_listTeamAttributeDefinitions", "list_team_attribute_definitions", operationDescriptionListTeamAttributeDefinitions, aliasDescriptionListTeamAttributeDefinitions, inputSchemaListTeamAttributeDefinitions, executeListTeamAttributeDefinitions);
 
   const opListTeams = requireOperation(operationMap, "listTeams");
   const operationDescriptionListTeams = "[team] Team List. (GET /teams). Operation ID: listTeams. Custom logic: default OAS execution.";
@@ -223,8 +216,7 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listTeams", operationDescriptionListTeams, inputSchemaListTeams, executeListTeams);
-  server.tool("list_teams", aliasDescriptionListTeams, inputSchemaListTeams, executeListTeams);
+  registerOperationTool(server, "core_listTeams", "list_teams", operationDescriptionListTeams, aliasDescriptionListTeams, inputSchemaListTeams, executeListTeams);
 
   const opRetrieveTeam = requireOperation(operationMap, "retrieveTeam");
   const operationDescriptionRetrieveTeam = "[team] Team Retrieve. (GET /teams/{slug}). Operation ID: retrieveTeam. Custom logic: default OAS execution.";
@@ -251,8 +243,7 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveTeam", operationDescriptionRetrieveTeam, inputSchemaRetrieveTeam, executeRetrieveTeam);
-  server.tool("retrieve_team", aliasDescriptionRetrieveTeam, inputSchemaRetrieveTeam, executeRetrieveTeam);
+  registerOperationTool(server, "core_retrieveTeam", "retrieve_team", operationDescriptionRetrieveTeam, aliasDescriptionRetrieveTeam, inputSchemaRetrieveTeam, executeRetrieveTeam);
 
   const opRetrieveTeamAttributeDefinition = requireOperation(operationMap, "retrieveTeamAttributeDefinition");
   const operationDescriptionRetrieveTeamAttributeDefinition = "[team] Team Attribute Definition Retrieve. (GET /teamAttributeDefinitions/{name}). Operation ID: retrieveTeamAttributeDefinition. Custom logic: default OAS execution.";
@@ -278,8 +269,7 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveTeamAttributeDefinition", operationDescriptionRetrieveTeamAttributeDefinition, inputSchemaRetrieveTeamAttributeDefinition, executeRetrieveTeamAttributeDefinition);
-  server.tool("retrieve_team_attribute_definition", aliasDescriptionRetrieveTeamAttributeDefinition, inputSchemaRetrieveTeamAttributeDefinition, executeRetrieveTeamAttributeDefinition);
+  registerOperationTool(server, "core_retrieveTeamAttributeDefinition", "retrieve_team_attribute_definition", operationDescriptionRetrieveTeamAttributeDefinition, aliasDescriptionRetrieveTeamAttributeDefinition, inputSchemaRetrieveTeamAttributeDefinition, executeRetrieveTeamAttributeDefinition);
 
   const opUpdateTeam = requireOperation(operationMap, "updateTeam");
   const operationDescriptionUpdateTeam = "[team] Team Update. (PUT /teams/{slug}). Operation ID: updateTeam. Custom logic: default OAS execution.";
@@ -305,8 +295,7 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateTeam", operationDescriptionUpdateTeam, inputSchemaUpdateTeam, executeUpdateTeam);
-  server.tool("update_team", aliasDescriptionUpdateTeam, inputSchemaUpdateTeam, executeUpdateTeam);
+  registerOperationTool(server, "core_updateTeam", "update_team", operationDescriptionUpdateTeam, aliasDescriptionUpdateTeam, inputSchemaUpdateTeam, executeUpdateTeam);
 
   const opUpdateTeamAttributeDefinition = requireOperation(operationMap, "updateTeamAttributeDefinition");
   const operationDescriptionUpdateTeamAttributeDefinition = "[team] Team Attribute Definition Update. (PUT /teamAttributeDefinitions/{name}). Operation ID: updateTeamAttributeDefinition. Custom logic: default OAS execution.";
@@ -332,7 +321,6 @@ export function registerTeamTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateTeamAttributeDefinition", operationDescriptionUpdateTeamAttributeDefinition, inputSchemaUpdateTeamAttributeDefinition, executeUpdateTeamAttributeDefinition);
-  server.tool("update_team_attribute_definition", aliasDescriptionUpdateTeamAttributeDefinition, inputSchemaUpdateTeamAttributeDefinition, executeUpdateTeamAttributeDefinition);
+  registerOperationTool(server, "core_updateTeamAttributeDefinition", "update_team_attribute_definition", operationDescriptionUpdateTeamAttributeDefinition, aliasDescriptionUpdateTeamAttributeDefinition, inputSchemaUpdateTeamAttributeDefinition, executeUpdateTeamAttributeDefinition);
 
 }

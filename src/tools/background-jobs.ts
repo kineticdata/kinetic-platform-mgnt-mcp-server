@@ -13,9 +13,10 @@
  * After triggering, poll the form or kapp's indexDefinitions until all statuses
  * change from "New" to "Built".
  */
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import type { KineticApiClient } from "../client/kinetic-client.js";
+import { registerOperationTool } from "./contexts/shared.js";
 
 export type BackgroundJobsRuntime = {
   getClient: (sessionId: string) => KineticApiClient | Promise<KineticApiClient>;
@@ -71,8 +72,15 @@ export function registerBackgroundJobTools(server: McpServer, runtime: Backgroun
     }
   };
 
-  server.tool("core_createKappBackgroundJob", kappDescription, kappInputSchema, executeKappBackgroundJob);
-  server.tool("create_kapp_background_job", kappDescription, kappInputSchema, executeKappBackgroundJob);
+  registerOperationTool(
+    server,
+    "core_createKappBackgroundJob",
+    "create_kapp_background_job",
+    kappDescription,
+    kappDescription,
+    kappInputSchema,
+    executeKappBackgroundJob,
+  );
 
   // ── Form-level background jobs ─────────────────────────────────────────────
 
@@ -113,6 +121,13 @@ export function registerBackgroundJobTools(server: McpServer, runtime: Backgroun
     }
   };
 
-  server.tool("core_createFormBackgroundJob", formDescription, formInputSchema, executeFormBackgroundJob);
-  server.tool("create_form_background_job", formDescription, formInputSchema, executeFormBackgroundJob);
+  registerOperationTool(
+    server,
+    "core_createFormBackgroundJob",
+    "create_form_background_job",
+    formDescription,
+    formDescription,
+    formInputSchema,
+    executeFormBackgroundJob,
+  );
 }

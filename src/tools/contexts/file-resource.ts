@@ -2,7 +2,7 @@
 // Regenerate with: npm run ops:generate-tools
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { ContextToolRuntime, requireOperation } from "./shared.js";
+import { ContextToolRuntime, registerOperationTool, requireOperation } from "./shared.js";
 
 export function registerFileResourceTools(server: McpServer, runtime: ContextToolRuntime): void {
   const { operationMap, invokeDefaultOperation } = runtime;
@@ -31,8 +31,7 @@ export function registerFileResourceTools(server: McpServer, runtime: ContextToo
     }
   };
 
-  server.tool("core_createFile", operationDescriptionCreateFile, inputSchemaCreateFile, executeCreateFile);
-  server.tool("create_file", aliasDescriptionCreateFile, inputSchemaCreateFile, executeCreateFile);
+  registerOperationTool(server, "core_createFile", "create_file", operationDescriptionCreateFile, aliasDescriptionCreateFile, inputSchemaCreateFile, executeCreateFile);
 
   const opCreateFileResource = requireOperation(operationMap, "createFileResource");
   const operationDescriptionCreateFileResource = "[fileResource] File Resource Create. (POST /fileResources). Operation ID: createFileResource. Custom logic: default OAS execution.";
@@ -57,8 +56,7 @@ export function registerFileResourceTools(server: McpServer, runtime: ContextToo
     }
   };
 
-  server.tool("core_createFileResource", operationDescriptionCreateFileResource, inputSchemaCreateFileResource, executeCreateFileResource);
-  server.tool("create_file_resource", aliasDescriptionCreateFileResource, inputSchemaCreateFileResource, executeCreateFileResource);
+  registerOperationTool(server, "core_createFileResource", "create_file_resource", operationDescriptionCreateFileResource, aliasDescriptionCreateFileResource, inputSchemaCreateFileResource, executeCreateFileResource);
 
   const opDeleteFile = requireOperation(operationMap, "deleteFile");
   const operationDescriptionDeleteFile = "[fileResource] File Delete. (DELETE /fileResources/{fileResourceSlug}/files/{fileResourcePath}). Operation ID: deleteFile. Custom logic: default OAS execution.";
@@ -84,8 +82,7 @@ export function registerFileResourceTools(server: McpServer, runtime: ContextToo
     }
   };
 
-  server.tool("core_deleteFile", operationDescriptionDeleteFile, inputSchemaDeleteFile, executeDeleteFile);
-  server.tool("delete_file", aliasDescriptionDeleteFile, inputSchemaDeleteFile, executeDeleteFile);
+  registerOperationTool(server, "core_deleteFile", "delete_file", operationDescriptionDeleteFile, aliasDescriptionDeleteFile, inputSchemaDeleteFile, executeDeleteFile);
 
   const opDeleteFileResource = requireOperation(operationMap, "deleteFileResource");
   const operationDescriptionDeleteFileResource = "[fileResource] File Resource Delete. (DELETE /fileResources/{fileResourceSlug}). Operation ID: deleteFileResource. Custom logic: default OAS execution.";
@@ -111,8 +108,7 @@ export function registerFileResourceTools(server: McpServer, runtime: ContextToo
     }
   };
 
-  server.tool("core_deleteFileResource", operationDescriptionDeleteFileResource, inputSchemaDeleteFileResource, executeDeleteFileResource);
-  server.tool("delete_file_resource", aliasDescriptionDeleteFileResource, inputSchemaDeleteFileResource, executeDeleteFileResource);
+  registerOperationTool(server, "core_deleteFileResource", "delete_file_resource", operationDescriptionDeleteFileResource, aliasDescriptionDeleteFileResource, inputSchemaDeleteFileResource, executeDeleteFileResource);
 
   const opListFileResources = requireOperation(operationMap, "listFileResources");
   const operationDescriptionListFileResources = "[fileResource] File Resources List. (GET /fileResources). Operation ID: listFileResources. Custom logic: default OAS execution.";
@@ -137,8 +133,7 @@ export function registerFileResourceTools(server: McpServer, runtime: ContextToo
     }
   };
 
-  server.tool("core_listFileResources", operationDescriptionListFileResources, inputSchemaListFileResources, executeListFileResources);
-  server.tool("list_file_resources", aliasDescriptionListFileResources, inputSchemaListFileResources, executeListFileResources);
+  registerOperationTool(server, "core_listFileResources", "list_file_resources", operationDescriptionListFileResources, aliasDescriptionListFileResources, inputSchemaListFileResources, executeListFileResources);
 
   const opRetrieveFile = requireOperation(operationMap, "retrieveFile");
   const operationDescriptionRetrieveFile = "[fileResource] File Retrieve. (GET /fileResources/{fileResourceSlug}/files/{fileResourcePath}). Operation ID: retrieveFile. Custom logic: default OAS execution.";
@@ -164,8 +159,7 @@ export function registerFileResourceTools(server: McpServer, runtime: ContextToo
     }
   };
 
-  server.tool("core_retrieveFile", operationDescriptionRetrieveFile, inputSchemaRetrieveFile, executeRetrieveFile);
-  server.tool("retrieve_file", aliasDescriptionRetrieveFile, inputSchemaRetrieveFile, executeRetrieveFile);
+  registerOperationTool(server, "core_retrieveFile", "retrieve_file", operationDescriptionRetrieveFile, aliasDescriptionRetrieveFile, inputSchemaRetrieveFile, executeRetrieveFile);
 
   const opRetrieveFileResource = requireOperation(operationMap, "retrieveFileResource");
   const operationDescriptionRetrieveFileResource = "[fileResource] File Resource Retrieve. (GET /fileResources/{fileResourceSlug}). Operation ID: retrieveFileResource. Custom logic: default OAS execution.";
@@ -191,8 +185,7 @@ export function registerFileResourceTools(server: McpServer, runtime: ContextToo
     }
   };
 
-  server.tool("core_retrieveFileResource", operationDescriptionRetrieveFileResource, inputSchemaRetrieveFileResource, executeRetrieveFileResource);
-  server.tool("retrieve_file_resource", aliasDescriptionRetrieveFileResource, inputSchemaRetrieveFileResource, executeRetrieveFileResource);
+  registerOperationTool(server, "core_retrieveFileResource", "retrieve_file_resource", operationDescriptionRetrieveFileResource, aliasDescriptionRetrieveFileResource, inputSchemaRetrieveFileResource, executeRetrieveFileResource);
 
   const opUpdateFileResources = requireOperation(operationMap, "updateFileResources");
   const operationDescriptionUpdateFileResources = "[fileResource] File Resource Update. (PUT /fileResources/{fileResourceSlug}). Operation ID: updateFileResources. Custom logic: default OAS execution.";
@@ -218,7 +211,6 @@ export function registerFileResourceTools(server: McpServer, runtime: ContextToo
     }
   };
 
-  server.tool("core_updateFileResources", operationDescriptionUpdateFileResources, inputSchemaUpdateFileResources, executeUpdateFileResources);
-  server.tool("update_file_resources", aliasDescriptionUpdateFileResources, inputSchemaUpdateFileResources, executeUpdateFileResources);
+  registerOperationTool(server, "core_updateFileResources", "update_file_resources", operationDescriptionUpdateFileResources, aliasDescriptionUpdateFileResources, inputSchemaUpdateFileResources, executeUpdateFileResources);
 
 }
