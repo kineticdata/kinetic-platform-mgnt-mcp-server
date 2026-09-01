@@ -64,12 +64,67 @@ the old dual naming). It is now one `attribute_definitions` tool:
 { "object": "team", "action": "create", "body": { "name": "Region" } }
 ```
 
-`object: "space"` always means the unscoped, space-level path (e.g.
-`/spaceAttributeDefinitions`, `/workflows`).
+#### Choosing `object`
 
-Each tool's description enumerates its valid `object` and `action` values and the
-required parameters per action. An invalid `action` or `object` returns an MCP
-error naming the valid values — it never silently no-ops.
+`object` names the **scope the endpoint lives under, not the thing returned**.
+`object: "space"` means the unscoped, space-level path — so listing kapps is
+`{ "object": "space", "action": "list" }`, because `/kapps` is a space-level
+path. `object: "kapp"` means the path sits *inside* a specific kapp.
+
+`object` may be **omitted** when only one object supports the chosen action, so
+`{ "action": "list" }` on `kapps` works. When several objects support it, the
+error names exactly which ones.
+
+#### Identifying a single record: `identifier`
+
+Every consolidated tool that can address a single record accepts a canonical
+**`identifier`** parameter, so you never have to remember whether this particular
+resource calls its key `formSlug`, `submissionId`, `slug` or `name`:
+
+```json
+{ "action": "get", "identifier": "my-form", "kappSlug": "services" }   // forms
+{ "action": "get", "identifier": "my-team" }                            // teams
+{ "action": "get", "identifier": "abc-123" }                            // submissions
+```
+
+The specific parameter names still work exactly as before — `identifier` is an
+additional always-correct path, not a replacement. **If both are supplied and
+they differ, the specific parameter wins** and the conflict is logged to stderr.
+
+Each tool's description states what `identifier` means for each of its actions,
+e.g. for `forms`: *form slug* for `get`/`update`/`delete`, *form type name* for
+`get_type`/`update_type`/`delete_type`.
+
+> [!IMPORTANT]
+> **Scope is not identity.** `kappSlug` when fetching a form is *scope* — a form
+> is identified by its slug **within** a kapp. So a nested resource needs
+> `identifier` **and** its scope parameter(s). In each tool's route listing,
+> identity is marked `[id]` and scope is marked `[scope]`.
+
+`identifier` is not offered on `integrator_admin` or `space_admin`, whose routes
+are all collection- or verb-shaped and address no single record.
+
+#### Validation
+
+Required parameters are validated **per action**, derived from the same route
+table that generates the description, so there is no second list to drift. An
+invalid `action` or `object` returns an MCP error naming the valid values, and a
+missing parameter names exactly what is missing and the forms it accepts:
+
+```
+forms action=get object=form requires the form slug — pass `identifier`
+(or `formSlug`), plus `kappSlug` for scope. Route: GET /kapps/{kappSlug}/forms/{formSlug}
+```
+
+Nothing silently no-ops, and nothing fails downstream that could have been caught
+at the tool boundary.
+
+> [!WARNING]
+> Some query parameters have names that look like identifiers but are filters.
+> `slug` on `forms action=list` filters **archived** forms; it does not select
+> one. Such parameters have descriptions that lead with
+> `FILTER ONLY - not the form identifier...` so they cannot be mistaken for
+> `identifier`/`formSlug`.
 
 **Coverage: all 277 operations are consolidated. No resource falls back to
 individual tools, and nothing is unreachable.** This is asserted by
