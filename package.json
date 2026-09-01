@@ -21,7 +21,8 @@
     "start:stdio": "node dist/index.js --stdio",
     "start:http": "node dist/index.js --http",
     "start:both": "node dist/index.js --both",
-    "count:tools": "node scripts/count-tools.js"
+    "count:tools": "node scripts/count-tools.js",
+    "smoke": "node scripts/smoke-test.js"
   },
   "keywords": [
     "mcp",
