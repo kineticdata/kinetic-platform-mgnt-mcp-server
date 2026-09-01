@@ -15,6 +15,12 @@ import { z } from "zod";
 import type { KineticApi, OasOperation, OasSpec } from "../client/oas.js";
 import type { KineticApiClient } from "../client/kinetic-client.js";
 
+/**
+ * `get_api_spec` and `execute_api` are also registered by `consolidated` mode
+ * (see server.ts): the spec browser is where a consolidated tool's body hint
+ * points for the full schema, and `execute_api` is the escape hatch for
+ * anything the families do not cover. One implementation, two surfaces.
+ */
 export type SlimToolRuntime = {
   operations: OasOperation[];
   specs: Record<KineticApi, OasSpec | null>;
@@ -27,6 +33,14 @@ const HTTP_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"] as const;
 /** Cap on get_api_spec response size so a broad query cannot flood the context window. */
 const MAX_SPEC_RESULTS = 200;
 const DEFAULT_SPEC_RESULTS = 40;
+/**
+ * `detail=full` returns the resolved request-body schema - the whole point of
+ * the consolidated tools' "full schema: get_api_spec ..." pointers. Schemas run
+ * to ~15KB, so they are returned only for a narrow page, and any single schema
+ * is depth-pruned to fit a budget rather than flooding the context window.
+ */
+const MAX_FULL_BODY_SCHEMAS = 5;
+const MAX_BODY_SCHEMA_CHARS = 12000;
 
 function ok(payload: unknown) {
   return { content: [{ type: "text" as const, text: JSON.stringify(payload, null, 2) }] };
@@ -98,12 +112,13 @@ export function registerSlimTools(server: McpServer, runtime: SlimToolRuntime): 
 
 // ── get_api_spec ────────────────────────────────────────────────────────────
 
-function registerGetApiSpec(server: McpServer, runtime: SlimToolRuntime): void {
+export function registerGetApiSpec(server: McpServer, runtime: SlimToolRuntime): void {
   const description =
     "Search the bundled Kinetic OpenAPI specs (Core and Integrator) for operations, and return a slice of the spec " +
     "so you can construct a call with `execute_api`. ALWAYS narrow with `tag`, `path`, `method` or `operationId` - " +
     "an unfiltered query returns only the first page. Use detail=\"full\" on a single operation to see its parameters " +
-    "and request body before calling `execute_api`.";
+    `and its fully resolved request-body schema (returned for pages of ${MAX_FULL_BODY_SCHEMAS} operations or fewer) ` +
+    "before calling `execute_api`. Pass `api` - it defaults to \"core\", so an Integrator operationId finds nothing without it.";
 
   const inputSchema = {
     api: z
@@ -175,7 +190,7 @@ function registerGetApiSpec(server: McpServer, runtime: SlimToolRuntime): void {
           integrator: runtime.specs.integrator?.servers?.[0]?.url,
         },
         availableTags: input.tag ? undefined : collectTags(runtime, api),
-        operations: page.map((op) => describeOperation(op, detail)),
+        operations: page.map((op) => describeOperation(op, detail, page.length <= MAX_FULL_BODY_SCHEMAS)),
       });
     } catch (error: any) {
       return fail(error.message);
@@ -192,7 +207,34 @@ function collectTags(runtime: SlimToolRuntime, api: "core" | "integrator" | "all
   return [...tags].sort();
 }
 
-function describeOperation(op: OasOperation, detail: "summary" | "full") {
+/**
+ * Replaces everything below `maxDepth` with a visible marker, so a large schema
+ * shrinks without ever silently looking complete.
+ */
+function pruneSchema(node: any, maxDepth: number, depth = 0): any {
+  if (node === null || typeof node !== "object") return node;
+  if (Array.isArray(node)) return node.map((item) => pruneSchema(item, maxDepth, depth));
+  if (depth >= maxDepth) return { truncated: "nesting elided - see oas/*.json for the full schema" };
+  const out: Record<string, any> = {};
+  for (const [key, value] of Object.entries(node)) {
+    // `properties` / `oneOf` containers are bookkeeping, not a schema level.
+    const nextDepth = key === "properties" || key === "oneOf" || key === "anyOf" || key === "allOf" ? depth : depth + 1;
+    out[key] = pruneSchema(value, maxDepth, nextDepth);
+  }
+  return out;
+}
+
+/** The resolved body schema, shrunk until it fits the budget. */
+function fitBodySchema(schema: any): any {
+  if (JSON.stringify(schema).length <= MAX_BODY_SCHEMA_CHARS) return schema;
+  for (const depth of [6, 5, 4, 3, 2]) {
+    const pruned = pruneSchema(schema, depth);
+    if (JSON.stringify(pruned).length <= MAX_BODY_SCHEMA_CHARS) return pruned;
+  }
+  return pruneSchema(schema, 1);
+}
+
+function describeOperation(op: OasOperation, detail: "summary" | "full", includeBodySchema: boolean) {
   const base = {
     api: op.api,
     method: op.method,
@@ -220,14 +262,24 @@ function describeOperation(op: OasOperation, detail: "summary" | "full") {
         description: clamp(param.description, 400),
       })),
     requestBody: op.requestBody
-      ? { required: Boolean(op.requestBody.required), description: clamp(op.requestBody.description, 400) }
+      ? {
+          required: Boolean(op.requestBody.required),
+          description: clamp(op.requestBody.description, 400),
+          mediaTypes: Object.keys(op.requestBody.content ?? {}),
+          // `$ref`s already followed, so this is readable without the spec file.
+          schema: includeBodySchema && op.requestBodySchema ? fitBodySchema(op.requestBodySchema) : undefined,
+          schemaOmitted:
+            !includeBodySchema && op.requestBodySchema
+              ? `Narrow to ${MAX_FULL_BODY_SCHEMAS} operations or fewer (e.g. operationId=${op.operationId}) to get the body schema.`
+              : undefined,
+        }
       : undefined,
   };
 }
 
 // ── execute_api ─────────────────────────────────────────────────────────────
 
-function registerExecuteApi(server: McpServer, runtime: SlimToolRuntime): void {
+export function registerExecuteApi(server: McpServer, runtime: SlimToolRuntime): void {
   const coreBase = runtime.specs.core?.servers?.[0]?.url ?? "{serverUrl}/app/api/v1";
   const integratorBase = runtime.specs.integrator?.servers?.[0]?.url ?? "{serverUrl}/app/integrator";
 

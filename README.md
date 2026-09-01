@@ -7,7 +7,7 @@ An MCP server for the Kinetic Platform, generated from the bundled OpenAPI specs
 ## Tool surface: read this first
 
 > [!IMPORTANT]
-> **`KINETIC_MCP_MODE` now defaults to `consolidated` (~26 tools).**
+> **`KINETIC_MCP_MODE` now defaults to `consolidated` (28 tools).**
 > This is a **breaking change**. The server previously registered **559 tools**,
 > which is unusable in Cursor (it hard-errors above roughly 40 tools) and burns
 > enormous context in every client. Set `KINETIC_MCP_MODE=full` to restore the
@@ -24,7 +24,7 @@ Counts below are measured with `npm run count:tools`, not estimated.
 
 | `KINETIC_MCP_MODE` | Tools | Reaches | Notes |
 | --- | --- | --- | --- |
-| **`consolidated`** (default) | **26** | all 277 operations | One tool per resource family, dispatched by `action` (+ `object`). |
+| **`consolidated`** (default) | **28** | all 277 operations | One tool per resource family, dispatched by `action` (+ `object`), plus `get_api_spec` + `execute_api`. |
 | `slim` | **10** | all 277 via `execute_api` | Smallest surface. Safest for Cursor and for very long sessions. |
 | `contexts` | **280** | all 277 operations | One tool per operation, snake_case names only. |
 | `full` | **559** | all 277 operations | Legacy. 277 × 2 names + `connect` + 4 background-job tools. |
@@ -33,15 +33,15 @@ With a context allowlist (`KINETIC_MCP_CONTEXTS`):
 
 | Mode + allowlist | Tools |
 | --- | --- |
-| `consolidated` + `form,submission,space` | 15 |
-| `consolidated` + `form,submission` | 5 |
+| `consolidated` + `form,submission,space` | 17 |
+| `consolidated` + `form,submission` | 7 |
 | `contexts` + `form,submission` | 47 |
 | `full` + `KINETIC_MCP_TOOL_NAMES=alias` | 280 |
 
 Every startup prints the mode and count to **stderr**:
 
 ```
-kinetic-platform-mcp: mode=consolidated, 26 tools (all 277 operations)
+kinetic-platform-mcp: mode=consolidated, 28 tools (all 277 operations)
 kinetic-platform-mcp: mode=slim, 10 tools (all 277 operations via execute_api)
 kinetic-platform-mcp: mode=full, 559 tools (277 operations, names=both)
 ```
@@ -50,10 +50,14 @@ stdout is the stdio JSON-RPC channel and is never written to.
 
 ## Modes in detail
 
-### `consolidated` (default, 26 tools)
+### `consolidated` (default)
 
 One tool per resource family. You pick the operation with an `action` parameter,
 and — for families that span several Kinetic objects — an `object` parameter.
+`get_api_spec` and `execute_api` are registered alongside the families: the
+first is where a tool's body hint sends you for a full request-body schema, the
+second is the escape hatch for anything the families do not cover. The server
+prints its mode and exact tool count to stderr at startup.
 
 The motivating case: attribute definitions exist for categories, forms, kapps,
 spaces, teams and users. That was 35 near-identical operations (70 tools with
@@ -125,6 +129,28 @@ at the tool boundary.
 > one. Such parameters have descriptions that lead with
 > `FILTER ONLY - not the form identifier...` so they cannot be mistaken for
 > `identifier`/`formSlug`.
+
+#### Request bodies
+
+Each tool's description ends with a **`Body shapes`** section listing, per
+action, the body's **required** properties (marked `!`) and any discriminator
+with its allowed values — the two things a caller cannot guess:
+
+```
+Body shapes - REQUIRED properties and discriminator values only; `!` = required, `...` = more properties not listed:
+- create body: {config!: {configType!: http|invalid|mssql|postgres, ...}, name!, type!, ...} - full schema: get_api_spec api=integrator operationId=createConnection detail=full
+```
+
+`...` always marks something omitted, so a hint is never mistaken for a complete
+shape, and each line names the exact `get_api_spec` call that returns the full
+schema. `get_api_spec detail=full` returns the request body schema with all
+`$ref`s resolved (for pages of five operations or fewer; broader pages say so
+and tell you how to narrow). Route lines mark `body` or `body (optional)` whenever the operation
+declares a request body at all — 105 of the 107 operations with a body get a
+hint (the remaining two declare `application/json` with no schema).
+
+Every part of this is read out of the OAS at startup, so it cannot drift from
+the specs.
 
 **Coverage: all 277 operations are consolidated. No resource falls back to
 individual tools, and nothing is unreachable.** This is asserted by
@@ -335,7 +361,7 @@ claude mcp add kinetic-platform -- \
 }
 ```
 
-Leave `KINETIC_MCP_MODE` unset. The default `consolidated` (26 tools) is under
+Leave `KINETIC_MCP_MODE` unset. The default `consolidated` (28 tools) is under
 Cursor's ~40-tool ceiling; use `KINETIC_MCP_MODE=slim` (10 tools) if you also run
 other MCP servers and are near the limit in aggregate. **Do not use `full` in
 Cursor** — 559 tools exceeds the limit and the server will not be usable.

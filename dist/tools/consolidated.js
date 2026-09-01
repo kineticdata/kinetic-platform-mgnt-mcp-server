@@ -354,6 +354,7 @@ export function buildFamilies(operations) {
             object,
             action,
             requiredParams,
+            hasBody: Boolean(op.requestBody),
             requiresBody: Boolean(op.requestBody?.required),
             identityParam,
             scopeParams,
@@ -472,11 +473,206 @@ function buildInputSchema(family, multiObject) {
         }
         schema[name] = zodForParam(param).optional().describe(description.slice(0, 400));
     }
-    schema.body = z.any().optional().describe("JSON request body, for actions that require one.");
+    schema.body = z
+        .any()
+        .optional()
+        .describe("JSON request body, for actions that take one. This tool's description lists each body's required " +
+        "properties under \"Body shapes\", with the `get_api_spec` call that returns the full schema.");
     return schema;
 }
 /** Cap on how many routes a description enumerates, so one huge family cannot dominate the context window. */
 const MAX_DESCRIBED_ROUTES = 60;
+/**
+ * Body hints are deliberately two-tier. Collapsing 558 tools into 26 was a
+ * context-cost decision, and a full inline skeleton per action hands that
+ * saving straight back: core.json alone has 93 operations with bodies and
+ * objects up to 28 properties. So the inline hint carries only what a caller
+ * cannot guess - the REQUIRED properties and any discriminator's allowed
+ * values - and every hint names the `get_api_spec` call that returns the rest.
+ * Truncation is always marked with `...` so a trimmed hint cannot be mistaken
+ * for a complete shape.
+ */
+const BODY_MAX_DEPTH = 2;
+/** Properties rendered per object, indexed by depth (top level first). */
+const BODY_MAX_PROPS = [8, 6];
+const BODY_MAX_DISCRIMINATOR_VALUES = 6;
+const BODY_LINE_MAX = 320;
+const MAX_DESCRIBED_BODY_SHAPES = 8;
+const TRUNC = "...";
+function clip(text, max) {
+    return text.length <= max ? text : `${text.slice(0, max - TRUNC.length)}${TRUNC}`;
+}
+/**
+ * Collapses `allOf` / `oneOf` / `anyOf` so a variant's properties are visible.
+ * A discriminated union is left alone - it is rendered as its discriminator.
+ */
+function flattenSchema(schema) {
+    if (!schema || typeof schema !== "object")
+        return {};
+    if (Array.isArray(schema.allOf)) {
+        const merged = {
+            ...schema,
+            properties: { ...(schema.properties ?? {}) },
+            required: [...(schema.required ?? [])],
+        };
+        delete merged.allOf;
+        for (const branch of schema.allOf) {
+            const flat = flattenSchema(branch);
+            Object.assign(merged.properties, flat.properties ?? {});
+            if (Array.isArray(flat.required))
+                merged.required.push(...flat.required);
+            if (flat.discriminator && !merged.discriminator)
+                merged.discriminator = flat.discriminator;
+            if (!merged.type && flat.type)
+                merged.type = flat.type;
+        }
+        return merged;
+    }
+    if (!schema.properties && !schema.discriminator) {
+        const variants = Array.isArray(schema.oneOf) ? schema.oneOf : schema.anyOf;
+        if (Array.isArray(variants)) {
+            const withProperties = variants.map(flattenSchema).find((variant) => variant?.properties);
+            if (withProperties)
+                return withProperties;
+        }
+    }
+    return schema;
+}
+/** The discriminating property and its allowed values, for a polymorphic schema. */
+function discriminator(schema) {
+    const spec = schema?.discriminator;
+    if (!spec || typeof spec.propertyName !== "string")
+        return undefined;
+    let values = spec.mapping && typeof spec.mapping === "object" ? Object.keys(spec.mapping) : [];
+    if (values.length === 0) {
+        // No mapping: fall back to the enum on each variant's discriminating property.
+        const variants = Array.isArray(schema.oneOf) ? schema.oneOf : schema.anyOf;
+        values = (Array.isArray(variants) ? variants : [])
+            .flatMap((variant) => flattenSchema(variant)?.properties?.[spec.propertyName]?.enum ?? [])
+            .filter((value) => typeof value === "string");
+    }
+    values = [...new Set(values)];
+    if (values.length === 0)
+        return undefined;
+    return { propertyName: spec.propertyName, values };
+}
+/** Renders a discriminated union as just its discriminator: the one thing a caller must get right. */
+function renderDiscriminator(disc) {
+    const shown = disc.values.slice(0, BODY_MAX_DISCRIMINATOR_VALUES);
+    const overflow = disc.values.length > shown.length ? `|${TRUNC}` : "";
+    return `{${disc.propertyName}!: ${shown.join("|")}${overflow}, ${TRUNC}}`;
+}
+/** The `: <shape>` half of a property, or "" for scalars, which render as a bare name. */
+function renderPropertyValue(schema, depth) {
+    const disc = discriminator(schema);
+    // Rendered at any depth: it is one short clause, and it is the difference
+    // between a guessable body and two failed round-trips.
+    if (disc)
+        return renderDiscriminator(disc);
+    const isObject = schema?.type === "object" || Boolean(schema?.properties);
+    if (!isObject)
+        return "";
+    if (depth + 1 > BODY_MAX_DEPTH)
+        return `{${TRUNC}}`;
+    return renderObjectShape(schema, depth + 1);
+}
+/** Unwraps `array` wrappers so `items` is what gets described, with `[]` on the name. */
+function unwrapItems(raw) {
+    const flat = flattenSchema(raw);
+    if (flat.type === "array" || flat.items) {
+        return { schema: flattenSchema(flat.items), arrayMark: "[]" };
+    }
+    return { schema: flat, arrayMark: "" };
+}
+function renderProperty(name, raw, isRequired, depth) {
+    const { schema, arrayMark } = unwrapItems(raw);
+    const label = `${name}${arrayMark}${isRequired ? "!" : ""}`;
+    const value = renderPropertyValue(schema, depth);
+    return value ? `${label}: ${value}` : label;
+}
+/**
+ * `{name!, config!: {configType!: http|postgres, ...}, ...}` - depth 1 is the top
+ * level. Only required properties and discriminator-bearing ones are listed;
+ * anything omitted sits behind the trailing `...` and lives in `get_api_spec`.
+ */
+function renderObjectShape(schema, depth) {
+    const flat = flattenSchema(schema);
+    const properties = flat.properties && typeof flat.properties === "object" ? flat.properties : undefined;
+    if (!properties)
+        return `{${TRUNC}}`;
+    const required = new Set(Array.isArray(flat.required) ? flat.required : []);
+    const names = Object.keys(properties);
+    const selected = names.filter((name) => required.has(name) || Boolean(discriminator(unwrapItems(properties[name]).schema)));
+    const cap = BODY_MAX_PROPS[Math.min(depth - 1, BODY_MAX_PROPS.length - 1)];
+    const shown = selected.slice(0, cap);
+    const parts = shown.map((name) => renderProperty(name, properties[name], required.has(name), depth));
+    // Anything not listed - elided by the cap, or simply optional - is marked.
+    if (shown.length < names.length)
+        parts.push(TRUNC);
+    return `{${parts.join(", ")}}`;
+}
+/**
+ * Compact required-properties hint for a request body. Returns undefined only
+ * when the operation has no JSON body schema at all (e.g. a text/csv body);
+ * a body whose properties are all optional still yields `{...}`, because the
+ * fact that a body exists - and where to read its schema - is itself the point.
+ */
+export function summarizeBodySchema(schema) {
+    if (!schema || typeof schema !== "object")
+        return undefined;
+    const flat = flattenSchema(schema);
+    if (flat.type === "array" || flat.items) {
+        return `[${summarizeBodySchema(flat.items) ?? TRUNC}]`;
+    }
+    const disc = discriminator(flat);
+    if (disc)
+        return renderDiscriminator(disc);
+    if (!flat.properties) {
+        return typeof flat.type === "string" && flat.type !== "object" ? flat.type : `{${TRUNC}}`;
+    }
+    return renderObjectShape(flat, 1);
+}
+/**
+ * A body schema's identity. A `$ref` IS that identity, so create/update/patch
+ * pointing at the same component collapse to one line - and one `get_api_spec`
+ * operationId then answers for all of them. Inline schemas are per-operation.
+ */
+function bodySchemaKey(op) {
+    const raw = op.requestBody?.content?.["application/json"]?.schema;
+    return typeof raw?.$ref === "string" ? `ref:${raw.$ref}` : `inline:${op.operationId}`;
+}
+/** One line per distinct body schema: the required-properties hint, plus the call that returns the rest. */
+function buildBodyShapeLines(entries) {
+    const groups = new Map();
+    for (const entry of entries) {
+        const shape = summarizeBodySchema(entry.op.requestBodySchema);
+        if (!shape)
+            continue;
+        const key = bodySchemaKey(entry.op);
+        const existing = groups.get(key);
+        if (existing) {
+            if (!existing.actions.includes(entry.action))
+                existing.actions.push(entry.action);
+            continue;
+        }
+        groups.set(key, {
+            actions: [entry.action],
+            shape: clip(shape, BODY_LINE_MAX),
+            // `api` is not optional in the pointer: get_api_spec defaults to "core",
+            // so an Integrator operationId matches nothing without it.
+            api: entry.op.api,
+            operationId: entry.op.operationId,
+        });
+    }
+    if (groups.size === 0)
+        return [];
+    const lines = [...groups.values()].map((group) => `- ${group.actions.join(", ")} body: ${group.shape} - full schema: get_api_spec api=${group.api} operationId=${group.operationId} detail=full`);
+    if (lines.length <= MAX_DESCRIBED_BODY_SHAPES)
+        return lines;
+    const kept = lines.slice(0, MAX_DESCRIBED_BODY_SHAPES);
+    kept.push(`- ...and ${lines.length - MAX_DESCRIBED_BODY_SHAPES} more; use \`get_api_spec\` with the route's path.`);
+    return kept;
+}
 function buildDescription(family, multiObject) {
     const lines = [];
     const title = family.tool.replace(/_/g, " ");
@@ -508,14 +704,22 @@ function buildDescription(family, multiObject) {
             else
                 required.push(name);
         }
-        if (entry.requiresBody)
-            required.push("body");
+        // Existence, not the `required` flag: 11 operations (10 in integrator.json,
+        // 1 in core.json) declare a body without flagging it required, and are
+        // meaningless without one. Saying nothing about them cost real round-trips.
+        if (entry.hasBody)
+            required.push(entry.requiresBody ? "body" : "body (optional)");
         const scope = multiObject ? ` object=${entry.object}` : "";
         const requires = required.length > 0 ? ` requires: ${required.join(", ")}` : " requires: none";
         lines.push(`- ${entry.action}${scope} -> ${entry.op.method} ${entry.op.path};${requires}`);
     }
     if (sorted.length > MAX_DESCRIBED_ROUTES) {
         lines.push(`- ...and ${sorted.length - MAX_DESCRIBED_ROUTES} more. Use \`get_api_spec\` or call with a wrong action to list them all.`);
+    }
+    const bodyShapes = buildBodyShapeLines(sorted);
+    if (bodyShapes.length > 0) {
+        lines.push("Body shapes - REQUIRED properties and discriminator values only; `!` = required, `...` = more properties not listed:");
+        lines.push(...bodyShapes);
     }
     lines.push("Call `connect` first if no session is configured.");
     return lines.join("\n");
