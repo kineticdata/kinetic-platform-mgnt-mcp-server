@@ -8,7 +8,16 @@ import { KineticApiClient, obtainOAuthToken } from "./client/kinetic-client.js";
 import type { KineticSessionConfig } from "./client/kinetic-client.js";
 import { registerAllContextTools } from "./tools/contexts/register-all.js";
 import { registerBackgroundJobTools } from "./tools/background-jobs.js";
+import { registerSlimTools } from "./tools/slim.js";
+import { registerConsolidatedTools } from "./tools/consolidated.js";
 import { invokeDefaultOperation } from "./tools/invocation.js";
+import {
+  countRegisteredTools,
+  logStartupSummary,
+  resolveServerMode,
+  resolveToolNameMode,
+} from "./tools/tool-config.js";
+import type { ServerMode } from "./tools/tool-config.js";
 
 export type SessionId = string;
 
@@ -46,23 +55,58 @@ export function createServerContext(): ServerContext {
   };
 }
 
+// Startup summary is logged once per process; HTTP mode builds one server per session.
+let startupLogged = false;
+
 export function createKineticMcpServer(context: ServerContext): McpServer {
   const server = new McpServer({
     name: "kinetic-platform",
     version: "0.1.0",
   });
 
+  const mode = resolveServerMode();
+
   registerConnectTool(server, context);
-  // Register explicit per-context tool stubs generated from OAS specs.
-  registerAllContextTools(server, {
-    operations: context.operations,
-    invokeDefaultOperation: (sessionId, op, input) =>
-      invokeDefaultOperation({ getClient: (sid, api) => getOrCreateClient(context, sid, api) }, sessionId, op, input),
-  });
+
+  const invoke = (sessionId: string, op: OasOperation, input: any) =>
+    invokeDefaultOperation(
+      { getClient: (sid, api) => getOrCreateClient(context, sid, api) },
+      sessionId,
+      op,
+      input,
+    );
+
+  if (mode === "slim") {
+    // ~12 high-level tools. get_api_spec + execute_api together cover every
+    // operation the per-operation tools used to expose.
+    registerSlimTools(server, {
+      operations: context.operations,
+      specs: context.specs,
+      getClient: (sessionId, api) => getOrCreateClient(context, sessionId, api),
+      invokeDefaultOperation: invoke,
+    });
+  } else if (mode === "consolidated") {
+    // One tool per resource family, dispatched by an `action` parameter.
+    registerConsolidatedTools(server, {
+      operations: context.operations,
+      invokeDefaultOperation: invoke,
+    });
+  } else {
+    // contexts / full: explicit per-operation tool stubs generated from the OAS specs.
+    registerAllContextTools(server, {
+      operations: context.operations,
+      invokeDefaultOperation: invoke,
+    });
+  }
 
   registerBackgroundJobTools(server, {
     getClient: (sessionId) => getOrCreateClient(context, sessionId, "core"),
   });
+
+  if (!startupLogged) {
+    startupLogged = true;
+    logStartupSummary(mode, countRegisteredTools(server), describeCoverage(mode, context));
+  }
 
   return server;
 }
@@ -132,7 +176,7 @@ async function getOrCreateClient(context: ServerContext, sessionId: SessionId, a
     const agentSlug = process.env.KINETIC_AGENT_SLUG ?? "system";
 
     if (!serverUrl || !username || !password) {
-      throw new Error("Not connected. Call connect or set KINETIC_SERVER_URL/KINETIC_USERNAME/KINETIC_PASSWORD for the space.");
+      throw new Error(missingCredentialsMessage());
     }
 
     session = {
@@ -182,4 +226,50 @@ function buildBaseUrl(specs: Record<KineticApi, OasSpec | null>, api: KineticApi
   const spec = specs[api];
   const template = spec?.servers?.[0]?.url ?? defaults[api];
   return template.replaceAll("{serverUrl}", serverUrl);
+}
+
+/**
+ * Credentials are read from the environment. They are deliberately NOT expected
+ * in MCP client config: partners put them in a gitignored .env and load it with
+ * `node --env-file=/absolute/path/to/.env dist/index.js --stdio`.
+ */
+export function missingCredentialsMessage(): string {
+  const present = [
+    process.env.KINETIC_SERVER_URL ? "KINETIC_SERVER_URL" : null,
+    process.env.KINETIC_USERNAME ? "KINETIC_USERNAME" : null,
+    process.env.KINETIC_PASSWORD ? "KINETIC_PASSWORD" : null,
+  ].filter(Boolean);
+
+  const missing = ["KINETIC_SERVER_URL", "KINETIC_USERNAME", "KINETIC_PASSWORD"].filter(
+    (name) => !process.env[name],
+  );
+
+  return [
+    `Not connected: missing ${missing.join(", ")}.`,
+    present.length > 0 ? `(Found: ${present.join(", ")}.)` : "(No Kinetic credentials found in the environment.)",
+    "Likely causes:",
+    '  1. The --env-file path is relative. It resolves against the MCP client\'s working directory, not the server directory, so it silently loads nothing. Use an ABSOLUTE path.',
+    "  2. The .env file does not exist at that path, or lacks these keys. Copy .env.example to .env and fill it in.",
+    "  3. Node is older than 20.6.0, which does not support --env-file.",
+    "Alternatively call the `connect` tool with serverUrl, username and password.",
+  ].join("\n");
+}
+
+/** How much of the API the active surface reaches, for the startup log. */
+function describeCoverage(mode: ServerMode, context: ServerContext): string {
+  const total = context.operations.length;
+  switch (mode) {
+    case "consolidated": {
+      const contexts = process.env.KINETIC_MCP_CONTEXTS?.trim();
+      // With an allowlist the surface covers only those contexts, not all operations.
+      return contexts ? `contexts=${contexts}` : `all ${total} operations`;
+    }
+    case "slim":
+      return `all ${total} operations via execute_api`;
+    default: {
+      const contexts = process.env.KINETIC_MCP_CONTEXTS?.trim();
+      const scope = contexts ? `contexts=${contexts}` : `${total} operations`;
+      return `${scope}, names=${resolveToolNameMode()}`;
+    }
+  }
 }
