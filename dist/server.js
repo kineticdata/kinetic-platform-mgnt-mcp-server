@@ -6,7 +6,7 @@ import { extractOperations, loadOasSpec, loadOasSpecIfExists } from "./client/oa
 import { KineticApiClient, obtainOAuthToken } from "./client/kinetic-client.js";
 import { registerAllContextTools } from "./tools/contexts/register-all.js";
 import { registerBackgroundJobTools } from "./tools/background-jobs.js";
-import { registerSlimTools } from "./tools/slim.js";
+import { registerSlimTools, registerGetApiSpec, registerExecuteApi } from "./tools/slim.js";
 import { registerConsolidatedTools } from "./tools/consolidated.js";
 import { invokeDefaultOperation } from "./tools/invocation.js";
 import { countRegisteredTools, logStartupSummary, resolveServerMode, resolveToolNameMode, } from "./tools/tool-config.js";
@@ -50,6 +50,18 @@ export function createKineticMcpServer(context) {
             operations: context.operations,
             invokeDefaultOperation: invoke,
         });
+        // Plus the two slim tools the consolidated surface depends on: the family
+        // descriptions point at `get_api_spec` for full request-body schemas, and
+        // `execute_api` reaches anything the families do not cover. Same
+        // registrations slim mode uses - there is no second implementation.
+        const slimRuntime = {
+            operations: context.operations,
+            specs: context.specs,
+            getClient: (sessionId, api) => getOrCreateClient(context, sessionId, api),
+            invokeDefaultOperation: invoke,
+        };
+        registerGetApiSpec(server, slimRuntime);
+        registerExecuteApi(server, slimRuntime);
     }
     else {
         // contexts / full: explicit per-operation tool stubs generated from the OAS specs.

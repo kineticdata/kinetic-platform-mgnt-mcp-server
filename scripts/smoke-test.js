@@ -41,7 +41,7 @@ srv.stdout.on("data", d => {
   const lines = buf.split("\n"); buf = lines.pop();
   for (const l of lines) {
     if (!l.trim()) continue;
-    try { const m = JSON.parse(l); if (m.id && pending.has(m.id)) { pending.get(m.id)(m); pending.delete(m.id); } } catch {}
+    try { const m = JSON.parse(l); if (m.id && pending.has(m.id)) { pending.get(m.id)(m); pending.delete(m.id); } } catch { /* not a JSON-RPC frame; ignore */ }
   }
 });
 const text = r => (r?.result?.content?.[0]?.text) || JSON.stringify(r?.error || r?.result || {});
