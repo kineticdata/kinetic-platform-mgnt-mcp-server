@@ -20,7 +20,9 @@
     "verify:registry": "node scripts/verify-registry.js",
     "start:stdio": "node dist/index.js --stdio",
     "start:http": "node dist/index.js --http",
-    "start:both": "node dist/index.js --both"
+    "start:both": "node dist/index.js --both",
+    "count:tools": "node scripts/count-tools.js",
+    "smoke": "node scripts/smoke-test.js"
   },
   "keywords": [
     "mcp",

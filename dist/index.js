@@ -10,6 +10,36 @@ import { createKineticMcpServer, createServerContext } from "./server.js";
 if (process.env.KINETIC_ALLOW_SELF_SIGNED === "true" || process.env.KINETIC_ALLOW_SELF_SIGNED === "1") {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 }
+/**
+ * Credentials are optional for tool REGISTRATION - a client can always connect
+ * and list tools. They are only needed when a tool actually calls the API. We
+ * still warn loudly at startup, because the common failure is a relative
+ * --env-file path that silently loads nothing.
+ *
+ * All output goes to stderr; stdout is the stdio JSON-RPC channel.
+ */
+function warnIfCredentialsMissing() {
+    const missing = ["KINETIC_SERVER_URL", "KINETIC_USERNAME", "KINETIC_PASSWORD"].filter((name) => !process.env[name]);
+    if (missing.length === 0)
+        return;
+    const usedEnvFile = process.execArgv.some((arg) => arg.startsWith("--env-file"));
+    console.error(`kinetic-platform-mcp: WARNING - missing ${missing.join(", ")}. Tools will list, but API calls will fail until credentials are provided.`);
+    if (usedEnvFile) {
+        const envFileArg = process.execArgv.find((arg) => arg.startsWith("--env-file")) ?? "";
+        const envFilePath = envFileArg.includes("=") ? envFileArg.split("=").slice(1).join("=") : "";
+        if (envFilePath && !envFilePath.startsWith("/")) {
+            console.error(`kinetic-platform-mcp:   --env-file="${envFilePath}" is a RELATIVE path. It resolves against the MCP client's working directory, not the server directory. Use an absolute path.`);
+        }
+        else {
+            console.error(`kinetic-platform-mcp:   --env-file="${envFilePath}" was passed but these keys were not found in it. Check the file exists and contains them.`);
+        }
+    }
+    else {
+        console.error("kinetic-platform-mcp:   Pass credentials with: node --env-file=/absolute/path/to/.env dist/index.js --stdio  (Node >= 20.6.0)");
+        console.error("kinetic-platform-mcp:   Or call the `connect` tool with serverUrl, username and password.");
+    }
+}
+warnIfCredentialsMissing();
 const args = new Set(process.argv.slice(2));
 const runStdio = args.has("--stdio") || args.has("--both") || args.size === 0;
 const runHttp = args.has("--http") || args.has("--both");

@@ -2,7 +2,7 @@
 // Regenerate with: npm run ops:generate-tools
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { ContextToolRuntime, requireOperation } from "./shared.js";
+import { ContextToolRuntime, registerOperationTool, requireOperation } from "./shared.js";
 
 export function registerFormTools(server: McpServer, runtime: ContextToolRuntime): void {
   const { operationMap, invokeDefaultOperation } = runtime;
@@ -31,8 +31,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createForm", operationDescriptionCreateForm, inputSchemaCreateForm, executeCreateForm);
-  server.tool("create_form", aliasDescriptionCreateForm, inputSchemaCreateForm, executeCreateForm);
+  registerOperationTool(server, "core_createForm", "create_form", operationDescriptionCreateForm, aliasDescriptionCreateForm, inputSchemaCreateForm, executeCreateForm);
 
   const opCreateFormAttributeDefinition = requireOperation(operationMap, "createFormAttributeDefinition");
   const operationDescriptionCreateFormAttributeDefinition = "[form] Kapp Form Attribute Definition Create. (POST /kapps/{kappSlug}/formAttributeDefinitions). Operation ID: createFormAttributeDefinition. Custom logic: default OAS execution.";
@@ -58,8 +57,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createFormAttributeDefinition", operationDescriptionCreateFormAttributeDefinition, inputSchemaCreateFormAttributeDefinition, executeCreateFormAttributeDefinition);
-  server.tool("create_form_attribute_definition", aliasDescriptionCreateFormAttributeDefinition, inputSchemaCreateFormAttributeDefinition, executeCreateFormAttributeDefinition);
+  registerOperationTool(server, "core_createFormAttributeDefinition", "create_form_attribute_definition", operationDescriptionCreateFormAttributeDefinition, aliasDescriptionCreateFormAttributeDefinition, inputSchemaCreateFormAttributeDefinition, executeCreateFormAttributeDefinition);
 
   const opCreateFormWorkflow = requireOperation(operationMap, "createFormWorkflow");
   const operationDescriptionCreateFormWorkflow = "[form] Form Workflow Create. (POST /kapps/{kappSlug}/forms/{formSlug}/workflows). Operation ID: createFormWorkflow. Custom logic: default OAS execution.";
@@ -86,8 +84,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createFormWorkflow", operationDescriptionCreateFormWorkflow, inputSchemaCreateFormWorkflow, executeCreateFormWorkflow);
-  server.tool("create_form_workflow", aliasDescriptionCreateFormWorkflow, inputSchemaCreateFormWorkflow, executeCreateFormWorkflow);
+  registerOperationTool(server, "core_createFormWorkflow", "create_form_workflow", operationDescriptionCreateFormWorkflow, aliasDescriptionCreateFormWorkflow, inputSchemaCreateFormWorkflow, executeCreateFormWorkflow);
 
   const opCreateKappFormType = requireOperation(operationMap, "createKappFormType");
   const operationDescriptionCreateKappFormType = "[form] Form Type Create. (POST /kapps/{kappSlug}/formTypes). Operation ID: createKappFormType. Custom logic: default OAS execution.";
@@ -113,8 +110,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_createKappFormType", operationDescriptionCreateKappFormType, inputSchemaCreateKappFormType, executeCreateKappFormType);
-  server.tool("create_kapp_form_type", aliasDescriptionCreateKappFormType, inputSchemaCreateKappFormType, executeCreateKappFormType);
+  registerOperationTool(server, "core_createKappFormType", "create_kapp_form_type", operationDescriptionCreateKappFormType, aliasDescriptionCreateKappFormType, inputSchemaCreateKappFormType, executeCreateKappFormType);
 
   const opDeleteForm = requireOperation(operationMap, "deleteForm");
   const operationDescriptionDeleteForm = "[form] Form Delete. (DELETE /kapps/{kappSlug}/forms/{formSlug}). Operation ID: deleteForm. Custom logic: default OAS execution.";
@@ -141,8 +137,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteForm", operationDescriptionDeleteForm, inputSchemaDeleteForm, executeDeleteForm);
-  server.tool("delete_form", aliasDescriptionDeleteForm, inputSchemaDeleteForm, executeDeleteForm);
+  registerOperationTool(server, "core_deleteForm", "delete_form", operationDescriptionDeleteForm, aliasDescriptionDeleteForm, inputSchemaDeleteForm, executeDeleteForm);
 
   const opDeleteFormAttributeDefinition = requireOperation(operationMap, "deleteFormAttributeDefinition");
   const operationDescriptionDeleteFormAttributeDefinition = "[form] Kapp Form Attribute Definition Delete. (DELETE /kapps/{kappSlug}/formAttributeDefinitions/{name}). Operation ID: deleteFormAttributeDefinition. Custom logic: default OAS execution.";
@@ -169,8 +164,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteFormAttributeDefinition", operationDescriptionDeleteFormAttributeDefinition, inputSchemaDeleteFormAttributeDefinition, executeDeleteFormAttributeDefinition);
-  server.tool("delete_form_attribute_definition", aliasDescriptionDeleteFormAttributeDefinition, inputSchemaDeleteFormAttributeDefinition, executeDeleteFormAttributeDefinition);
+  registerOperationTool(server, "core_deleteFormAttributeDefinition", "delete_form_attribute_definition", operationDescriptionDeleteFormAttributeDefinition, aliasDescriptionDeleteFormAttributeDefinition, inputSchemaDeleteFormAttributeDefinition, executeDeleteFormAttributeDefinition);
 
   const opDeleteFormWorkflow = requireOperation(operationMap, "deleteFormWorkflow");
   const operationDescriptionDeleteFormWorkflow = "[form] Form Workflow Delete. (DELETE /kapps/{kappSlug}/forms/{formSlug}/workflows/{id}). Operation ID: deleteFormWorkflow. Custom logic: default OAS execution.";
@@ -197,8 +191,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteFormWorkflow", operationDescriptionDeleteFormWorkflow, inputSchemaDeleteFormWorkflow, executeDeleteFormWorkflow);
-  server.tool("delete_form_workflow", aliasDescriptionDeleteFormWorkflow, inputSchemaDeleteFormWorkflow, executeDeleteFormWorkflow);
+  registerOperationTool(server, "core_deleteFormWorkflow", "delete_form_workflow", operationDescriptionDeleteFormWorkflow, aliasDescriptionDeleteFormWorkflow, inputSchemaDeleteFormWorkflow, executeDeleteFormWorkflow);
 
   const opDeleteKappFormType = requireOperation(operationMap, "deleteKappFormType");
   const operationDescriptionDeleteKappFormType = "[form] Form Type Delete. (DELETE /kapps/{kappSlug}/formTypes/{name}). Operation ID: deleteKappFormType. Custom logic: default OAS execution.";
@@ -225,8 +218,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_deleteKappFormType", operationDescriptionDeleteKappFormType, inputSchemaDeleteKappFormType, executeDeleteKappFormType);
-  server.tool("delete_kapp_form_type", aliasDescriptionDeleteKappFormType, inputSchemaDeleteKappFormType, executeDeleteKappFormType);
+  registerOperationTool(server, "core_deleteKappFormType", "delete_kapp_form_type", operationDescriptionDeleteKappFormType, aliasDescriptionDeleteKappFormType, inputSchemaDeleteKappFormType, executeDeleteKappFormType);
 
   const opExecuteFormIntegration = requireOperation(operationMap, "executeFormIntegration");
   const operationDescriptionExecuteFormIntegration = "[form] Form Integration Execute. (POST /integrations/kapps/{kappSlug}/forms/{formSlug}/{name}). Operation ID: executeFormIntegration. Custom logic: default OAS execution.";
@@ -253,8 +245,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_executeFormIntegration", operationDescriptionExecuteFormIntegration, inputSchemaExecuteFormIntegration, executeExecuteFormIntegration);
-  server.tool("execute_form_integration", aliasDescriptionExecuteFormIntegration, inputSchemaExecuteFormIntegration, executeExecuteFormIntegration);
+  registerOperationTool(server, "core_executeFormIntegration", "execute_form_integration", operationDescriptionExecuteFormIntegration, aliasDescriptionExecuteFormIntegration, inputSchemaExecuteFormIntegration, executeExecuteFormIntegration);
 
   const opFetchFormActivityMetrics = requireOperation(operationMap, "fetchFormActivityMetrics");
   const operationDescriptionFetchFormActivityMetrics = "[form] Kapp Form Submission Metrics Retrieve. (GET /kapps/{kappSlug}/forms/{formSlug}/activity). Operation ID: fetchFormActivityMetrics. Custom logic: default OAS execution.";
@@ -282,8 +273,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_fetchFormActivityMetrics", operationDescriptionFetchFormActivityMetrics, inputSchemaFetchFormActivityMetrics, executeFetchFormActivityMetrics);
-  server.tool("fetch_form_activity_metrics", aliasDescriptionFetchFormActivityMetrics, inputSchemaFetchFormActivityMetrics, executeFetchFormActivityMetrics);
+  registerOperationTool(server, "core_fetchFormActivityMetrics", "fetch_form_activity_metrics", operationDescriptionFetchFormActivityMetrics, aliasDescriptionFetchFormActivityMetrics, inputSchemaFetchFormActivityMetrics, executeFetchFormActivityMetrics);
 
   const opListFormAttributeDefinitions = requireOperation(operationMap, "listFormAttributeDefinitions");
   const operationDescriptionListFormAttributeDefinitions = "[form] Kapp Form Attribute Definition List. (GET /kapps/{kappSlug}/formAttributeDefinitions). Operation ID: listFormAttributeDefinitions. Custom logic: default OAS execution.";
@@ -309,8 +299,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listFormAttributeDefinitions", operationDescriptionListFormAttributeDefinitions, inputSchemaListFormAttributeDefinitions, executeListFormAttributeDefinitions);
-  server.tool("list_form_attribute_definitions", aliasDescriptionListFormAttributeDefinitions, inputSchemaListFormAttributeDefinitions, executeListFormAttributeDefinitions);
+  registerOperationTool(server, "core_listFormAttributeDefinitions", "list_form_attribute_definitions", operationDescriptionListFormAttributeDefinitions, aliasDescriptionListFormAttributeDefinitions, inputSchemaListFormAttributeDefinitions, executeListFormAttributeDefinitions);
 
   const opListForms = requireOperation(operationMap, "listForms");
   const operationDescriptionListForms = "[form] Form Search. (GET /kapps/{kappSlug}/forms). Operation ID: listForms. Custom logic: default OAS execution.";
@@ -346,8 +335,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listForms", operationDescriptionListForms, inputSchemaListForms, executeListForms);
-  server.tool("list_forms", aliasDescriptionListForms, inputSchemaListForms, executeListForms);
+  registerOperationTool(server, "core_listForms", "list_forms", operationDescriptionListForms, aliasDescriptionListForms, inputSchemaListForms, executeListForms);
 
   const opListKappFormTypes = requireOperation(operationMap, "listKappFormTypes");
   const operationDescriptionListKappFormTypes = "[form] Form Type List. (GET /kapps/{kappSlug}/formTypes). Operation ID: listKappFormTypes. Custom logic: default OAS execution.";
@@ -373,8 +361,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_listKappFormTypes", operationDescriptionListKappFormTypes, inputSchemaListKappFormTypes, executeListKappFormTypes);
-  server.tool("list_kapp_form_types", aliasDescriptionListKappFormTypes, inputSchemaListKappFormTypes, executeListKappFormTypes);
+  registerOperationTool(server, "core_listKappFormTypes", "list_kapp_form_types", operationDescriptionListKappFormTypes, aliasDescriptionListKappFormTypes, inputSchemaListKappFormTypes, executeListKappFormTypes);
 
   const opRepairFormWorkflow = requireOperation(operationMap, "repairFormWorkflow");
   const operationDescriptionRepairFormWorkflow = "[form] Form Workflow Repair. (POST /kapps/{kappSlug}/forms/{formSlug}/workflows/repair). Operation ID: repairFormWorkflow. Custom logic: default OAS execution.";
@@ -400,8 +387,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_repairFormWorkflow", operationDescriptionRepairFormWorkflow, inputSchemaRepairFormWorkflow, executeRepairFormWorkflow);
-  server.tool("repair_form_workflow", aliasDescriptionRepairFormWorkflow, inputSchemaRepairFormWorkflow, executeRepairFormWorkflow);
+  registerOperationTool(server, "core_repairFormWorkflow", "repair_form_workflow", operationDescriptionRepairFormWorkflow, aliasDescriptionRepairFormWorkflow, inputSchemaRepairFormWorkflow, executeRepairFormWorkflow);
 
   const opRetrieveForm = requireOperation(operationMap, "retrieveForm");
   const operationDescriptionRetrieveForm = "[form] Form Retrieve. (GET /kapps/{kappSlug}/forms/{formSlug}). Operation ID: retrieveForm. Custom logic: default OAS execution.";
@@ -429,8 +415,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveForm", operationDescriptionRetrieveForm, inputSchemaRetrieveForm, executeRetrieveForm);
-  server.tool("retrieve_form", aliasDescriptionRetrieveForm, inputSchemaRetrieveForm, executeRetrieveForm);
+  registerOperationTool(server, "core_retrieveForm", "retrieve_form", operationDescriptionRetrieveForm, aliasDescriptionRetrieveForm, inputSchemaRetrieveForm, executeRetrieveForm);
 
   const opRetrieveFormAttributeDefinition = requireOperation(operationMap, "retrieveFormAttributeDefinition");
   const operationDescriptionRetrieveFormAttributeDefinition = "[form] Kapp Form Attribute Definition Retrieve. (GET /kapps/{kappSlug}/formAttributeDefinitions/{name}). Operation ID: retrieveFormAttributeDefinition. Custom logic: default OAS execution.";
@@ -457,8 +442,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveFormAttributeDefinition", operationDescriptionRetrieveFormAttributeDefinition, inputSchemaRetrieveFormAttributeDefinition, executeRetrieveFormAttributeDefinition);
-  server.tool("retrieve_form_attribute_definition", aliasDescriptionRetrieveFormAttributeDefinition, inputSchemaRetrieveFormAttributeDefinition, executeRetrieveFormAttributeDefinition);
+  registerOperationTool(server, "core_retrieveFormAttributeDefinition", "retrieve_form_attribute_definition", operationDescriptionRetrieveFormAttributeDefinition, aliasDescriptionRetrieveFormAttributeDefinition, inputSchemaRetrieveFormAttributeDefinition, executeRetrieveFormAttributeDefinition);
 
   const opRetrieveFormWorkflow = requireOperation(operationMap, "retrieveFormWorkflow");
   const operationDescriptionRetrieveFormWorkflow = "[form] Form Workflow Retrieve. (GET /kapps/{kappSlug}/forms/{formSlug}/workflows/{id}). Operation ID: retrieveFormWorkflow. Custom logic: default OAS execution.";
@@ -485,8 +469,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveFormWorkflow", operationDescriptionRetrieveFormWorkflow, inputSchemaRetrieveFormWorkflow, executeRetrieveFormWorkflow);
-  server.tool("retrieve_form_workflow", aliasDescriptionRetrieveFormWorkflow, inputSchemaRetrieveFormWorkflow, executeRetrieveFormWorkflow);
+  registerOperationTool(server, "core_retrieveFormWorkflow", "retrieve_form_workflow", operationDescriptionRetrieveFormWorkflow, aliasDescriptionRetrieveFormWorkflow, inputSchemaRetrieveFormWorkflow, executeRetrieveFormWorkflow);
 
   const opRetrieveFormWorkflows = requireOperation(operationMap, "retrieveFormWorkflows");
   const operationDescriptionRetrieveFormWorkflows = "[form] Form Workflows Retrieve. (GET /kapps/{kappSlug}/forms/{formSlug}/workflows). Operation ID: retrieveFormWorkflows. Custom logic: default OAS execution.";
@@ -512,8 +495,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveFormWorkflows", operationDescriptionRetrieveFormWorkflows, inputSchemaRetrieveFormWorkflows, executeRetrieveFormWorkflows);
-  server.tool("retrieve_form_workflows", aliasDescriptionRetrieveFormWorkflows, inputSchemaRetrieveFormWorkflows, executeRetrieveFormWorkflows);
+  registerOperationTool(server, "core_retrieveFormWorkflows", "retrieve_form_workflows", operationDescriptionRetrieveFormWorkflows, aliasDescriptionRetrieveFormWorkflows, inputSchemaRetrieveFormWorkflows, executeRetrieveFormWorkflows);
 
   const opRetrieveKappFormType = requireOperation(operationMap, "retrieveKappFormType");
   const operationDescriptionRetrieveKappFormType = "[form] Form Type Retrieve. (GET /kapps/{kappSlug}/formTypes/{name}). Operation ID: retrieveKappFormType. Custom logic: default OAS execution.";
@@ -540,8 +522,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_retrieveKappFormType", operationDescriptionRetrieveKappFormType, inputSchemaRetrieveKappFormType, executeRetrieveKappFormType);
-  server.tool("retrieve_kapp_form_type", aliasDescriptionRetrieveKappFormType, inputSchemaRetrieveKappFormType, executeRetrieveKappFormType);
+  registerOperationTool(server, "core_retrieveKappFormType", "retrieve_kapp_form_type", operationDescriptionRetrieveKappFormType, aliasDescriptionRetrieveKappFormType, inputSchemaRetrieveKappFormType, executeRetrieveKappFormType);
 
   const opUpdateForm = requireOperation(operationMap, "updateForm");
   const operationDescriptionUpdateForm = "[form] Form Update. (PUT /kapps/{kappSlug}/forms/{formSlug}). Operation ID: updateForm. Custom logic: default OAS execution.";
@@ -569,8 +550,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateForm", operationDescriptionUpdateForm, inputSchemaUpdateForm, executeUpdateForm);
-  server.tool("update_form", aliasDescriptionUpdateForm, inputSchemaUpdateForm, executeUpdateForm);
+  registerOperationTool(server, "core_updateForm", "update_form", operationDescriptionUpdateForm, aliasDescriptionUpdateForm, inputSchemaUpdateForm, executeUpdateForm);
 
   const opUpdateFormAttributeDefinition = requireOperation(operationMap, "updateFormAttributeDefinition");
   const operationDescriptionUpdateFormAttributeDefinition = "[form] Kapp Form Attribute Definition Update. (PUT /kapps/{kappSlug}/formAttributeDefinitions/{name}). Operation ID: updateFormAttributeDefinition. Custom logic: default OAS execution.";
@@ -597,8 +577,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateFormAttributeDefinition", operationDescriptionUpdateFormAttributeDefinition, inputSchemaUpdateFormAttributeDefinition, executeUpdateFormAttributeDefinition);
-  server.tool("update_form_attribute_definition", aliasDescriptionUpdateFormAttributeDefinition, inputSchemaUpdateFormAttributeDefinition, executeUpdateFormAttributeDefinition);
+  registerOperationTool(server, "core_updateFormAttributeDefinition", "update_form_attribute_definition", operationDescriptionUpdateFormAttributeDefinition, aliasDescriptionUpdateFormAttributeDefinition, inputSchemaUpdateFormAttributeDefinition, executeUpdateFormAttributeDefinition);
 
   const opUpdateFormWorkflow = requireOperation(operationMap, "updateFormWorkflow");
   const operationDescriptionUpdateFormWorkflow = "[form] Form Workflow Update. (PUT /kapps/{kappSlug}/forms/{formSlug}/workflows/{id}). Operation ID: updateFormWorkflow. Custom logic: default OAS execution.";
@@ -625,8 +604,7 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateFormWorkflow", operationDescriptionUpdateFormWorkflow, inputSchemaUpdateFormWorkflow, executeUpdateFormWorkflow);
-  server.tool("update_form_workflow", aliasDescriptionUpdateFormWorkflow, inputSchemaUpdateFormWorkflow, executeUpdateFormWorkflow);
+  registerOperationTool(server, "core_updateFormWorkflow", "update_form_workflow", operationDescriptionUpdateFormWorkflow, aliasDescriptionUpdateFormWorkflow, inputSchemaUpdateFormWorkflow, executeUpdateFormWorkflow);
 
   const opUpdateKappFormType = requireOperation(operationMap, "updateKappFormType");
   const operationDescriptionUpdateKappFormType = "[form] Form Type Update. (PUT /kapps/{kappSlug}/formTypes/{name}). Operation ID: updateKappFormType. Custom logic: default OAS execution.";
@@ -653,7 +631,6 @@ export function registerFormTools(server: McpServer, runtime: ContextToolRuntime
     }
   };
 
-  server.tool("core_updateKappFormType", operationDescriptionUpdateKappFormType, inputSchemaUpdateKappFormType, executeUpdateKappFormType);
-  server.tool("update_kapp_form_type", aliasDescriptionUpdateKappFormType, inputSchemaUpdateKappFormType, executeUpdateKappFormType);
+  registerOperationTool(server, "core_updateKappFormType", "update_kapp_form_type", operationDescriptionUpdateKappFormType, aliasDescriptionUpdateKappFormType, inputSchemaUpdateKappFormType, executeUpdateKappFormType);
 
 }

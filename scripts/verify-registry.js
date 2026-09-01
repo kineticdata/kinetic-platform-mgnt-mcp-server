@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 
 // Verifies that generated context stubs fully cover all OAS operations.
 const CONTEXT_FILE = {
@@ -65,22 +66,101 @@ async function main() {
       contextContent.includes(`requireOperation(operationMap, "${op.operationId}")`),
       `Missing operation lookup for ${op.operationId} in ${op.context}`
     );
+    // Both names are declared in a single registerOperationTool call; which one is
+    // actually registered at runtime is decided by KINETIC_MCP_TOOL_NAMES.
     assert.ok(
-      contextContent.includes(`server.tool("${prefix}_${op.operationId}"`),
-      `Missing canonical tool registration for ${op.operationId} in ${op.context}`
-    );
-    assert.ok(
-      contextContent.includes(`server.tool("${op.alias}"`),
-      `Missing alias tool registration for ${op.operationId} in ${op.context}`
+      contextContent.includes(`registerOperationTool(server, "${prefix}_${op.operationId}", "${op.alias}"`),
+      `Missing registerOperationTool registration for ${op.operationId} in ${op.context}`
     );
   }
 
-  const totalToolRegistrations = Object.values(CONTEXT_FILE)
-    .map((fileName) => fs.readFileSync(path.resolve(contextDir, fileName), "utf8"))
-    .reduce((count, content) => count + (content.match(/server\.tool\("/g) ?? []).length, 0);
-  assert.equal(totalToolRegistrations, allOperations.length * 2, "Expected exactly 2 tool registrations per operation");
+  const contextContents = Object.values(CONTEXT_FILE).map((fileName) =>
+    fs.readFileSync(path.resolve(contextDir, fileName), "utf8")
+  );
 
-  console.log(`Registry verification passed for ${allOperations.length} operations and ${totalToolRegistrations} tool registrations.`);
+  const totalRegistrations = contextContents.reduce(
+    (count, content) => count + (content.match(/registerOperationTool\(server, "/g) ?? []).length,
+    0
+  );
+  assert.equal(
+    totalRegistrations,
+    allOperations.length,
+    "Expected exactly 1 registerOperationTool call per operation"
+  );
+
+  // The de-duplication fix: generated files must not call server.tool directly any more.
+  const strayDirectRegistrations = contextContents.reduce(
+    (count, content) => count + (content.match(/server\.tool\("/g) ?? []).length,
+    0
+  );
+  assert.equal(
+    strayDirectRegistrations,
+    0,
+    "Generated context files must register through registerOperationTool, not server.tool"
+  );
+
+  // shared.ts is the single place tool naming is decided.
+  const sharedContent = fs.readFileSync(path.resolve(contextDir, "shared.ts"), "utf8");
+  assert.ok(
+    sharedContent.includes("export function registerOperationTool("),
+    "shared.ts must export registerOperationTool"
+  );
+  assert.ok(
+    sharedContent.includes("resolveToolNameMode()"),
+    "registerOperationTool must honour KINETIC_MCP_TOOL_NAMES via resolveToolNameMode()"
+  );
+
+  console.log(
+    `Registry verification passed for ${allOperations.length} operations and ${totalRegistrations} registerOperationTool calls.`
+  );
+
+  await verifyConsolidatedCoverage(projectRoot, allOperations.length);
+}
+
+/**
+ * Consolidated mode must route every OAS operation somewhere. Requires a build,
+ * so this is skipped (with a notice) when dist/ is absent.
+ */
+async function verifyConsolidatedCoverage(projectRoot, expectedOperationCount) {
+  const consolidatedDist = path.resolve(projectRoot, "dist/tools/consolidated.js");
+  const oasDist = path.resolve(projectRoot, "dist/client/oas.js");
+  if (!fs.existsSync(consolidatedDist) || !fs.existsSync(oasDist)) {
+    console.log("Skipping consolidated coverage check (dist/ not built; run npm run build first).");
+    return;
+  }
+
+  const { buildFamilies } = await import(pathToFileURL(consolidatedDist).href);
+  const { extractOperations, loadOasSpec, loadOasSpecIfExists } = await import(pathToFileURL(oasDist).href);
+
+  const oasDir = path.resolve(projectRoot, "oas");
+  const operations = [
+    ...extractOperations(loadOasSpec(oasDir, "core.json"), "core"),
+    ...(loadOasSpecIfExists(oasDir, "integrator.json")
+      ? extractOperations(loadOasSpecIfExists(oasDir, "integrator.json"), "integrator")
+      : []),
+  ];
+
+  const families = buildFamilies(operations);
+  const routed = families.reduce((count, family) => count + family.entries.length, 0);
+
+  assert.equal(
+    routed,
+    expectedOperationCount,
+    `Consolidated mode routes ${routed} operations but the OAS has ${expectedOperationCount}`
+  );
+
+  for (const family of families) {
+    assert.ok(family.actions.length > 0, `Consolidated family ${family.tool} has no actions`);
+    assert.equal(
+      family.dispatch.size,
+      family.entries.length,
+      `Consolidated family ${family.tool} has colliding action routes`
+    );
+  }
+
+  console.log(
+    `Consolidated coverage passed: ${families.length} tools route all ${routed} operations.`
+  );
 }
 
 function extractOperationIds(spec) {

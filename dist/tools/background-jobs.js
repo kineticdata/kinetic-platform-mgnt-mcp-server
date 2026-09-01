@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { registerOperationTool } from "./contexts/shared.js";
 const backgroundJobBodySchema = z.object({
     type: z.string().describe('Job type. Use "Build Index" to build index definitions.'),
     content: z
@@ -40,8 +41,7 @@ export function registerBackgroundJobTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createKappBackgroundJob", kappDescription, kappInputSchema, executeKappBackgroundJob);
-    server.tool("create_kapp_background_job", kappDescription, kappInputSchema, executeKappBackgroundJob);
+    registerOperationTool(server, "core_createKappBackgroundJob", "create_kapp_background_job", kappDescription, kappDescription, kappInputSchema, executeKappBackgroundJob);
     // ── Form-level background jobs ─────────────────────────────────────────────
     const formDescription = "[form] Form Background Job Create. (POST /kapps/{kappSlug}/forms/{formSlug}/backgroundJobs). " +
         "Triggers an index build for form-level index definitions. " +
@@ -70,6 +70,5 @@ export function registerBackgroundJobTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createFormBackgroundJob", formDescription, formInputSchema, executeFormBackgroundJob);
-    server.tool("create_form_background_job", formDescription, formInputSchema, executeFormBackgroundJob);
+    registerOperationTool(server, "core_createFormBackgroundJob", "create_form_background_job", formDescription, formDescription, formInputSchema, executeFormBackgroundJob);
 }

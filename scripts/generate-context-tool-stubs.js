@@ -243,7 +243,7 @@ function renderContextFile(context, entries) {
   lines.push("// Regenerate with: npm run ops:generate-tools");
   lines.push('import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";');
   lines.push('import { z } from "zod";');
-  lines.push('import { ContextToolRuntime, requireOperation } from "./shared.js";');
+  lines.push('import { ContextToolRuntime, registerOperationTool, requireOperation } from "./shared.js";');
   lines.push("");
   lines.push(`export function ${fnName}(server: McpServer, runtime: ContextToolRuntime): void {`);
   lines.push("  const { operationMap, invokeDefaultOperation } = runtime;");
@@ -275,8 +275,9 @@ function renderContextFile(context, entries) {
       lines.push("    }");
       lines.push("  };");
       lines.push("");
-      lines.push(`  server.tool("${prefix}_${op.operationId}", operationDescription${suffix}, inputSchema${suffix}, execute${suffix});`);
-      lines.push(`  server.tool("${alias}", aliasDescription${suffix}, inputSchema${suffix}, execute${suffix});`);
+      lines.push(
+        `  registerOperationTool(server, "${prefix}_${op.operationId}", "${alias}", operationDescription${suffix}, aliasDescription${suffix}, inputSchema${suffix}, execute${suffix});`
+      );
       lines.push("");
     }
   }
@@ -395,7 +396,9 @@ function renderSharedFile() {
   return [
     "// AUTO-GENERATED FILE. Do not edit manually.",
     "// Regenerate with: npm run ops:generate-tools",
+    'import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";',
     'import { OasOperation } from "../../client/oas.js";',
+    'import { resolveToolNameMode } from "../tool-config.js";',
     "",
     "export type ContextToolRuntime = {",
     "  operationMap: Map<string, OasOperation>;",
@@ -410,18 +413,46 @@ function renderSharedFile() {
     "  return op;",
     "}",
     "",
+    "/**",
+    " * Single choke point for every generated operation registration.",
+    " *",
+    " * Historically each operation was registered twice under identical schema and",
+    " * handler (core_<operationId> and its snake_case alias), doubling the tool",
+    " * surface for zero added capability. KINETIC_MCP_TOOL_NAMES now selects:",
+    " *   alias (default) -> snake_case only, e.g. create_form",
+    " *   core            -> core_<operationId> / integrator_<operationId> only",
+    " *   both            -> legacy behaviour, both names registered",
+    " */",
+    "export function registerOperationTool(",
+    "  server: McpServer,",
+    "  coreName: string,",
+    "  aliasName: string,",
+    "  coreDescription: string,",
+    "  aliasDescription: string,",
+    "  inputSchema: any,",
+    "  handler: any,",
+    "): void {",
+    "  const nameMode = resolveToolNameMode();",
+    '  if (nameMode === "core" || nameMode === "both") {',
+    "    server.tool(coreName, coreDescription, inputSchema, handler);",
+    "  }",
+    '  if (nameMode === "alias" || nameMode === "both") {',
+    "    server.tool(aliasName, aliasDescription, inputSchema, handler);",
+    "  }",
+    "}",
+    "",
   ].join("\n");
 }
 
 function renderRegisterAllFile(activeContexts) {
   const imports = [];
-  const calls = [];
+  const registrars = [];
 
   for (const context of activeContexts) {
     const fileName = contextFileName(context);
     const fnName = contextFunctionName(context);
     imports.push(`import { ${fnName} } from "./${fileName}.js";`);
-    calls.push(`  ${fnName}(server, runtime);`);
+    registrars.push(`  { name: "${context}", register: ${fnName} },`);
   }
 
   return [
@@ -431,11 +462,23 @@ function renderRegisterAllFile(activeContexts) {
     'import { OasOperation } from "../../client/oas.js";',
     ...imports,
     'import { ContextToolRuntime } from "./shared.js";',
+    'import { resolveContextAllowlist } from "../tool-config.js";',
     "",
     "export type RegisterAllContextToolsArgs = {",
     "  operations: OasOperation[];",
     "  invokeDefaultOperation: ContextToolRuntime['invokeDefaultOperation'];",
     "};",
+    "",
+    "type ContextRegistrar = {",
+    "  name: string;",
+    "  register: (server: McpServer, runtime: ContextToolRuntime) => void;",
+    "};",
+    "",
+    "export const CONTEXT_REGISTRARS: ContextRegistrar[] = [",
+    ...registrars,
+    "];",
+    "",
+    "export const CONTEXT_NAMES: string[] = CONTEXT_REGISTRARS.map((entry) => entry.name);",
     "",
     "export function registerAllContextTools(server: McpServer, args: RegisterAllContextToolsArgs): void {",
     "  const operationMap = new Map(args.operations.map((op) => [op.operationId, op]));",
@@ -444,7 +487,13 @@ function renderRegisterAllFile(activeContexts) {
     "    invokeDefaultOperation: args.invokeDefaultOperation,",
     "  };",
     "",
-    ...calls,
+    "  // KINETIC_MCP_CONTEXTS allowlist; null means every context.",
+    "  const allowed = resolveContextAllowlist(CONTEXT_NAMES);",
+    "",
+    "  for (const entry of CONTEXT_REGISTRARS) {",
+    "    if (allowed && !allowed.has(entry.name)) continue;",
+    "    entry.register(server, runtime);",
+    "  }",
     "}",
     "",
   ].join("\n");

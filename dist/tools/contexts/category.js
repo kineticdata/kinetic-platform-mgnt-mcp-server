@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { requireOperation } from "./shared.js";
+import { registerOperationTool, requireOperation } from "./shared.js";
 export function registerCategoryTools(server, runtime) {
     const { operationMap, invokeDefaultOperation } = runtime;
     const opCreateCategorization = requireOperation(operationMap, "createCategorization");
@@ -26,8 +26,7 @@ export function registerCategoryTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createCategorization", operationDescriptionCreateCategorization, inputSchemaCreateCategorization, executeCreateCategorization);
-    server.tool("create_categorization", aliasDescriptionCreateCategorization, inputSchemaCreateCategorization, executeCreateCategorization);
+    registerOperationTool(server, "core_createCategorization", "create_categorization", operationDescriptionCreateCategorization, aliasDescriptionCreateCategorization, inputSchemaCreateCategorization, executeCreateCategorization);
     const opCreateCategory = requireOperation(operationMap, "createCategory");
     const operationDescriptionCreateCategory = "[category] Category Create. (POST /kapps/{kappSlug}/categories). Operation ID: createCategory. Custom logic: default OAS execution.";
     const aliasDescriptionCreateCategory = "[category] Category Create. (POST /kapps/{kappSlug}/categories). Operation ID: createCategory. Custom logic: default OAS execution. Use this alias for POST /kapps/{kappSlug}/categories. Tags: Categories. Required inputs: kappSlug (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -52,8 +51,7 @@ export function registerCategoryTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createCategory", operationDescriptionCreateCategory, inputSchemaCreateCategory, executeCreateCategory);
-    server.tool("create_category", aliasDescriptionCreateCategory, inputSchemaCreateCategory, executeCreateCategory);
+    registerOperationTool(server, "core_createCategory", "create_category", operationDescriptionCreateCategory, aliasDescriptionCreateCategory, inputSchemaCreateCategory, executeCreateCategory);
     const opDeleteCategorization = requireOperation(operationMap, "deleteCategorization");
     const operationDescriptionDeleteCategorization = "[category] Categorization Delete. (DELETE /kapps/{kappSlug}/categorizations/{categorizationName}). Operation ID: deleteCategorization. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteCategorization = "[category] Categorization Delete. (DELETE /kapps/{kappSlug}/categorizations/{categorizationName}). Operation ID: deleteCategorization. Custom logic: default OAS execution. Use this alias for DELETE /kapps/{kappSlug}/categorizations/{categorizationName}. Tags: Categories. Required inputs: kappSlug (path), categorizationName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -79,8 +77,7 @@ export function registerCategoryTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteCategorization", operationDescriptionDeleteCategorization, inputSchemaDeleteCategorization, executeDeleteCategorization);
-    server.tool("delete_categorization", aliasDescriptionDeleteCategorization, inputSchemaDeleteCategorization, executeDeleteCategorization);
+    registerOperationTool(server, "core_deleteCategorization", "delete_categorization", operationDescriptionDeleteCategorization, aliasDescriptionDeleteCategorization, inputSchemaDeleteCategorization, executeDeleteCategorization);
     const opDeleteCategory = requireOperation(operationMap, "deleteCategory");
     const operationDescriptionDeleteCategory = "[category] Category Delete. (DELETE /kapps/{kappSlug}/categories/{name}). Operation ID: deleteCategory. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteCategory = "[category] Category Delete. (DELETE /kapps/{kappSlug}/categories/{name}). Operation ID: deleteCategory. Custom logic: default OAS execution. Use this alias for DELETE /kapps/{kappSlug}/categories/{name}. Tags: Categories. Required inputs: kappSlug (path), name (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -106,8 +103,7 @@ export function registerCategoryTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteCategory", operationDescriptionDeleteCategory, inputSchemaDeleteCategory, executeDeleteCategory);
-    server.tool("delete_category", aliasDescriptionDeleteCategory, inputSchemaDeleteCategory, executeDeleteCategory);
+    registerOperationTool(server, "core_deleteCategory", "delete_category", operationDescriptionDeleteCategory, aliasDescriptionDeleteCategory, inputSchemaDeleteCategory, executeDeleteCategory);
     const opListCategories = requireOperation(operationMap, "listCategories");
     const operationDescriptionListCategories = "[category] Category List. (GET /kapps/{kappSlug}/categories). Operation ID: listCategories. Custom logic: default OAS execution.";
     const aliasDescriptionListCategories = "[category] Category List. (GET /kapps/{kappSlug}/categories). Operation ID: listCategories. Custom logic: default OAS execution. Use this alias for GET /kapps/{kappSlug}/categories. Tags: Categories. Required inputs: kappSlug (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -132,8 +128,7 @@ export function registerCategoryTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listCategories", operationDescriptionListCategories, inputSchemaListCategories, executeListCategories);
-    server.tool("list_categories", aliasDescriptionListCategories, inputSchemaListCategories, executeListCategories);
+    registerOperationTool(server, "core_listCategories", "list_categories", operationDescriptionListCategories, aliasDescriptionListCategories, inputSchemaListCategories, executeListCategories);
     const opListCategorizations = requireOperation(operationMap, "listCategorizations");
     const operationDescriptionListCategorizations = "[category] Categorization List. (GET /kapps/{kappSlug}/categorizations). Operation ID: listCategorizations. Custom logic: default OAS execution.";
     const aliasDescriptionListCategorizations = "[category] Categorization List. (GET /kapps/{kappSlug}/categorizations). Operation ID: listCategorizations. Custom logic: default OAS execution. Use this alias for GET /kapps/{kappSlug}/categorizations. Tags: Categories. Required inputs: kappSlug (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -158,8 +153,7 @@ export function registerCategoryTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listCategorizations", operationDescriptionListCategorizations, inputSchemaListCategorizations, executeListCategorizations);
-    server.tool("list_categorizations", aliasDescriptionListCategorizations, inputSchemaListCategorizations, executeListCategorizations);
+    registerOperationTool(server, "core_listCategorizations", "list_categorizations", operationDescriptionListCategorizations, aliasDescriptionListCategorizations, inputSchemaListCategorizations, executeListCategorizations);
     const opRetrieveCategorization = requireOperation(operationMap, "retrieveCategorization");
     const operationDescriptionRetrieveCategorization = "[category] Categorization Retrieve. (GET /kapps/{kappSlug}/categorizations/{categorizationName}). Operation ID: retrieveCategorization. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveCategorization = "[category] Categorization Retrieve. (GET /kapps/{kappSlug}/categorizations/{categorizationName}). Operation ID: retrieveCategorization. Custom logic: default OAS execution. Use this alias for GET /kapps/{kappSlug}/categorizations/{categorizationName}. Tags: Categories. Required inputs: kappSlug (path), categorizationName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -185,8 +179,7 @@ export function registerCategoryTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveCategorization", operationDescriptionRetrieveCategorization, inputSchemaRetrieveCategorization, executeRetrieveCategorization);
-    server.tool("retrieve_categorization", aliasDescriptionRetrieveCategorization, inputSchemaRetrieveCategorization, executeRetrieveCategorization);
+    registerOperationTool(server, "core_retrieveCategorization", "retrieve_categorization", operationDescriptionRetrieveCategorization, aliasDescriptionRetrieveCategorization, inputSchemaRetrieveCategorization, executeRetrieveCategorization);
     const opRetrieveCategory = requireOperation(operationMap, "retrieveCategory");
     const operationDescriptionRetrieveCategory = "[category] Category Retrieve. (GET /kapps/{kappSlug}/categories/{name}). Operation ID: retrieveCategory. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveCategory = "[category] Category Retrieve. (GET /kapps/{kappSlug}/categories/{name}). Operation ID: retrieveCategory. Custom logic: default OAS execution. Use this alias for GET /kapps/{kappSlug}/categories/{name}. Tags: Categories. Required inputs: kappSlug (path), name (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -212,8 +205,7 @@ export function registerCategoryTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveCategory", operationDescriptionRetrieveCategory, inputSchemaRetrieveCategory, executeRetrieveCategory);
-    server.tool("retrieve_category", aliasDescriptionRetrieveCategory, inputSchemaRetrieveCategory, executeRetrieveCategory);
+    registerOperationTool(server, "core_retrieveCategory", "retrieve_category", operationDescriptionRetrieveCategory, aliasDescriptionRetrieveCategory, inputSchemaRetrieveCategory, executeRetrieveCategory);
     const opUpdateCategorization = requireOperation(operationMap, "updateCategorization");
     const operationDescriptionUpdateCategorization = "[category] Categorization Update. (PUT /kapps/{kappSlug}/categorizations/{categorizationName}). Operation ID: updateCategorization. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateCategorization = "[category] Categorization Update. (PUT /kapps/{kappSlug}/categorizations/{categorizationName}). Operation ID: updateCategorization. Custom logic: default OAS execution. Use this alias for PUT /kapps/{kappSlug}/categorizations/{categorizationName}. Tags: Categories. Required inputs: kappSlug (path), categorizationName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -239,8 +231,7 @@ export function registerCategoryTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateCategorization", operationDescriptionUpdateCategorization, inputSchemaUpdateCategorization, executeUpdateCategorization);
-    server.tool("update_categorization", aliasDescriptionUpdateCategorization, inputSchemaUpdateCategorization, executeUpdateCategorization);
+    registerOperationTool(server, "core_updateCategorization", "update_categorization", operationDescriptionUpdateCategorization, aliasDescriptionUpdateCategorization, inputSchemaUpdateCategorization, executeUpdateCategorization);
     const opUpdateCategory = requireOperation(operationMap, "updateCategory");
     const operationDescriptionUpdateCategory = "[category] Category Update. (PUT /kapps/{kappSlug}/categories/{name}). Operation ID: updateCategory. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateCategory = "[category] Category Update. (PUT /kapps/{kappSlug}/categories/{name}). Operation ID: updateCategory. Custom logic: default OAS execution. Use this alias for PUT /kapps/{kappSlug}/categories/{name}. Tags: Categories. Required inputs: kappSlug (path), name (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -266,6 +257,5 @@ export function registerCategoryTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateCategory", operationDescriptionUpdateCategory, inputSchemaUpdateCategory, executeUpdateCategory);
-    server.tool("update_category", aliasDescriptionUpdateCategory, inputSchemaUpdateCategory, executeUpdateCategory);
+    registerOperationTool(server, "core_updateCategory", "update_category", operationDescriptionUpdateCategory, aliasDescriptionUpdateCategory, inputSchemaUpdateCategory, executeUpdateCategory);
 }

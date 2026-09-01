@@ -2,7 +2,7 @@
 // Regenerate with: npm run ops:generate-tools
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { ContextToolRuntime, requireOperation } from "./shared.js";
+import { ContextToolRuntime, registerOperationTool, requireOperation } from "./shared.js";
 
 export function registerIntegratorTools(server: McpServer, runtime: ContextToolRuntime): void {
   const { operationMap, invokeDefaultOperation } = runtime;
@@ -29,8 +29,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_createConnection", operationDescriptionCreateConnection, inputSchemaCreateConnection, executeCreateConnection);
-  server.tool("create_connection", aliasDescriptionCreateConnection, inputSchemaCreateConnection, executeCreateConnection);
+  registerOperationTool(server, "integrator_createConnection", "create_connection", operationDescriptionCreateConnection, aliasDescriptionCreateConnection, inputSchemaCreateConnection, executeCreateConnection);
 
   const opCreateOperation = requireOperation(operationMap, "createOperation");
   const operationDescriptionCreateOperation = "[integrator] Create an operation. (POST /api/connections/{connection_id}/operations). Operation ID: createOperation. Custom logic: default OAS execution.";
@@ -55,8 +54,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_createOperation", operationDescriptionCreateOperation, inputSchemaCreateOperation, executeCreateOperation);
-  server.tool("create_operation", aliasDescriptionCreateOperation, inputSchemaCreateOperation, executeCreateOperation);
+  registerOperationTool(server, "integrator_createOperation", "create_operation", operationDescriptionCreateOperation, aliasDescriptionCreateOperation, inputSchemaCreateOperation, executeCreateOperation);
 
   const opDeleteConnection = requireOperation(operationMap, "deleteConnection");
   const operationDescriptionDeleteConnection = "[integrator] Delete a connection. (DELETE /api/connections/{id}). Operation ID: deleteConnection. Custom logic: default OAS execution.";
@@ -81,8 +79,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_deleteConnection", operationDescriptionDeleteConnection, inputSchemaDeleteConnection, executeDeleteConnection);
-  server.tool("delete_connection", aliasDescriptionDeleteConnection, inputSchemaDeleteConnection, executeDeleteConnection);
+  registerOperationTool(server, "integrator_deleteConnection", "delete_connection", operationDescriptionDeleteConnection, aliasDescriptionDeleteConnection, inputSchemaDeleteConnection, executeDeleteConnection);
 
   const opDeleteOperation = requireOperation(operationMap, "deleteOperation");
   const operationDescriptionDeleteOperation = "[integrator] Delete an operation. (DELETE /api/connections/{connection_id}/operations/{id}). Operation ID: deleteOperation. Custom logic: default OAS execution.";
@@ -108,8 +105,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_deleteOperation", operationDescriptionDeleteOperation, inputSchemaDeleteOperation, executeDeleteOperation);
-  server.tool("delete_operation", aliasDescriptionDeleteOperation, inputSchemaDeleteOperation, executeDeleteOperation);
+  registerOperationTool(server, "integrator_deleteOperation", "delete_operation", operationDescriptionDeleteOperation, aliasDescriptionDeleteOperation, inputSchemaDeleteOperation, executeDeleteOperation);
 
   const opExecuteOperation = requireOperation(operationMap, "executeOperation");
   const operationDescriptionExecuteOperation = "[integrator] Execute an operation. (POST /api/execute). Operation ID: executeOperation. Custom logic: default OAS execution.";
@@ -134,8 +130,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_executeOperation", operationDescriptionExecuteOperation, inputSchemaExecuteOperation, executeExecuteOperation);
-  server.tool("execute_operation", aliasDescriptionExecuteOperation, inputSchemaExecuteOperation, executeExecuteOperation);
+  registerOperationTool(server, "integrator_executeOperation", "execute_operation", operationDescriptionExecuteOperation, aliasDescriptionExecuteOperation, inputSchemaExecuteOperation, executeExecuteOperation);
 
   const opExportConnection = requireOperation(operationMap, "exportConnection");
   const operationDescriptionExportConnection = "[integrator] Export a connection and operations. (GET /api/export/connections/{id}). Operation ID: exportConnection. Custom logic: default OAS execution.";
@@ -160,8 +155,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_exportConnection", operationDescriptionExportConnection, inputSchemaExportConnection, executeExportConnection);
-  server.tool("export_connection", aliasDescriptionExportConnection, inputSchemaExportConnection, executeExportConnection);
+  registerOperationTool(server, "integrator_exportConnection", "export_connection", operationDescriptionExportConnection, aliasDescriptionExportConnection, inputSchemaExportConnection, executeExportConnection);
 
   const opImportConnection = requireOperation(operationMap, "importConnection");
   const operationDescriptionImportConnection = "[integrator] Import a connection. (POST /api/import/connections). Operation ID: importConnection. Custom logic: default OAS execution.";
@@ -186,8 +180,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_importConnection", operationDescriptionImportConnection, inputSchemaImportConnection, executeImportConnection);
-  server.tool("import_connection", aliasDescriptionImportConnection, inputSchemaImportConnection, executeImportConnection);
+  registerOperationTool(server, "integrator_importConnection", "import_connection", operationDescriptionImportConnection, aliasDescriptionImportConnection, inputSchemaImportConnection, executeImportConnection);
 
   const opImportOperations = requireOperation(operationMap, "importOperations");
   const operationDescriptionImportOperations = "[integrator] Import operations. (POST /api/import/connections/{connection_id}/operations). Operation ID: importOperations. Custom logic: default OAS execution.";
@@ -213,8 +206,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_importOperations", operationDescriptionImportOperations, inputSchemaImportOperations, executeImportOperations);
-  server.tool("import_operations", aliasDescriptionImportOperations, inputSchemaImportOperations, executeImportOperations);
+  registerOperationTool(server, "integrator_importOperations", "import_operations", operationDescriptionImportOperations, aliasDescriptionImportOperations, inputSchemaImportOperations, executeImportOperations);
 
   const opInspectOperation = requireOperation(operationMap, "inspectOperation");
   const operationDescriptionInspectOperation = "[integrator] Inspect an operation. (POST /api/inspect). Operation ID: inspectOperation. Custom logic: default OAS execution.";
@@ -238,8 +230,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_inspectOperation", operationDescriptionInspectOperation, inputSchemaInspectOperation, executeInspectOperation);
-  server.tool("inspect_operation", aliasDescriptionInspectOperation, inputSchemaInspectOperation, executeInspectOperation);
+  registerOperationTool(server, "integrator_inspectOperation", "inspect_operation", operationDescriptionInspectOperation, aliasDescriptionInspectOperation, inputSchemaInspectOperation, executeInspectOperation);
 
   const opIntegratorHealth = requireOperation(operationMap, "integratorHealth");
   const operationDescriptionIntegratorHealth = "[integrator] Health. (GET /api/healthz). Operation ID: integratorHealth. Custom logic: default OAS execution.";
@@ -263,8 +254,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_integratorHealth", operationDescriptionIntegratorHealth, inputSchemaIntegratorHealth, executeIntegratorHealth);
-  server.tool("integrator_health", aliasDescriptionIntegratorHealth, inputSchemaIntegratorHealth, executeIntegratorHealth);
+  registerOperationTool(server, "integrator_integratorHealth", "integrator_health", operationDescriptionIntegratorHealth, aliasDescriptionIntegratorHealth, inputSchemaIntegratorHealth, executeIntegratorHealth);
 
   const opIntegratorVersion = requireOperation(operationMap, "integratorVersion");
   const operationDescriptionIntegratorVersion = "[integrator] Version. (GET /api/version). Operation ID: integratorVersion. Custom logic: default OAS execution.";
@@ -288,8 +278,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_integratorVersion", operationDescriptionIntegratorVersion, inputSchemaIntegratorVersion, executeIntegratorVersion);
-  server.tool("integrator_version", aliasDescriptionIntegratorVersion, inputSchemaIntegratorVersion, executeIntegratorVersion);
+  registerOperationTool(server, "integrator_integratorVersion", "integrator_version", operationDescriptionIntegratorVersion, aliasDescriptionIntegratorVersion, inputSchemaIntegratorVersion, executeIntegratorVersion);
 
   const opListConnections = requireOperation(operationMap, "listConnections");
   const operationDescriptionListConnections = "[integrator] Retrieve connections. (GET /api/connections). Operation ID: listConnections. Custom logic: default OAS execution.";
@@ -313,8 +302,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_listConnections", operationDescriptionListConnections, inputSchemaListConnections, executeListConnections);
-  server.tool("list_connections", aliasDescriptionListConnections, inputSchemaListConnections, executeListConnections);
+  registerOperationTool(server, "integrator_listConnections", "list_connections", operationDescriptionListConnections, aliasDescriptionListConnections, inputSchemaListConnections, executeListConnections);
 
   const opListOperations = requireOperation(operationMap, "listOperations");
   const operationDescriptionListOperations = "[integrator] Retrieve operations. (GET /api/connections/{connection_id}/operations). Operation ID: listOperations. Custom logic: default OAS execution.";
@@ -339,8 +327,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_listOperations", operationDescriptionListOperations, inputSchemaListOperations, executeListOperations);
-  server.tool("list_operations", aliasDescriptionListOperations, inputSchemaListOperations, executeListOperations);
+  registerOperationTool(server, "integrator_listOperations", "list_operations", operationDescriptionListOperations, aliasDescriptionListOperations, inputSchemaListOperations, executeListOperations);
 
   const opPatchConnection = requireOperation(operationMap, "patchConnection");
   const operationDescriptionPatchConnection = "[integrator] Update a connection. (PATCH /api/connections/{id}). Operation ID: patchConnection. Custom logic: default OAS execution.";
@@ -365,8 +352,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_patchConnection", operationDescriptionPatchConnection, inputSchemaPatchConnection, executePatchConnection);
-  server.tool("patch_connection", aliasDescriptionPatchConnection, inputSchemaPatchConnection, executePatchConnection);
+  registerOperationTool(server, "integrator_patchConnection", "patch_connection", operationDescriptionPatchConnection, aliasDescriptionPatchConnection, inputSchemaPatchConnection, executePatchConnection);
 
   const opPatchOperation = requireOperation(operationMap, "patchOperation");
   const operationDescriptionPatchOperation = "[integrator] Update an operation. (PATCH /api/connections/{connection_id}/operations/{id}). Operation ID: patchOperation. Custom logic: default OAS execution.";
@@ -392,8 +378,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_patchOperation", operationDescriptionPatchOperation, inputSchemaPatchOperation, executePatchOperation);
-  server.tool("patch_operation", aliasDescriptionPatchOperation, inputSchemaPatchOperation, executePatchOperation);
+  registerOperationTool(server, "integrator_patchOperation", "patch_operation", operationDescriptionPatchOperation, aliasDescriptionPatchOperation, inputSchemaPatchOperation, executePatchOperation);
 
   const opRestartConnection = requireOperation(operationMap, "restartConnection");
   const operationDescriptionRestartConnection = "[integrator] Restart connection. (POST /api/connections/{id}/restart). Operation ID: restartConnection. Custom logic: default OAS execution.";
@@ -418,8 +403,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_restartConnection", operationDescriptionRestartConnection, inputSchemaRestartConnection, executeRestartConnection);
-  server.tool("restart_connection", aliasDescriptionRestartConnection, inputSchemaRestartConnection, executeRestartConnection);
+  registerOperationTool(server, "integrator_restartConnection", "restart_connection", operationDescriptionRestartConnection, aliasDescriptionRestartConnection, inputSchemaRestartConnection, executeRestartConnection);
 
   const opRetrieveConnection = requireOperation(operationMap, "retrieveConnection");
   const operationDescriptionRetrieveConnection = "[integrator] Show connection. (GET /api/connections/{id}). Operation ID: retrieveConnection. Custom logic: default OAS execution.";
@@ -444,8 +428,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_retrieveConnection", operationDescriptionRetrieveConnection, inputSchemaRetrieveConnection, executeRetrieveConnection);
-  server.tool("retrieve_connection", aliasDescriptionRetrieveConnection, inputSchemaRetrieveConnection, executeRetrieveConnection);
+  registerOperationTool(server, "integrator_retrieveConnection", "retrieve_connection", operationDescriptionRetrieveConnection, aliasDescriptionRetrieveConnection, inputSchemaRetrieveConnection, executeRetrieveConnection);
 
   const opRetrieveOperation = requireOperation(operationMap, "retrieveOperation");
   const operationDescriptionRetrieveOperation = "[integrator] Show operation. (GET /api/connections/{connection_id}/operations/{id}). Operation ID: retrieveOperation. Custom logic: default OAS execution.";
@@ -471,8 +454,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_retrieveOperation", operationDescriptionRetrieveOperation, inputSchemaRetrieveOperation, executeRetrieveOperation);
-  server.tool("retrieve_operation", aliasDescriptionRetrieveOperation, inputSchemaRetrieveOperation, executeRetrieveOperation);
+  registerOperationTool(server, "integrator_retrieveOperation", "retrieve_operation", operationDescriptionRetrieveOperation, aliasDescriptionRetrieveOperation, inputSchemaRetrieveOperation, executeRetrieveOperation);
 
   const opRotateEncryptionKey = requireOperation(operationMap, "rotateEncryptionKey");
   const operationDescriptionRotateEncryptionKey = "[integrator] Rotate Encryption Key. (POST /api/rotate-encryption-key). Operation ID: rotateEncryptionKey. Custom logic: default OAS execution.";
@@ -496,8 +478,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_rotateEncryptionKey", operationDescriptionRotateEncryptionKey, inputSchemaRotateEncryptionKey, executeRotateEncryptionKey);
-  server.tool("rotate_encryption_key", aliasDescriptionRotateEncryptionKey, inputSchemaRotateEncryptionKey, executeRotateEncryptionKey);
+  registerOperationTool(server, "integrator_rotateEncryptionKey", "rotate_encryption_key", operationDescriptionRotateEncryptionKey, aliasDescriptionRotateEncryptionKey, inputSchemaRotateEncryptionKey, executeRotateEncryptionKey);
 
   const opSearchOperations = requireOperation(operationMap, "searchOperations");
   const operationDescriptionSearchOperations = "[integrator] Search operations. (POST /api/operations-search). Operation ID: searchOperations. Custom logic: default OAS execution.";
@@ -521,8 +502,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_searchOperations", operationDescriptionSearchOperations, inputSchemaSearchOperations, executeSearchOperations);
-  server.tool("search_operations", aliasDescriptionSearchOperations, inputSchemaSearchOperations, executeSearchOperations);
+  registerOperationTool(server, "integrator_searchOperations", "search_operations", operationDescriptionSearchOperations, aliasDescriptionSearchOperations, inputSchemaSearchOperations, executeSearchOperations);
 
   const opTestSavedConnection = requireOperation(operationMap, "testSavedConnection");
   const operationDescriptionTestSavedConnection = "[integrator] Test saved connection. (POST /api/connections/{id}/test). Operation ID: testSavedConnection. Custom logic: default OAS execution.";
@@ -547,8 +527,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_testSavedConnection", operationDescriptionTestSavedConnection, inputSchemaTestSavedConnection, executeTestSavedConnection);
-  server.tool("test_saved_connection", aliasDescriptionTestSavedConnection, inputSchemaTestSavedConnection, executeTestSavedConnection);
+  registerOperationTool(server, "integrator_testSavedConnection", "test_saved_connection", operationDescriptionTestSavedConnection, aliasDescriptionTestSavedConnection, inputSchemaTestSavedConnection, executeTestSavedConnection);
 
   const opTestTransform = requireOperation(operationMap, "testTransform");
   const operationDescriptionTestTransform = "[integrator] Test Transform Expressions. (POST /api/transform). Operation ID: testTransform. Custom logic: default OAS execution.";
@@ -572,8 +551,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_testTransform", operationDescriptionTestTransform, inputSchemaTestTransform, executeTestTransform);
-  server.tool("test_transform", aliasDescriptionTestTransform, inputSchemaTestTransform, executeTestTransform);
+  registerOperationTool(server, "integrator_testTransform", "test_transform", operationDescriptionTestTransform, aliasDescriptionTestTransform, inputSchemaTestTransform, executeTestTransform);
 
   const opTestUnsavedConnection = requireOperation(operationMap, "testUnsavedConnection");
   const operationDescriptionTestUnsavedConnection = "[integrator] Test unsaved connection configuration. (POST /api/test). Operation ID: testUnsavedConnection. Custom logic: default OAS execution.";
@@ -597,8 +575,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_testUnsavedConnection", operationDescriptionTestUnsavedConnection, inputSchemaTestUnsavedConnection, executeTestUnsavedConnection);
-  server.tool("test_unsaved_connection", aliasDescriptionTestUnsavedConnection, inputSchemaTestUnsavedConnection, executeTestUnsavedConnection);
+  registerOperationTool(server, "integrator_testUnsavedConnection", "test_unsaved_connection", operationDescriptionTestUnsavedConnection, aliasDescriptionTestUnsavedConnection, inputSchemaTestUnsavedConnection, executeTestUnsavedConnection);
 
   const opUpdateConnection = requireOperation(operationMap, "updateConnection");
   const operationDescriptionUpdateConnection = "[integrator] Update a connection. (PUT /api/connections/{id}). Operation ID: updateConnection. Custom logic: default OAS execution.";
@@ -623,8 +600,7 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_updateConnection", operationDescriptionUpdateConnection, inputSchemaUpdateConnection, executeUpdateConnection);
-  server.tool("update_connection", aliasDescriptionUpdateConnection, inputSchemaUpdateConnection, executeUpdateConnection);
+  registerOperationTool(server, "integrator_updateConnection", "update_connection", operationDescriptionUpdateConnection, aliasDescriptionUpdateConnection, inputSchemaUpdateConnection, executeUpdateConnection);
 
   const opUpdateOperation = requireOperation(operationMap, "updateOperation");
   const operationDescriptionUpdateOperation = "[integrator] Update an operation. (PUT /api/connections/{connection_id}/operations/{id}). Operation ID: updateOperation. Custom logic: default OAS execution.";
@@ -650,7 +626,6 @@ export function registerIntegratorTools(server: McpServer, runtime: ContextToolR
     }
   };
 
-  server.tool("integrator_updateOperation", operationDescriptionUpdateOperation, inputSchemaUpdateOperation, executeUpdateOperation);
-  server.tool("update_operation", aliasDescriptionUpdateOperation, inputSchemaUpdateOperation, executeUpdateOperation);
+  registerOperationTool(server, "integrator_updateOperation", "update_operation", operationDescriptionUpdateOperation, aliasDescriptionUpdateOperation, inputSchemaUpdateOperation, executeUpdateOperation);
 
 }
