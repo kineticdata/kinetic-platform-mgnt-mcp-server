@@ -1,10 +1,10 @@
 {
   "_comment": [
+    "Cursor: place this at .cursor/mcp.json (project) or ~/.cursor/mcp.json (global).",
     "Credentials live in a gitignored .env loaded via --env-file, NOT in this file.",
-    "Both paths must be ABSOLUTE: a relative --env-file resolves against the MCP",
-    "client's working directory and silently loads nothing.",
-    "Requires Node >= 20.6.0 for --env-file support.",
-    "Omit KINETIC_MCP_MODE to get slim mode (~10 tools), the default."
+    "Both paths must be ABSOLUTE. Requires Node >= 20.6.0.",
+    "Leave KINETIC_MCP_MODE unset: slim mode (~10 tools) is the default and is",
+    "what keeps Cursor under its ~40-tool ceiling."
   ],
   "mcpServers": {
     "kinetic-platform": {
