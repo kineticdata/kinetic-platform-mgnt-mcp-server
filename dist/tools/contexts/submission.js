@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { requireOperation } from "./shared.js";
+import { registerOperationTool, requireOperation } from "./shared.js";
 export function registerSubmissionTools(server, runtime) {
     const { operationMap, invokeDefaultOperation } = runtime;
     const opCloneSubmission = requireOperation(operationMap, "cloneSubmission");
@@ -27,8 +27,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_cloneSubmission", operationDescriptionCloneSubmission, inputSchemaCloneSubmission, executeCloneSubmission);
-    server.tool("clone_submission", aliasDescriptionCloneSubmission, inputSchemaCloneSubmission, executeCloneSubmission);
+    registerOperationTool(server, "core_cloneSubmission", "clone_submission", operationDescriptionCloneSubmission, aliasDescriptionCloneSubmission, inputSchemaCloneSubmission, executeCloneSubmission);
     const opCreateSubmission = requireOperation(operationMap, "createSubmission");
     const operationDescriptionCreateSubmission = "[submission] Submission Create. (POST /kapps/{kappSlug}/forms/{formSlug}/submissions). Operation ID: createSubmission. Custom logic: default OAS execution.";
     const aliasDescriptionCreateSubmission = "[submission] Submission Create. (POST /kapps/{kappSlug}/forms/{formSlug}/submissions). Operation ID: createSubmission. Custom logic: default OAS execution. Use this alias for POST /kapps/{kappSlug}/forms/{formSlug}/submissions. Tags: Submissions. Required inputs: kappSlug (path), formSlug (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -58,8 +57,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createSubmission", operationDescriptionCreateSubmission, inputSchemaCreateSubmission, executeCreateSubmission);
-    server.tool("create_submission", aliasDescriptionCreateSubmission, inputSchemaCreateSubmission, executeCreateSubmission);
+    registerOperationTool(server, "core_createSubmission", "create_submission", operationDescriptionCreateSubmission, aliasDescriptionCreateSubmission, inputSchemaCreateSubmission, executeCreateSubmission);
     const opCreateSubmissionActivity = requireOperation(operationMap, "createSubmissionActivity");
     const operationDescriptionCreateSubmissionActivity = "[submission] Submission Activity Create. (POST /submissions/{submissionId}/activities). Operation ID: createSubmissionActivity. Custom logic: default OAS execution.";
     const aliasDescriptionCreateSubmissionActivity = "[submission] Submission Activity Create. (POST /submissions/{submissionId}/activities). Operation ID: createSubmissionActivity. Custom logic: default OAS execution. Use this alias for POST /submissions/{submissionId}/activities. Tags: Submissions. Required inputs: submissionId (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -84,8 +82,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createSubmissionActivity", operationDescriptionCreateSubmissionActivity, inputSchemaCreateSubmissionActivity, executeCreateSubmissionActivity);
-    server.tool("create_submission_activity", aliasDescriptionCreateSubmissionActivity, inputSchemaCreateSubmissionActivity, executeCreateSubmissionActivity);
+    registerOperationTool(server, "core_createSubmissionActivity", "create_submission_activity", operationDescriptionCreateSubmissionActivity, aliasDescriptionCreateSubmissionActivity, inputSchemaCreateSubmissionActivity, executeCreateSubmissionActivity);
     const opCreateSubmissionMultipart = requireOperation(operationMap, "createSubmissionMultipart");
     const operationDescriptionCreateSubmissionMultipart = "[submission] Submission Create (with Attachments). (POST /kapps/{kappSlug}/forms/{formSlug}/submissions-multipart). Operation ID: createSubmissionMultipart. Custom logic: default OAS execution.";
     const aliasDescriptionCreateSubmissionMultipart = "[submission] Submission Create (with Attachments). (POST /kapps/{kappSlug}/forms/{formSlug}/submissions-multipart). Operation ID: createSubmissionMultipart. Custom logic: default OAS execution. Use this alias for POST /kapps/{kappSlug}/forms/{formSlug}/submissions-multipart. Tags: Submissions. Required inputs: kappSlug (path), formSlug (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -112,8 +109,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createSubmissionMultipart", operationDescriptionCreateSubmissionMultipart, inputSchemaCreateSubmissionMultipart, executeCreateSubmissionMultipart);
-    server.tool("create_submission_multipart", aliasDescriptionCreateSubmissionMultipart, inputSchemaCreateSubmissionMultipart, executeCreateSubmissionMultipart);
+    registerOperationTool(server, "core_createSubmissionMultipart", "create_submission_multipart", operationDescriptionCreateSubmissionMultipart, aliasDescriptionCreateSubmissionMultipart, inputSchemaCreateSubmissionMultipart, executeCreateSubmissionMultipart);
     const opDeleteSubmission = requireOperation(operationMap, "deleteSubmission");
     const operationDescriptionDeleteSubmission = "[submission] Submission Delete. (DELETE /submissions/{submissionId}). Operation ID: deleteSubmission. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteSubmission = "[submission] Submission Delete. (DELETE /submissions/{submissionId}). Operation ID: deleteSubmission. Custom logic: default OAS execution. Use this alias for DELETE /submissions/{submissionId}. Tags: Submissions. Required inputs: submissionId (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -138,8 +134,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteSubmission", operationDescriptionDeleteSubmission, inputSchemaDeleteSubmission, executeDeleteSubmission);
-    server.tool("delete_submission", aliasDescriptionDeleteSubmission, inputSchemaDeleteSubmission, executeDeleteSubmission);
+    registerOperationTool(server, "core_deleteSubmission", "delete_submission", operationDescriptionDeleteSubmission, aliasDescriptionDeleteSubmission, inputSchemaDeleteSubmission, executeDeleteSubmission);
     const opDeleteSubmissionActivity = requireOperation(operationMap, "deleteSubmissionActivity");
     const operationDescriptionDeleteSubmissionActivity = "[submission] Submission Activity Delete. (DELETE /submissions/{submissionId}/activities/{activityId}). Operation ID: deleteSubmissionActivity. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteSubmissionActivity = "[submission] Submission Activity Delete. (DELETE /submissions/{submissionId}/activities/{activityId}). Operation ID: deleteSubmissionActivity. Custom logic: default OAS execution. Use this alias for DELETE /submissions/{submissionId}/activities/{activityId}. Tags: Submissions. Required inputs: submissionId (path), activityId (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -165,8 +160,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteSubmissionActivity", operationDescriptionDeleteSubmissionActivity, inputSchemaDeleteSubmissionActivity, executeDeleteSubmissionActivity);
-    server.tool("delete_submission_activity", aliasDescriptionDeleteSubmissionActivity, inputSchemaDeleteSubmissionActivity, executeDeleteSubmissionActivity);
+    registerOperationTool(server, "core_deleteSubmissionActivity", "delete_submission_activity", operationDescriptionDeleteSubmissionActivity, aliasDescriptionDeleteSubmissionActivity, inputSchemaDeleteSubmissionActivity, executeDeleteSubmissionActivity);
     const opListFormSubmissions = requireOperation(operationMap, "listFormSubmissions");
     const operationDescriptionListFormSubmissions = "[submission] Submission Search (by Form). (GET /kapps/{kappSlug}/forms/{formSlug}/submissions). Operation ID: listFormSubmissions. Custom logic: default OAS execution.";
     const aliasDescriptionListFormSubmissions = "[submission] Submission Search (by Form). (GET /kapps/{kappSlug}/forms/{formSlug}/submissions). Operation ID: listFormSubmissions. Custom logic: default OAS execution. Use this alias for GET /kapps/{kappSlug}/forms/{formSlug}/submissions. Tags: Submissions. Required inputs: kappSlug (path), formSlug (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -198,8 +192,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listFormSubmissions", operationDescriptionListFormSubmissions, inputSchemaListFormSubmissions, executeListFormSubmissions);
-    server.tool("list_form_submissions", aliasDescriptionListFormSubmissions, inputSchemaListFormSubmissions, executeListFormSubmissions);
+    registerOperationTool(server, "core_listFormSubmissions", "list_form_submissions", operationDescriptionListFormSubmissions, aliasDescriptionListFormSubmissions, inputSchemaListFormSubmissions, executeListFormSubmissions);
     const opListFormSubmissionsAsPost = requireOperation(operationMap, "listFormSubmissionsAsPost");
     const operationDescriptionListFormSubmissionsAsPost = "[submission] Submission Search (by Form as POST). (POST /kapps/{kappSlug}/forms/{formSlug}/submissions-search). Operation ID: listFormSubmissionsAsPost. Custom logic: default OAS execution.";
     const aliasDescriptionListFormSubmissionsAsPost = "[submission] Submission Search (by Form as POST). (POST /kapps/{kappSlug}/forms/{formSlug}/submissions-search). Operation ID: listFormSubmissionsAsPost. Custom logic: default OAS execution. Use this alias for POST /kapps/{kappSlug}/forms/{formSlug}/submissions-search. Tags: Submissions. Required inputs: kappSlug (path), formSlug (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -225,8 +218,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listFormSubmissionsAsPost", operationDescriptionListFormSubmissionsAsPost, inputSchemaListFormSubmissionsAsPost, executeListFormSubmissionsAsPost);
-    server.tool("list_form_submissions_as_post", aliasDescriptionListFormSubmissionsAsPost, inputSchemaListFormSubmissionsAsPost, executeListFormSubmissionsAsPost);
+    registerOperationTool(server, "core_listFormSubmissionsAsPost", "list_form_submissions_as_post", operationDescriptionListFormSubmissionsAsPost, aliasDescriptionListFormSubmissionsAsPost, inputSchemaListFormSubmissionsAsPost, executeListFormSubmissionsAsPost);
     const opListKappSubmissions = requireOperation(operationMap, "listKappSubmissions");
     const operationDescriptionListKappSubmissions = "[submission] Submissions Search (by Kapp). (GET /kapps/{kappSlug}/submissions). Operation ID: listKappSubmissions. Custom logic: default OAS execution.";
     const aliasDescriptionListKappSubmissions = "[submission] Submissions Search (by Kapp). (GET /kapps/{kappSlug}/submissions). Operation ID: listKappSubmissions. Custom logic: default OAS execution. Use this alias for GET /kapps/{kappSlug}/submissions. Tags: Submissions. Required inputs: kappSlug (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -257,8 +249,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listKappSubmissions", operationDescriptionListKappSubmissions, inputSchemaListKappSubmissions, executeListKappSubmissions);
-    server.tool("list_kapp_submissions", aliasDescriptionListKappSubmissions, inputSchemaListKappSubmissions, executeListKappSubmissions);
+    registerOperationTool(server, "core_listKappSubmissions", "list_kapp_submissions", operationDescriptionListKappSubmissions, aliasDescriptionListKappSubmissions, inputSchemaListKappSubmissions, executeListKappSubmissions);
     const opListKappSubmissionsAsPost = requireOperation(operationMap, "listKappSubmissionsAsPost");
     const operationDescriptionListKappSubmissionsAsPost = "[submission] Submissions Search (by Kapp as POST). (POST /kapps/{kappSlug}/submissions-search). Operation ID: listKappSubmissionsAsPost. Custom logic: default OAS execution.";
     const aliasDescriptionListKappSubmissionsAsPost = "[submission] Submissions Search (by Kapp as POST). (POST /kapps/{kappSlug}/submissions-search). Operation ID: listKappSubmissionsAsPost. Custom logic: default OAS execution. Use this alias for POST /kapps/{kappSlug}/submissions-search. Tags: Submissions. Required inputs: kappSlug (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -283,8 +274,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listKappSubmissionsAsPost", operationDescriptionListKappSubmissionsAsPost, inputSchemaListKappSubmissionsAsPost, executeListKappSubmissionsAsPost);
-    server.tool("list_kapp_submissions_as_post", aliasDescriptionListKappSubmissionsAsPost, inputSchemaListKappSubmissionsAsPost, executeListKappSubmissionsAsPost);
+    registerOperationTool(server, "core_listKappSubmissionsAsPost", "list_kapp_submissions_as_post", operationDescriptionListKappSubmissionsAsPost, aliasDescriptionListKappSubmissionsAsPost, inputSchemaListKappSubmissionsAsPost, executeListKappSubmissionsAsPost);
     const opListSubmissionActivities = requireOperation(operationMap, "listSubmissionActivities");
     const operationDescriptionListSubmissionActivities = "[submission] Submission Activity List. (GET /submissions/{submissionId}/activities). Operation ID: listSubmissionActivities. Custom logic: default OAS execution.";
     const aliasDescriptionListSubmissionActivities = "[submission] Submission Activity List. (GET /submissions/{submissionId}/activities). Operation ID: listSubmissionActivities. Custom logic: default OAS execution. Use this alias for GET /submissions/{submissionId}/activities. Tags: Submissions. Required inputs: submissionId (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -309,8 +299,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listSubmissionActivities", operationDescriptionListSubmissionActivities, inputSchemaListSubmissionActivities, executeListSubmissionActivities);
-    server.tool("list_submission_activities", aliasDescriptionListSubmissionActivities, inputSchemaListSubmissionActivities, executeListSubmissionActivities);
+    registerOperationTool(server, "core_listSubmissionActivities", "list_submission_activities", operationDescriptionListSubmissionActivities, aliasDescriptionListSubmissionActivities, inputSchemaListSubmissionActivities, executeListSubmissionActivities);
     const opPatchExistingSubmission = requireOperation(operationMap, "patchExistingSubmission");
     const operationDescriptionPatchExistingSubmission = "[submission] Submission Patch (existing). (PATCH /submissions/{submissionId}). Operation ID: patchExistingSubmission. Custom logic: default OAS execution.";
     const aliasDescriptionPatchExistingSubmission = "[submission] Submission Patch (existing). (PATCH /submissions/{submissionId}). Operation ID: patchExistingSubmission. Custom logic: default OAS execution. Use this alias for PATCH /submissions/{submissionId}. Tags: Submissions. Required inputs: submissionId (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -335,8 +324,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_patchExistingSubmission", operationDescriptionPatchExistingSubmission, inputSchemaPatchExistingSubmission, executePatchExistingSubmission);
-    server.tool("patch_existing_submission", aliasDescriptionPatchExistingSubmission, inputSchemaPatchExistingSubmission, executePatchExistingSubmission);
+    registerOperationTool(server, "core_patchExistingSubmission", "patch_existing_submission", operationDescriptionPatchExistingSubmission, aliasDescriptionPatchExistingSubmission, inputSchemaPatchExistingSubmission, executePatchExistingSubmission);
     const opPatchNewSubmission = requireOperation(operationMap, "patchNewSubmission");
     const operationDescriptionPatchNewSubmission = "[submission] Submission Patch (new). (PATCH /kapps/{kappSlug}/forms/{formSlug}/submissions). Operation ID: patchNewSubmission. Custom logic: default OAS execution.";
     const aliasDescriptionPatchNewSubmission = "[submission] Submission Patch (new). (PATCH /kapps/{kappSlug}/forms/{formSlug}/submissions). Operation ID: patchNewSubmission. Custom logic: default OAS execution. Use this alias for PATCH /kapps/{kappSlug}/forms/{formSlug}/submissions. Tags: Submissions. Required inputs: kappSlug (path), formSlug (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -362,8 +350,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_patchNewSubmission", operationDescriptionPatchNewSubmission, inputSchemaPatchNewSubmission, executePatchNewSubmission);
-    server.tool("patch_new_submission", aliasDescriptionPatchNewSubmission, inputSchemaPatchNewSubmission, executePatchNewSubmission);
+    registerOperationTool(server, "core_patchNewSubmission", "patch_new_submission", operationDescriptionPatchNewSubmission, aliasDescriptionPatchNewSubmission, inputSchemaPatchNewSubmission, executePatchNewSubmission);
     const opReindexSubmissions = requireOperation(operationMap, "reindexSubmissions");
     const operationDescriptionReindexSubmissions = "[submission] Reindex Submissions. (PUT /submissions/{submissionId}/reindex). Operation ID: reindexSubmissions. Custom logic: default OAS execution.";
     const aliasDescriptionReindexSubmissions = "[submission] Reindex Submissions. (PUT /submissions/{submissionId}/reindex). Operation ID: reindexSubmissions. Custom logic: default OAS execution. Use this alias for PUT /submissions/{submissionId}/reindex. Tags: Submissions. Required inputs: submissionId (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -388,8 +375,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_reindexSubmissions", operationDescriptionReindexSubmissions, inputSchemaReindexSubmissions, executeReindexSubmissions);
-    server.tool("reindex_submissions", aliasDescriptionReindexSubmissions, inputSchemaReindexSubmissions, executeReindexSubmissions);
+    registerOperationTool(server, "core_reindexSubmissions", "reindex_submissions", operationDescriptionReindexSubmissions, aliasDescriptionReindexSubmissions, inputSchemaReindexSubmissions, executeReindexSubmissions);
     const opRetrieveSubmission = requireOperation(operationMap, "retrieveSubmission");
     const operationDescriptionRetrieveSubmission = "[submission] Submission Retrieve. (GET /submissions/{submissionId}). Operation ID: retrieveSubmission. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveSubmission = "[submission] Submission Retrieve. (GET /submissions/{submissionId}). Operation ID: retrieveSubmission. Custom logic: default OAS execution. Use this alias for GET /submissions/{submissionId}. Tags: Submissions. Required inputs: submissionId (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -414,8 +400,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveSubmission", operationDescriptionRetrieveSubmission, inputSchemaRetrieveSubmission, executeRetrieveSubmission);
-    server.tool("retrieve_submission", aliasDescriptionRetrieveSubmission, inputSchemaRetrieveSubmission, executeRetrieveSubmission);
+    registerOperationTool(server, "core_retrieveSubmission", "retrieve_submission", operationDescriptionRetrieveSubmission, aliasDescriptionRetrieveSubmission, inputSchemaRetrieveSubmission, executeRetrieveSubmission);
     const opRetrieveSubmissionActivity = requireOperation(operationMap, "retrieveSubmissionActivity");
     const operationDescriptionRetrieveSubmissionActivity = "[submission] Submission Activity Retrieve. (GET /submissions/{submissionId}/activities/{activityId}). Operation ID: retrieveSubmissionActivity. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveSubmissionActivity = "[submission] Submission Activity Retrieve. (GET /submissions/{submissionId}/activities/{activityId}). Operation ID: retrieveSubmissionActivity. Custom logic: default OAS execution. Use this alias for GET /submissions/{submissionId}/activities/{activityId}. Tags: Submissions. Required inputs: submissionId (path), activityId (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -441,8 +426,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveSubmissionActivity", operationDescriptionRetrieveSubmissionActivity, inputSchemaRetrieveSubmissionActivity, executeRetrieveSubmissionActivity);
-    server.tool("retrieve_submission_activity", aliasDescriptionRetrieveSubmissionActivity, inputSchemaRetrieveSubmissionActivity, executeRetrieveSubmissionActivity);
+    registerOperationTool(server, "core_retrieveSubmissionActivity", "retrieve_submission_activity", operationDescriptionRetrieveSubmissionActivity, aliasDescriptionRetrieveSubmissionActivity, inputSchemaRetrieveSubmissionActivity, executeRetrieveSubmissionActivity);
     const opRetrieveSubmissionFileUrl = requireOperation(operationMap, "retrieveSubmissionFileUrl");
     const operationDescriptionRetrieveSubmissionFileUrl = "[submission] Submission Attachment File URL Retrieve. (GET /submissions/{submissionId}/files/{fieldName}/{fileIndex}/{fileName}/url). Operation ID: retrieveSubmissionFileUrl. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveSubmissionFileUrl = "[submission] Submission Attachment File URL Retrieve. (GET /submissions/{submissionId}/files/{fieldName}/{fileIndex}/{fileName}/url). Operation ID: retrieveSubmissionFileUrl. Custom logic: default OAS execution. Use this alias for GET /submissions/{submissionId}/files/{fieldName}/{fileIndex}/{fileName}/url. Tags: Submissions. Required inputs: submissionId (path), fieldName (path), fileIndex (path), fileName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -469,8 +453,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveSubmissionFileUrl", operationDescriptionRetrieveSubmissionFileUrl, inputSchemaRetrieveSubmissionFileUrl, executeRetrieveSubmissionFileUrl);
-    server.tool("retrieve_submission_file_url", aliasDescriptionRetrieveSubmissionFileUrl, inputSchemaRetrieveSubmissionFileUrl, executeRetrieveSubmissionFileUrl);
+    registerOperationTool(server, "core_retrieveSubmissionFileUrl", "retrieve_submission_file_url", operationDescriptionRetrieveSubmissionFileUrl, aliasDescriptionRetrieveSubmissionFileUrl, inputSchemaRetrieveSubmissionFileUrl, executeRetrieveSubmissionFileUrl);
     const opSubmitSubmissionPage = requireOperation(operationMap, "submitSubmissionPage");
     const operationDescriptionSubmitSubmissionPage = "[submission] Submission Submit. (POST /submissions/{submissionId}). Operation ID: submitSubmissionPage. Custom logic: default OAS execution.";
     const aliasDescriptionSubmitSubmissionPage = "[submission] Submission Submit. (POST /submissions/{submissionId}). Operation ID: submitSubmissionPage. Custom logic: default OAS execution. Use this alias for POST /submissions/{submissionId}. Tags: Submissions. Required inputs: submissionId (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -498,8 +481,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_submitSubmissionPage", operationDescriptionSubmitSubmissionPage, inputSchemaSubmitSubmissionPage, executeSubmitSubmissionPage);
-    server.tool("submit_submission_page", aliasDescriptionSubmitSubmissionPage, inputSchemaSubmitSubmissionPage, executeSubmitSubmissionPage);
+    registerOperationTool(server, "core_submitSubmissionPage", "submit_submission_page", operationDescriptionSubmitSubmissionPage, aliasDescriptionSubmitSubmissionPage, inputSchemaSubmitSubmissionPage, executeSubmitSubmissionPage);
     const opUpdateSubmission = requireOperation(operationMap, "updateSubmission");
     const operationDescriptionUpdateSubmission = "[submission] Submission Update. (PUT /submissions/{submissionId}). Operation ID: updateSubmission. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateSubmission = "[submission] Submission Update. (PUT /submissions/{submissionId}). Operation ID: updateSubmission. Custom logic: default OAS execution. Use this alias for PUT /submissions/{submissionId}. Tags: Submissions. Required inputs: submissionId (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -524,8 +506,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateSubmission", operationDescriptionUpdateSubmission, inputSchemaUpdateSubmission, executeUpdateSubmission);
-    server.tool("update_submission", aliasDescriptionUpdateSubmission, inputSchemaUpdateSubmission, executeUpdateSubmission);
+    registerOperationTool(server, "core_updateSubmission", "update_submission", operationDescriptionUpdateSubmission, aliasDescriptionUpdateSubmission, inputSchemaUpdateSubmission, executeUpdateSubmission);
     const opUpdateSubmissionActivity = requireOperation(operationMap, "updateSubmissionActivity");
     const operationDescriptionUpdateSubmissionActivity = "[submission] Submission Activity Update. (PUT /submissions/{submissionId}/activities/{activityId}). Operation ID: updateSubmissionActivity. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateSubmissionActivity = "[submission] Submission Activity Update. (PUT /submissions/{submissionId}/activities/{activityId}). Operation ID: updateSubmissionActivity. Custom logic: default OAS execution. Use this alias for PUT /submissions/{submissionId}/activities/{activityId}. Tags: Submissions. Required inputs: submissionId (path), activityId (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -551,8 +532,7 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateSubmissionActivity", operationDescriptionUpdateSubmissionActivity, inputSchemaUpdateSubmissionActivity, executeUpdateSubmissionActivity);
-    server.tool("update_submission_activity", aliasDescriptionUpdateSubmissionActivity, inputSchemaUpdateSubmissionActivity, executeUpdateSubmissionActivity);
+    registerOperationTool(server, "core_updateSubmissionActivity", "update_submission_activity", operationDescriptionUpdateSubmissionActivity, aliasDescriptionUpdateSubmissionActivity, inputSchemaUpdateSubmissionActivity, executeUpdateSubmissionActivity);
     const opUpdateSubmissionMultipart = requireOperation(operationMap, "updateSubmissionMultipart");
     const operationDescriptionUpdateSubmissionMultipart = "[submission] Submission Update (with Attachments). (POST /submissions-multipart/{submissionId}). Operation ID: updateSubmissionMultipart. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateSubmissionMultipart = "[submission] Submission Update (with Attachments). (POST /submissions-multipart/{submissionId}). Operation ID: updateSubmissionMultipart. Custom logic: default OAS execution. Use this alias for POST /submissions-multipart/{submissionId}. Tags: Submissions. Required inputs: submissionId (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -578,6 +558,5 @@ export function registerSubmissionTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateSubmissionMultipart", operationDescriptionUpdateSubmissionMultipart, inputSchemaUpdateSubmissionMultipart, executeUpdateSubmissionMultipart);
-    server.tool("update_submission_multipart", aliasDescriptionUpdateSubmissionMultipart, inputSchemaUpdateSubmissionMultipart, executeUpdateSubmissionMultipart);
+    registerOperationTool(server, "core_updateSubmissionMultipart", "update_submission_multipart", operationDescriptionUpdateSubmissionMultipart, aliasDescriptionUpdateSubmissionMultipart, inputSchemaUpdateSubmissionMultipart, executeUpdateSubmissionMultipart);
 }

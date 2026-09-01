@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { requireOperation } from "./shared.js";
+import { registerOperationTool, requireOperation } from "./shared.js";
 export function registerModelTools(server, runtime) {
     const { operationMap, invokeDefaultOperation } = runtime;
     const opCreateModel = requireOperation(operationMap, "createModel");
@@ -25,8 +25,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createModel", operationDescriptionCreateModel, inputSchemaCreateModel, executeCreateModel);
-    server.tool("create_model", aliasDescriptionCreateModel, inputSchemaCreateModel, executeCreateModel);
+    registerOperationTool(server, "core_createModel", "create_model", operationDescriptionCreateModel, aliasDescriptionCreateModel, inputSchemaCreateModel, executeCreateModel);
     const opCreateModelAttribute = requireOperation(operationMap, "createModelAttribute");
     const operationDescriptionCreateModelAttribute = "[model] Model Attribute Create. (POST /models/{modelName}/attributes). Operation ID: createModelAttribute. Custom logic: default OAS execution.";
     const aliasDescriptionCreateModelAttribute = "[model] Model Attribute Create. (POST /models/{modelName}/attributes). Operation ID: createModelAttribute. Custom logic: default OAS execution. Use this alias for POST /models/{modelName}/attributes. Tags: Models. Required inputs: modelName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -50,8 +49,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createModelAttribute", operationDescriptionCreateModelAttribute, inputSchemaCreateModelAttribute, executeCreateModelAttribute);
-    server.tool("create_model_attribute", aliasDescriptionCreateModelAttribute, inputSchemaCreateModelAttribute, executeCreateModelAttribute);
+    registerOperationTool(server, "core_createModelAttribute", "create_model_attribute", operationDescriptionCreateModelAttribute, aliasDescriptionCreateModelAttribute, inputSchemaCreateModelAttribute, executeCreateModelAttribute);
     const opCreateModelMapping = requireOperation(operationMap, "createModelMapping");
     const operationDescriptionCreateModelMapping = "[model] Model Mapping Create. (POST /models/{modelName}/mappings). Operation ID: createModelMapping. Custom logic: default OAS execution.";
     const aliasDescriptionCreateModelMapping = "[model] Model Mapping Create. (POST /models/{modelName}/mappings). Operation ID: createModelMapping. Custom logic: default OAS execution. Use this alias for POST /models/{modelName}/mappings. Tags: Models. Required inputs: modelName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -76,8 +74,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createModelMapping", operationDescriptionCreateModelMapping, inputSchemaCreateModelMapping, executeCreateModelMapping);
-    server.tool("create_model_mapping", aliasDescriptionCreateModelMapping, inputSchemaCreateModelMapping, executeCreateModelMapping);
+    registerOperationTool(server, "core_createModelMapping", "create_model_mapping", operationDescriptionCreateModelMapping, aliasDescriptionCreateModelMapping, inputSchemaCreateModelMapping, executeCreateModelMapping);
     const opCreateModelMappingAttribute = requireOperation(operationMap, "createModelMappingAttribute");
     const operationDescriptionCreateModelMappingAttribute = "[model] Model Mapping Attribute Create. (POST /models/{modelName}/mappings/{modelMappingName}/attributes). Operation ID: createModelMappingAttribute. Custom logic: default OAS execution.";
     const aliasDescriptionCreateModelMappingAttribute = "[model] Model Mapping Attribute Create. (POST /models/{modelName}/mappings/{modelMappingName}/attributes). Operation ID: createModelMappingAttribute. Custom logic: default OAS execution. Use this alias for POST /models/{modelName}/mappings/{modelMappingName}/attributes. Tags: Models. Required inputs: modelName (path), modelMappingName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -102,8 +99,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createModelMappingAttribute", operationDescriptionCreateModelMappingAttribute, inputSchemaCreateModelMappingAttribute, executeCreateModelMappingAttribute);
-    server.tool("create_model_mapping_attribute", aliasDescriptionCreateModelMappingAttribute, inputSchemaCreateModelMappingAttribute, executeCreateModelMappingAttribute);
+    registerOperationTool(server, "core_createModelMappingAttribute", "create_model_mapping_attribute", operationDescriptionCreateModelMappingAttribute, aliasDescriptionCreateModelMappingAttribute, inputSchemaCreateModelMappingAttribute, executeCreateModelMappingAttribute);
     const opCreateModelMappingQualification = requireOperation(operationMap, "createModelMappingQualification");
     const operationDescriptionCreateModelMappingQualification = "[model] Model Mapping Qualification Create. (POST /models/{modelName}/mappings/{modelMappingName}/qualifications). Operation ID: createModelMappingQualification. Custom logic: default OAS execution.";
     const aliasDescriptionCreateModelMappingQualification = "[model] Model Mapping Qualification Create. (POST /models/{modelName}/mappings/{modelMappingName}/qualifications). Operation ID: createModelMappingQualification. Custom logic: default OAS execution. Use this alias for POST /models/{modelName}/mappings/{modelMappingName}/qualifications. Tags: Models. Required inputs: modelName (path), modelMappingName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -129,8 +125,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createModelMappingQualification", operationDescriptionCreateModelMappingQualification, inputSchemaCreateModelMappingQualification, executeCreateModelMappingQualification);
-    server.tool("create_model_mapping_qualification", aliasDescriptionCreateModelMappingQualification, inputSchemaCreateModelMappingQualification, executeCreateModelMappingQualification);
+    registerOperationTool(server, "core_createModelMappingQualification", "create_model_mapping_qualification", operationDescriptionCreateModelMappingQualification, aliasDescriptionCreateModelMappingQualification, inputSchemaCreateModelMappingQualification, executeCreateModelMappingQualification);
     const opCreateModelQualification = requireOperation(operationMap, "createModelQualification");
     const operationDescriptionCreateModelQualification = "[model] Model Qualification Create. (POST /models/{modelName}/qualifications). Operation ID: createModelQualification. Custom logic: default OAS execution.";
     const aliasDescriptionCreateModelQualification = "[model] Model Qualification Create. (POST /models/{modelName}/qualifications). Operation ID: createModelQualification. Custom logic: default OAS execution. Use this alias for POST /models/{modelName}/qualifications. Tags: Models. Required inputs: modelName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -155,8 +150,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createModelQualification", operationDescriptionCreateModelQualification, inputSchemaCreateModelQualification, executeCreateModelQualification);
-    server.tool("create_model_qualification", aliasDescriptionCreateModelQualification, inputSchemaCreateModelQualification, executeCreateModelQualification);
+    registerOperationTool(server, "core_createModelQualification", "create_model_qualification", operationDescriptionCreateModelQualification, aliasDescriptionCreateModelQualification, inputSchemaCreateModelQualification, executeCreateModelQualification);
     const opCreateModelQualificationParameter = requireOperation(operationMap, "createModelQualificationParameter");
     const operationDescriptionCreateModelQualificationParameter = "[model] Model Qualification Parameter Create. (POST /models/{modelName}/qualifications/{modelQualificationName}/parameters). Operation ID: createModelQualificationParameter. Custom logic: default OAS execution.";
     const aliasDescriptionCreateModelQualificationParameter = "[model] Model Qualification Parameter Create. (POST /models/{modelName}/qualifications/{modelQualificationName}/parameters). Operation ID: createModelQualificationParameter. Custom logic: default OAS execution. Use this alias for POST /models/{modelName}/qualifications/{modelQualificationName}/parameters. Tags: Models. Required inputs: modelName (path), modelQualificationName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -182,8 +176,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createModelQualificationParameter", operationDescriptionCreateModelQualificationParameter, inputSchemaCreateModelQualificationParameter, executeCreateModelQualificationParameter);
-    server.tool("create_model_qualification_parameter", aliasDescriptionCreateModelQualificationParameter, inputSchemaCreateModelQualificationParameter, executeCreateModelQualificationParameter);
+    registerOperationTool(server, "core_createModelQualificationParameter", "create_model_qualification_parameter", operationDescriptionCreateModelQualificationParameter, aliasDescriptionCreateModelQualificationParameter, inputSchemaCreateModelQualificationParameter, executeCreateModelQualificationParameter);
     const opDeleteModel = requireOperation(operationMap, "deleteModel");
     const operationDescriptionDeleteModel = "[model] Model Delete. (DELETE /models/{modelName}). Operation ID: deleteModel. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteModel = "[model] Model Delete. (DELETE /models/{modelName}). Operation ID: deleteModel. Custom logic: default OAS execution. Use this alias for DELETE /models/{modelName}. Tags: Models. Required inputs: modelName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -208,8 +201,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteModel", operationDescriptionDeleteModel, inputSchemaDeleteModel, executeDeleteModel);
-    server.tool("delete_model", aliasDescriptionDeleteModel, inputSchemaDeleteModel, executeDeleteModel);
+    registerOperationTool(server, "core_deleteModel", "delete_model", operationDescriptionDeleteModel, aliasDescriptionDeleteModel, inputSchemaDeleteModel, executeDeleteModel);
     const opDeleteModelAttribute = requireOperation(operationMap, "deleteModelAttribute");
     const operationDescriptionDeleteModelAttribute = "[model] Model Attribute Delete. (DELETE /models/{modelName}/attributes/{modelAttributeName}). Operation ID: deleteModelAttribute. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteModelAttribute = "[model] Model Attribute Delete. (DELETE /models/{modelName}/attributes/{modelAttributeName}). Operation ID: deleteModelAttribute. Custom logic: default OAS execution. Use this alias for DELETE /models/{modelName}/attributes/{modelAttributeName}. Tags: Models. Required inputs: modelName (path), modelAttributeName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -234,8 +226,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteModelAttribute", operationDescriptionDeleteModelAttribute, inputSchemaDeleteModelAttribute, executeDeleteModelAttribute);
-    server.tool("delete_model_attribute", aliasDescriptionDeleteModelAttribute, inputSchemaDeleteModelAttribute, executeDeleteModelAttribute);
+    registerOperationTool(server, "core_deleteModelAttribute", "delete_model_attribute", operationDescriptionDeleteModelAttribute, aliasDescriptionDeleteModelAttribute, inputSchemaDeleteModelAttribute, executeDeleteModelAttribute);
     const opDeleteModelMapping = requireOperation(operationMap, "deleteModelMapping");
     const operationDescriptionDeleteModelMapping = "[model] Model Mapping Delete. (DELETE /models/{modelName}/mappings/{modelMappingName}). Operation ID: deleteModelMapping. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteModelMapping = "[model] Model Mapping Delete. (DELETE /models/{modelName}/mappings/{modelMappingName}). Operation ID: deleteModelMapping. Custom logic: default OAS execution. Use this alias for DELETE /models/{modelName}/mappings/{modelMappingName}. Tags: Models. Required inputs: modelName (path), modelMappingName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -261,8 +252,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteModelMapping", operationDescriptionDeleteModelMapping, inputSchemaDeleteModelMapping, executeDeleteModelMapping);
-    server.tool("delete_model_mapping", aliasDescriptionDeleteModelMapping, inputSchemaDeleteModelMapping, executeDeleteModelMapping);
+    registerOperationTool(server, "core_deleteModelMapping", "delete_model_mapping", operationDescriptionDeleteModelMapping, aliasDescriptionDeleteModelMapping, inputSchemaDeleteModelMapping, executeDeleteModelMapping);
     const opDeleteModelMappingAttribute = requireOperation(operationMap, "deleteModelMappingAttribute");
     const operationDescriptionDeleteModelMappingAttribute = "[model] Model Mapping Attribute Delete. (DELETE /models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}). Operation ID: deleteModelMappingAttribute. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteModelMappingAttribute = "[model] Model Mapping Attribute Delete. (DELETE /models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}). Operation ID: deleteModelMappingAttribute. Custom logic: default OAS execution. Use this alias for DELETE /models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}. Tags: Models. Required inputs: modelName (path), modelMappingName (path), modelMappingAttributeName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -288,8 +278,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteModelMappingAttribute", operationDescriptionDeleteModelMappingAttribute, inputSchemaDeleteModelMappingAttribute, executeDeleteModelMappingAttribute);
-    server.tool("delete_model_mapping_attribute", aliasDescriptionDeleteModelMappingAttribute, inputSchemaDeleteModelMappingAttribute, executeDeleteModelMappingAttribute);
+    registerOperationTool(server, "core_deleteModelMappingAttribute", "delete_model_mapping_attribute", operationDescriptionDeleteModelMappingAttribute, aliasDescriptionDeleteModelMappingAttribute, inputSchemaDeleteModelMappingAttribute, executeDeleteModelMappingAttribute);
     const opDeleteModelMappingQualification = requireOperation(operationMap, "deleteModelMappingQualification");
     const operationDescriptionDeleteModelMappingQualification = "[model] Model Mapping Qualification Delete. (DELETE /models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}). Operation ID: deleteModelMappingQualification. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteModelMappingQualification = "[model] Model Mapping Qualification Delete. (DELETE /models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}). Operation ID: deleteModelMappingQualification. Custom logic: default OAS execution. Use this alias for DELETE /models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}. Tags: Models. Required inputs: modelName (path), modelMappingName (path), modelMappingQualificationName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -316,8 +305,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteModelMappingQualification", operationDescriptionDeleteModelMappingQualification, inputSchemaDeleteModelMappingQualification, executeDeleteModelMappingQualification);
-    server.tool("delete_model_mapping_qualification", aliasDescriptionDeleteModelMappingQualification, inputSchemaDeleteModelMappingQualification, executeDeleteModelMappingQualification);
+    registerOperationTool(server, "core_deleteModelMappingQualification", "delete_model_mapping_qualification", operationDescriptionDeleteModelMappingQualification, aliasDescriptionDeleteModelMappingQualification, inputSchemaDeleteModelMappingQualification, executeDeleteModelMappingQualification);
     const opDeleteModelQualification = requireOperation(operationMap, "deleteModelQualification");
     const operationDescriptionDeleteModelQualification = "[model] Model Qualification Delete. (DELETE /models/{modelName}/qualifications/{modelQualificationName}). Operation ID: deleteModelQualification. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteModelQualification = "[model] Model Qualification Delete. (DELETE /models/{modelName}/qualifications/{modelQualificationName}). Operation ID: deleteModelQualification. Custom logic: default OAS execution. Use this alias for DELETE /models/{modelName}/qualifications/{modelQualificationName}. Tags: Models. Required inputs: modelName (path), modelQualificationName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -343,8 +331,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteModelQualification", operationDescriptionDeleteModelQualification, inputSchemaDeleteModelQualification, executeDeleteModelQualification);
-    server.tool("delete_model_qualification", aliasDescriptionDeleteModelQualification, inputSchemaDeleteModelQualification, executeDeleteModelQualification);
+    registerOperationTool(server, "core_deleteModelQualification", "delete_model_qualification", operationDescriptionDeleteModelQualification, aliasDescriptionDeleteModelQualification, inputSchemaDeleteModelQualification, executeDeleteModelQualification);
     const opDeleteModelQualificationParameter = requireOperation(operationMap, "deleteModelQualificationParameter");
     const operationDescriptionDeleteModelQualificationParameter = "[model] Model Qualification Parameter Delete. (DELETE /models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}). Operation ID: deleteModelQualificationParameter. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteModelQualificationParameter = "[model] Model Qualification Parameter Delete. (DELETE /models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}). Operation ID: deleteModelQualificationParameter. Custom logic: default OAS execution. Use this alias for DELETE /models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}. Tags: Models. Required inputs: modelName (path), modelQualificationName (path), modelQualificationParameterName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -371,8 +358,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteModelQualificationParameter", operationDescriptionDeleteModelQualificationParameter, inputSchemaDeleteModelQualificationParameter, executeDeleteModelQualificationParameter);
-    server.tool("delete_model_qualification_parameter", aliasDescriptionDeleteModelQualificationParameter, inputSchemaDeleteModelQualificationParameter, executeDeleteModelQualificationParameter);
+    registerOperationTool(server, "core_deleteModelQualificationParameter", "delete_model_qualification_parameter", operationDescriptionDeleteModelQualificationParameter, aliasDescriptionDeleteModelQualificationParameter, inputSchemaDeleteModelQualificationParameter, executeDeleteModelQualificationParameter);
     const opListModelAttributes = requireOperation(operationMap, "listModelAttributes");
     const operationDescriptionListModelAttributes = "[model] Model Attribute List. (GET /models/{modelName}/attributes). Operation ID: listModelAttributes. Custom logic: default OAS execution.";
     const aliasDescriptionListModelAttributes = "[model] Model Attribute List. (GET /models/{modelName}/attributes). Operation ID: listModelAttributes. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/attributes. Tags: Models. Required inputs: modelName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -396,8 +382,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listModelAttributes", operationDescriptionListModelAttributes, inputSchemaListModelAttributes, executeListModelAttributes);
-    server.tool("list_model_attributes", aliasDescriptionListModelAttributes, inputSchemaListModelAttributes, executeListModelAttributes);
+    registerOperationTool(server, "core_listModelAttributes", "list_model_attributes", operationDescriptionListModelAttributes, aliasDescriptionListModelAttributes, inputSchemaListModelAttributes, executeListModelAttributes);
     const opListModelMappingAttributes = requireOperation(operationMap, "listModelMappingAttributes");
     const operationDescriptionListModelMappingAttributes = "[model] Model Mapping Attribute List. (GET /models/{modelName}/mappings/{modelMappingName}/attributes). Operation ID: listModelMappingAttributes. Custom logic: default OAS execution.";
     const aliasDescriptionListModelMappingAttributes = "[model] Model Mapping Attribute List. (GET /models/{modelName}/mappings/{modelMappingName}/attributes). Operation ID: listModelMappingAttributes. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/mappings/{modelMappingName}/attributes. Tags: Models. Required inputs: modelName (path), modelMappingName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -422,8 +407,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listModelMappingAttributes", operationDescriptionListModelMappingAttributes, inputSchemaListModelMappingAttributes, executeListModelMappingAttributes);
-    server.tool("list_model_mapping_attributes", aliasDescriptionListModelMappingAttributes, inputSchemaListModelMappingAttributes, executeListModelMappingAttributes);
+    registerOperationTool(server, "core_listModelMappingAttributes", "list_model_mapping_attributes", operationDescriptionListModelMappingAttributes, aliasDescriptionListModelMappingAttributes, inputSchemaListModelMappingAttributes, executeListModelMappingAttributes);
     const opListModelMappingQualifications = requireOperation(operationMap, "listModelMappingQualifications");
     const operationDescriptionListModelMappingQualifications = "[model] Model Mapping Qualification List. (GET /models/{modelName}/mappings/{modelMappingName}/qualifications). Operation ID: listModelMappingQualifications. Custom logic: default OAS execution.";
     const aliasDescriptionListModelMappingQualifications = "[model] Model Mapping Qualification List. (GET /models/{modelName}/mappings/{modelMappingName}/qualifications). Operation ID: listModelMappingQualifications. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/mappings/{modelMappingName}/qualifications. Tags: Models. Required inputs: modelName (path), modelMappingName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -449,8 +433,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listModelMappingQualifications", operationDescriptionListModelMappingQualifications, inputSchemaListModelMappingQualifications, executeListModelMappingQualifications);
-    server.tool("list_model_mapping_qualifications", aliasDescriptionListModelMappingQualifications, inputSchemaListModelMappingQualifications, executeListModelMappingQualifications);
+    registerOperationTool(server, "core_listModelMappingQualifications", "list_model_mapping_qualifications", operationDescriptionListModelMappingQualifications, aliasDescriptionListModelMappingQualifications, inputSchemaListModelMappingQualifications, executeListModelMappingQualifications);
     const opListModelMappings = requireOperation(operationMap, "listModelMappings");
     const operationDescriptionListModelMappings = "[model] Model Mapping List. (GET /models/{modelName}/mappings). Operation ID: listModelMappings. Custom logic: default OAS execution.";
     const aliasDescriptionListModelMappings = "[model] Model Mapping List. (GET /models/{modelName}/mappings). Operation ID: listModelMappings. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/mappings. Tags: Models. Required inputs: modelName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -475,8 +458,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listModelMappings", operationDescriptionListModelMappings, inputSchemaListModelMappings, executeListModelMappings);
-    server.tool("list_model_mappings", aliasDescriptionListModelMappings, inputSchemaListModelMappings, executeListModelMappings);
+    registerOperationTool(server, "core_listModelMappings", "list_model_mappings", operationDescriptionListModelMappings, aliasDescriptionListModelMappings, inputSchemaListModelMappings, executeListModelMappings);
     const opListModelQualificationParameters = requireOperation(operationMap, "listModelQualificationParameters");
     const operationDescriptionListModelQualificationParameters = "[model] Model Qualification Parameter List. (GET /models/{modelName}/qualifications/{modelQualificationName}/parameters). Operation ID: listModelQualificationParameters. Custom logic: default OAS execution.";
     const aliasDescriptionListModelQualificationParameters = "[model] Model Qualification Parameter List. (GET /models/{modelName}/qualifications/{modelQualificationName}/parameters). Operation ID: listModelQualificationParameters. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/qualifications/{modelQualificationName}/parameters. Tags: Models. Required inputs: modelName (path), modelQualificationName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -502,8 +484,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listModelQualificationParameters", operationDescriptionListModelQualificationParameters, inputSchemaListModelQualificationParameters, executeListModelQualificationParameters);
-    server.tool("list_model_qualification_parameters", aliasDescriptionListModelQualificationParameters, inputSchemaListModelQualificationParameters, executeListModelQualificationParameters);
+    registerOperationTool(server, "core_listModelQualificationParameters", "list_model_qualification_parameters", operationDescriptionListModelQualificationParameters, aliasDescriptionListModelQualificationParameters, inputSchemaListModelQualificationParameters, executeListModelQualificationParameters);
     const opListModelQualifications = requireOperation(operationMap, "listModelQualifications");
     const operationDescriptionListModelQualifications = "[model] Model Qualification List. (GET /models/{modelName}/qualifications). Operation ID: listModelQualifications. Custom logic: default OAS execution.";
     const aliasDescriptionListModelQualifications = "[model] Model Qualification List. (GET /models/{modelName}/qualifications). Operation ID: listModelQualifications. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/qualifications. Tags: Models. Required inputs: modelName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -528,8 +509,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listModelQualifications", operationDescriptionListModelQualifications, inputSchemaListModelQualifications, executeListModelQualifications);
-    server.tool("list_model_qualifications", aliasDescriptionListModelQualifications, inputSchemaListModelQualifications, executeListModelQualifications);
+    registerOperationTool(server, "core_listModelQualifications", "list_model_qualifications", operationDescriptionListModelQualifications, aliasDescriptionListModelQualifications, inputSchemaListModelQualifications, executeListModelQualifications);
     const opListModels = requireOperation(operationMap, "listModels");
     const operationDescriptionListModels = "[model] Model List. (GET /models). Operation ID: listModels. Custom logic: default OAS execution.";
     const aliasDescriptionListModels = "[model] Model List. (GET /models). Operation ID: listModels. Custom logic: default OAS execution. Use this alias for GET /models. Tags: Models. Required inputs: none. Request body: not used. Call `connect` first if a session is not already configured.";
@@ -553,8 +533,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listModels", operationDescriptionListModels, inputSchemaListModels, executeListModels);
-    server.tool("list_models", aliasDescriptionListModels, inputSchemaListModels, executeListModels);
+    registerOperationTool(server, "core_listModels", "list_models", operationDescriptionListModels, aliasDescriptionListModels, inputSchemaListModels, executeListModels);
     const opRetrieveModel = requireOperation(operationMap, "retrieveModel");
     const operationDescriptionRetrieveModel = "[model] Model Retrieve. (GET /models/{modelName}). Operation ID: retrieveModel. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveModel = "[model] Model Retrieve. (GET /models/{modelName}). Operation ID: retrieveModel. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}. Tags: Models. Required inputs: modelName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -579,8 +558,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveModel", operationDescriptionRetrieveModel, inputSchemaRetrieveModel, executeRetrieveModel);
-    server.tool("retrieve_model", aliasDescriptionRetrieveModel, inputSchemaRetrieveModel, executeRetrieveModel);
+    registerOperationTool(server, "core_retrieveModel", "retrieve_model", operationDescriptionRetrieveModel, aliasDescriptionRetrieveModel, inputSchemaRetrieveModel, executeRetrieveModel);
     const opRetrieveModelAttribute = requireOperation(operationMap, "retrieveModelAttribute");
     const operationDescriptionRetrieveModelAttribute = "[model] Model Attribute Retrieve. (GET /models/{modelName}/attributes/{modelAttributeName}). Operation ID: retrieveModelAttribute. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveModelAttribute = "[model] Model Attribute Retrieve. (GET /models/{modelName}/attributes/{modelAttributeName}). Operation ID: retrieveModelAttribute. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/attributes/{modelAttributeName}. Tags: Models. Required inputs: modelName (path), modelAttributeName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -605,8 +583,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveModelAttribute", operationDescriptionRetrieveModelAttribute, inputSchemaRetrieveModelAttribute, executeRetrieveModelAttribute);
-    server.tool("retrieve_model_attribute", aliasDescriptionRetrieveModelAttribute, inputSchemaRetrieveModelAttribute, executeRetrieveModelAttribute);
+    registerOperationTool(server, "core_retrieveModelAttribute", "retrieve_model_attribute", operationDescriptionRetrieveModelAttribute, aliasDescriptionRetrieveModelAttribute, inputSchemaRetrieveModelAttribute, executeRetrieveModelAttribute);
     const opRetrieveModelMapping = requireOperation(operationMap, "retrieveModelMapping");
     const operationDescriptionRetrieveModelMapping = "[model] Model Mapping Retrieve. (GET /models/{modelName}/mappings/{modelMappingName}). Operation ID: retrieveModelMapping. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveModelMapping = "[model] Model Mapping Retrieve. (GET /models/{modelName}/mappings/{modelMappingName}). Operation ID: retrieveModelMapping. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/mappings/{modelMappingName}. Tags: Models. Required inputs: modelName (path), modelMappingName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -632,8 +609,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveModelMapping", operationDescriptionRetrieveModelMapping, inputSchemaRetrieveModelMapping, executeRetrieveModelMapping);
-    server.tool("retrieve_model_mapping", aliasDescriptionRetrieveModelMapping, inputSchemaRetrieveModelMapping, executeRetrieveModelMapping);
+    registerOperationTool(server, "core_retrieveModelMapping", "retrieve_model_mapping", operationDescriptionRetrieveModelMapping, aliasDescriptionRetrieveModelMapping, inputSchemaRetrieveModelMapping, executeRetrieveModelMapping);
     const opRetrieveModelMappingAttributes = requireOperation(operationMap, "retrieveModelMappingAttributes");
     const operationDescriptionRetrieveModelMappingAttributes = "[model] Model Mapping Attribute Retrieve. (GET /models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}). Operation ID: retrieveModelMappingAttributes. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveModelMappingAttributes = "[model] Model Mapping Attribute Retrieve. (GET /models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}). Operation ID: retrieveModelMappingAttributes. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}. Tags: Models. Required inputs: modelName (path), modelMappingName (path), modelMappingAttributeName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -659,8 +635,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveModelMappingAttributes", operationDescriptionRetrieveModelMappingAttributes, inputSchemaRetrieveModelMappingAttributes, executeRetrieveModelMappingAttributes);
-    server.tool("retrieve_model_mapping_attributes", aliasDescriptionRetrieveModelMappingAttributes, inputSchemaRetrieveModelMappingAttributes, executeRetrieveModelMappingAttributes);
+    registerOperationTool(server, "core_retrieveModelMappingAttributes", "retrieve_model_mapping_attributes", operationDescriptionRetrieveModelMappingAttributes, aliasDescriptionRetrieveModelMappingAttributes, inputSchemaRetrieveModelMappingAttributes, executeRetrieveModelMappingAttributes);
     const opRetrieveModelMappingQualifications = requireOperation(operationMap, "retrieveModelMappingQualifications");
     const operationDescriptionRetrieveModelMappingQualifications = "[model] Model Mapping Qualification Retrieve. (GET /models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}). Operation ID: retrieveModelMappingQualifications. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveModelMappingQualifications = "[model] Model Mapping Qualification Retrieve. (GET /models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}). Operation ID: retrieveModelMappingQualifications. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}. Tags: Models. Required inputs: modelName (path), modelMappingName (path), modelMappingQualificationName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -687,8 +662,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveModelMappingQualifications", operationDescriptionRetrieveModelMappingQualifications, inputSchemaRetrieveModelMappingQualifications, executeRetrieveModelMappingQualifications);
-    server.tool("retrieve_model_mapping_qualifications", aliasDescriptionRetrieveModelMappingQualifications, inputSchemaRetrieveModelMappingQualifications, executeRetrieveModelMappingQualifications);
+    registerOperationTool(server, "core_retrieveModelMappingQualifications", "retrieve_model_mapping_qualifications", operationDescriptionRetrieveModelMappingQualifications, aliasDescriptionRetrieveModelMappingQualifications, inputSchemaRetrieveModelMappingQualifications, executeRetrieveModelMappingQualifications);
     const opRetrieveModelQualification = requireOperation(operationMap, "retrieveModelQualification");
     const operationDescriptionRetrieveModelQualification = "[model] Model Qualification Retrieve. (GET /models/{modelName}/qualifications/{modelQualificationName}). Operation ID: retrieveModelQualification. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveModelQualification = "[model] Model Qualification Retrieve. (GET /models/{modelName}/qualifications/{modelQualificationName}). Operation ID: retrieveModelQualification. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/qualifications/{modelQualificationName}. Tags: Models. Required inputs: modelName (path), modelQualificationName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -714,8 +688,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveModelQualification", operationDescriptionRetrieveModelQualification, inputSchemaRetrieveModelQualification, executeRetrieveModelQualification);
-    server.tool("retrieve_model_qualification", aliasDescriptionRetrieveModelQualification, inputSchemaRetrieveModelQualification, executeRetrieveModelQualification);
+    registerOperationTool(server, "core_retrieveModelQualification", "retrieve_model_qualification", operationDescriptionRetrieveModelQualification, aliasDescriptionRetrieveModelQualification, inputSchemaRetrieveModelQualification, executeRetrieveModelQualification);
     const opRetrieveModelQualificationParameter = requireOperation(operationMap, "retrieveModelQualificationParameter");
     const operationDescriptionRetrieveModelQualificationParameter = "[model] Model Qualification Parameter Retrieve. (GET /models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}). Operation ID: retrieveModelQualificationParameter. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveModelQualificationParameter = "[model] Model Qualification Parameter Retrieve. (GET /models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}). Operation ID: retrieveModelQualificationParameter. Custom logic: default OAS execution. Use this alias for GET /models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}. Tags: Models. Required inputs: modelName (path), modelQualificationName (path), modelQualificationParameterName (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -742,8 +715,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveModelQualificationParameter", operationDescriptionRetrieveModelQualificationParameter, inputSchemaRetrieveModelQualificationParameter, executeRetrieveModelQualificationParameter);
-    server.tool("retrieve_model_qualification_parameter", aliasDescriptionRetrieveModelQualificationParameter, inputSchemaRetrieveModelQualificationParameter, executeRetrieveModelQualificationParameter);
+    registerOperationTool(server, "core_retrieveModelQualificationParameter", "retrieve_model_qualification_parameter", operationDescriptionRetrieveModelQualificationParameter, aliasDescriptionRetrieveModelQualificationParameter, inputSchemaRetrieveModelQualificationParameter, executeRetrieveModelQualificationParameter);
     const opUpdateModel = requireOperation(operationMap, "updateModel");
     const operationDescriptionUpdateModel = "[model] Model Update. (PUT /models/{modelName}). Operation ID: updateModel. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateModel = "[model] Model Update. (PUT /models/{modelName}). Operation ID: updateModel. Custom logic: default OAS execution. Use this alias for PUT /models/{modelName}. Tags: Models. Required inputs: modelName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -768,8 +740,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateModel", operationDescriptionUpdateModel, inputSchemaUpdateModel, executeUpdateModel);
-    server.tool("update_model", aliasDescriptionUpdateModel, inputSchemaUpdateModel, executeUpdateModel);
+    registerOperationTool(server, "core_updateModel", "update_model", operationDescriptionUpdateModel, aliasDescriptionUpdateModel, inputSchemaUpdateModel, executeUpdateModel);
     const opUpdateModelAttribute = requireOperation(operationMap, "updateModelAttribute");
     const operationDescriptionUpdateModelAttribute = "[model] Model Attribute Update. (PUT /models/{modelName}/attributes/{modelAttributeName}). Operation ID: updateModelAttribute. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateModelAttribute = "[model] Model Attribute Update. (PUT /models/{modelName}/attributes/{modelAttributeName}). Operation ID: updateModelAttribute. Custom logic: default OAS execution. Use this alias for PUT /models/{modelName}/attributes/{modelAttributeName}. Tags: Models. Required inputs: modelName (path), modelAttributeName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -794,8 +765,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateModelAttribute", operationDescriptionUpdateModelAttribute, inputSchemaUpdateModelAttribute, executeUpdateModelAttribute);
-    server.tool("update_model_attribute", aliasDescriptionUpdateModelAttribute, inputSchemaUpdateModelAttribute, executeUpdateModelAttribute);
+    registerOperationTool(server, "core_updateModelAttribute", "update_model_attribute", operationDescriptionUpdateModelAttribute, aliasDescriptionUpdateModelAttribute, inputSchemaUpdateModelAttribute, executeUpdateModelAttribute);
     const opUpdateModelMapping = requireOperation(operationMap, "updateModelMapping");
     const operationDescriptionUpdateModelMapping = "[model] Model Mapping Update. (PUT /models/{modelName}/mappings/{modelMappingName}). Operation ID: updateModelMapping. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateModelMapping = "[model] Model Mapping Update. (PUT /models/{modelName}/mappings/{modelMappingName}). Operation ID: updateModelMapping. Custom logic: default OAS execution. Use this alias for PUT /models/{modelName}/mappings/{modelMappingName}. Tags: Models. Required inputs: modelName (path), modelMappingName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -821,8 +791,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateModelMapping", operationDescriptionUpdateModelMapping, inputSchemaUpdateModelMapping, executeUpdateModelMapping);
-    server.tool("update_model_mapping", aliasDescriptionUpdateModelMapping, inputSchemaUpdateModelMapping, executeUpdateModelMapping);
+    registerOperationTool(server, "core_updateModelMapping", "update_model_mapping", operationDescriptionUpdateModelMapping, aliasDescriptionUpdateModelMapping, inputSchemaUpdateModelMapping, executeUpdateModelMapping);
     const opUpdateModelMappingAttribute = requireOperation(operationMap, "updateModelMappingAttribute");
     const operationDescriptionUpdateModelMappingAttribute = "[model] Model Mapping Attribute Update. (PUT /models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}). Operation ID: updateModelMappingAttribute. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateModelMappingAttribute = "[model] Model Mapping Attribute Update. (PUT /models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}). Operation ID: updateModelMappingAttribute. Custom logic: default OAS execution. Use this alias for PUT /models/{modelName}/mappings/{modelMappingName}/attributes/{modelMappingAttributeName}. Tags: Models. Required inputs: modelName (path), modelMappingName (path), modelMappingAttributeName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -848,8 +817,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateModelMappingAttribute", operationDescriptionUpdateModelMappingAttribute, inputSchemaUpdateModelMappingAttribute, executeUpdateModelMappingAttribute);
-    server.tool("update_model_mapping_attribute", aliasDescriptionUpdateModelMappingAttribute, inputSchemaUpdateModelMappingAttribute, executeUpdateModelMappingAttribute);
+    registerOperationTool(server, "core_updateModelMappingAttribute", "update_model_mapping_attribute", operationDescriptionUpdateModelMappingAttribute, aliasDescriptionUpdateModelMappingAttribute, inputSchemaUpdateModelMappingAttribute, executeUpdateModelMappingAttribute);
     const opUpdateModelMappingQualification = requireOperation(operationMap, "updateModelMappingQualification");
     const operationDescriptionUpdateModelMappingQualification = "[model] Model Mapping Qualification Update. (PUT /models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}). Operation ID: updateModelMappingQualification. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateModelMappingQualification = "[model] Model Mapping Qualification Update. (PUT /models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}). Operation ID: updateModelMappingQualification. Custom logic: default OAS execution. Use this alias for PUT /models/{modelName}/mappings/{modelMappingName}/qualifications/{modelMappingQualificationName}. Tags: Models. Required inputs: modelName (path), modelMappingName (path), modelMappingQualificationName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -876,8 +844,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateModelMappingQualification", operationDescriptionUpdateModelMappingQualification, inputSchemaUpdateModelMappingQualification, executeUpdateModelMappingQualification);
-    server.tool("update_model_mapping_qualification", aliasDescriptionUpdateModelMappingQualification, inputSchemaUpdateModelMappingQualification, executeUpdateModelMappingQualification);
+    registerOperationTool(server, "core_updateModelMappingQualification", "update_model_mapping_qualification", operationDescriptionUpdateModelMappingQualification, aliasDescriptionUpdateModelMappingQualification, inputSchemaUpdateModelMappingQualification, executeUpdateModelMappingQualification);
     const opUpdateModelQualification = requireOperation(operationMap, "updateModelQualification");
     const operationDescriptionUpdateModelQualification = "[model] Model Qualification Update. (PUT /models/{modelName}/qualifications/{modelQualificationName}). Operation ID: updateModelQualification. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateModelQualification = "[model] Model Qualification Update. (PUT /models/{modelName}/qualifications/{modelQualificationName}). Operation ID: updateModelQualification. Custom logic: default OAS execution. Use this alias for PUT /models/{modelName}/qualifications/{modelQualificationName}. Tags: Models. Required inputs: modelName (path), modelQualificationName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -903,8 +870,7 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateModelQualification", operationDescriptionUpdateModelQualification, inputSchemaUpdateModelQualification, executeUpdateModelQualification);
-    server.tool("update_model_qualification", aliasDescriptionUpdateModelQualification, inputSchemaUpdateModelQualification, executeUpdateModelQualification);
+    registerOperationTool(server, "core_updateModelQualification", "update_model_qualification", operationDescriptionUpdateModelQualification, aliasDescriptionUpdateModelQualification, inputSchemaUpdateModelQualification, executeUpdateModelQualification);
     const opUpdateModelQualificationParameter = requireOperation(operationMap, "updateModelQualificationParameter");
     const operationDescriptionUpdateModelQualificationParameter = "[model] Model Qualification Parameter Update. (PUT /models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}). Operation ID: updateModelQualificationParameter. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateModelQualificationParameter = "[model] Model Qualification Parameter Update. (PUT /models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}). Operation ID: updateModelQualificationParameter. Custom logic: default OAS execution. Use this alias for PUT /models/{modelName}/qualifications/{modelQualificationName}/parameters/{modelQualificationParameterName}. Tags: Models. Required inputs: modelName (path), modelQualificationName (path), modelQualificationParameterName (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -931,6 +897,5 @@ export function registerModelTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateModelQualificationParameter", operationDescriptionUpdateModelQualificationParameter, inputSchemaUpdateModelQualificationParameter, executeUpdateModelQualificationParameter);
-    server.tool("update_model_qualification_parameter", aliasDescriptionUpdateModelQualificationParameter, inputSchemaUpdateModelQualificationParameter, executeUpdateModelQualificationParameter);
+    registerOperationTool(server, "core_updateModelQualificationParameter", "update_model_qualification_parameter", operationDescriptionUpdateModelQualificationParameter, aliasDescriptionUpdateModelQualificationParameter, inputSchemaUpdateModelQualificationParameter, executeUpdateModelQualificationParameter);
 }

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { requireOperation } from "./shared.js";
+import { registerOperationTool, requireOperation } from "./shared.js";
 export function registerUserTools(server, runtime) {
     const { operationMap, invokeDefaultOperation } = runtime;
     const opCreateUser = requireOperation(operationMap, "createUser");
@@ -25,8 +25,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createUser", operationDescriptionCreateUser, inputSchemaCreateUser, executeCreateUser);
-    server.tool("create_user", aliasDescriptionCreateUser, inputSchemaCreateUser, executeCreateUser);
+    registerOperationTool(server, "core_createUser", "create_user", operationDescriptionCreateUser, aliasDescriptionCreateUser, inputSchemaCreateUser, executeCreateUser);
     const opCreateUserAttributeDefinition = requireOperation(operationMap, "createUserAttributeDefinition");
     const operationDescriptionCreateUserAttributeDefinition = "[user] User Attribute Definition Create. (POST /userAttributeDefinitions). Operation ID: createUserAttributeDefinition. Custom logic: default OAS execution.";
     const aliasDescriptionCreateUserAttributeDefinition = "[user] User Attribute Definition Create. (POST /userAttributeDefinitions). Operation ID: createUserAttributeDefinition. Custom logic: default OAS execution. Use this alias for POST /userAttributeDefinitions. Tags: Attribute Definitions. Required inputs: none. Request body: required. Call `connect` first if a session is not already configured.";
@@ -50,8 +49,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createUserAttributeDefinition", operationDescriptionCreateUserAttributeDefinition, inputSchemaCreateUserAttributeDefinition, executeCreateUserAttributeDefinition);
-    server.tool("create_user_attribute_definition", aliasDescriptionCreateUserAttributeDefinition, inputSchemaCreateUserAttributeDefinition, executeCreateUserAttributeDefinition);
+    registerOperationTool(server, "core_createUserAttributeDefinition", "create_user_attribute_definition", operationDescriptionCreateUserAttributeDefinition, aliasDescriptionCreateUserAttributeDefinition, inputSchemaCreateUserAttributeDefinition, executeCreateUserAttributeDefinition);
     const opCreateUserInvitationToken = requireOperation(operationMap, "createUserInvitationToken");
     const operationDescriptionCreateUserInvitationToken = "[user] User Invitation Token Create. (POST /userInvitationTokens). Operation ID: createUserInvitationToken. Custom logic: default OAS execution.";
     const aliasDescriptionCreateUserInvitationToken = "[user] User Invitation Token Create. (POST /userInvitationTokens). Operation ID: createUserInvitationToken. Custom logic: default OAS execution. Use this alias for POST /userInvitationTokens. Tags: Users. Required inputs: none. Request body: required. Call `connect` first if a session is not already configured.";
@@ -75,8 +73,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createUserInvitationToken", operationDescriptionCreateUserInvitationToken, inputSchemaCreateUserInvitationToken, executeCreateUserInvitationToken);
-    server.tool("create_user_invitation_token", aliasDescriptionCreateUserInvitationToken, inputSchemaCreateUserInvitationToken, executeCreateUserInvitationToken);
+    registerOperationTool(server, "core_createUserInvitationToken", "create_user_invitation_token", operationDescriptionCreateUserInvitationToken, aliasDescriptionCreateUserInvitationToken, inputSchemaCreateUserInvitationToken, executeCreateUserInvitationToken);
     const opCreateUserProfileAttributeDefinition = requireOperation(operationMap, "createUserProfileAttributeDefinition");
     const operationDescriptionCreateUserProfileAttributeDefinition = "[user] User Profile Attribute Definition Create. (POST /userProfileAttributeDefinitions). Operation ID: createUserProfileAttributeDefinition. Custom logic: default OAS execution.";
     const aliasDescriptionCreateUserProfileAttributeDefinition = "[user] User Profile Attribute Definition Create. (POST /userProfileAttributeDefinitions). Operation ID: createUserProfileAttributeDefinition. Custom logic: default OAS execution. Use this alias for POST /userProfileAttributeDefinitions. Tags: Attribute Definitions. Required inputs: none. Request body: required. Call `connect` first if a session is not already configured.";
@@ -100,8 +97,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_createUserProfileAttributeDefinition", operationDescriptionCreateUserProfileAttributeDefinition, inputSchemaCreateUserProfileAttributeDefinition, executeCreateUserProfileAttributeDefinition);
-    server.tool("create_user_profile_attribute_definition", aliasDescriptionCreateUserProfileAttributeDefinition, inputSchemaCreateUserProfileAttributeDefinition, executeCreateUserProfileAttributeDefinition);
+    registerOperationTool(server, "core_createUserProfileAttributeDefinition", "create_user_profile_attribute_definition", operationDescriptionCreateUserProfileAttributeDefinition, aliasDescriptionCreateUserProfileAttributeDefinition, inputSchemaCreateUserProfileAttributeDefinition, executeCreateUserProfileAttributeDefinition);
     const opDeleteUser = requireOperation(operationMap, "deleteUser");
     const operationDescriptionDeleteUser = "[user] User Delete. (DELETE /users/{username}). Operation ID: deleteUser. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteUser = "[user] User Delete. (DELETE /users/{username}). Operation ID: deleteUser. Custom logic: default OAS execution. Use this alias for DELETE /users/{username}. Tags: Users. Required inputs: username (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -126,8 +122,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteUser", operationDescriptionDeleteUser, inputSchemaDeleteUser, executeDeleteUser);
-    server.tool("delete_user", aliasDescriptionDeleteUser, inputSchemaDeleteUser, executeDeleteUser);
+    registerOperationTool(server, "core_deleteUser", "delete_user", operationDescriptionDeleteUser, aliasDescriptionDeleteUser, inputSchemaDeleteUser, executeDeleteUser);
     const opDeleteUserAttributeDefinition = requireOperation(operationMap, "deleteUserAttributeDefinition");
     const operationDescriptionDeleteUserAttributeDefinition = "[user] User Attribute Definition Delete. (DELETE /userAttributeDefinitions/{name}). Operation ID: deleteUserAttributeDefinition. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteUserAttributeDefinition = "[user] User Attribute Definition Delete. (DELETE /userAttributeDefinitions/{name}). Operation ID: deleteUserAttributeDefinition. Custom logic: default OAS execution. Use this alias for DELETE /userAttributeDefinitions/{name}. Tags: Attribute Definitions. Required inputs: name (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -152,8 +147,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteUserAttributeDefinition", operationDescriptionDeleteUserAttributeDefinition, inputSchemaDeleteUserAttributeDefinition, executeDeleteUserAttributeDefinition);
-    server.tool("delete_user_attribute_definition", aliasDescriptionDeleteUserAttributeDefinition, inputSchemaDeleteUserAttributeDefinition, executeDeleteUserAttributeDefinition);
+    registerOperationTool(server, "core_deleteUserAttributeDefinition", "delete_user_attribute_definition", operationDescriptionDeleteUserAttributeDefinition, aliasDescriptionDeleteUserAttributeDefinition, inputSchemaDeleteUserAttributeDefinition, executeDeleteUserAttributeDefinition);
     const opDeleteUserInvitationToken = requireOperation(operationMap, "deleteUserInvitationToken");
     const operationDescriptionDeleteUserInvitationToken = "[user] User Invitation Token Delete. (DELETE /userInvitationTokens/{id}). Operation ID: deleteUserInvitationToken. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteUserInvitationToken = "[user] User Invitation Token Delete. (DELETE /userInvitationTokens/{id}). Operation ID: deleteUserInvitationToken. Custom logic: default OAS execution. Use this alias for DELETE /userInvitationTokens/{id}. Tags: Users. Required inputs: id (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -178,8 +172,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteUserInvitationToken", operationDescriptionDeleteUserInvitationToken, inputSchemaDeleteUserInvitationToken, executeDeleteUserInvitationToken);
-    server.tool("delete_user_invitation_token", aliasDescriptionDeleteUserInvitationToken, inputSchemaDeleteUserInvitationToken, executeDeleteUserInvitationToken);
+    registerOperationTool(server, "core_deleteUserInvitationToken", "delete_user_invitation_token", operationDescriptionDeleteUserInvitationToken, aliasDescriptionDeleteUserInvitationToken, inputSchemaDeleteUserInvitationToken, executeDeleteUserInvitationToken);
     const opDeleteUserPreference = requireOperation(operationMap, "deleteUserPreference");
     const operationDescriptionDeleteUserPreference = "[user] User Preference Delete. (DELETE /userPreferences/{key}). Operation ID: deleteUserPreference. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteUserPreference = "[user] User Preference Delete. (DELETE /userPreferences/{key}). Operation ID: deleteUserPreference. Custom logic: default OAS execution. Use this alias for DELETE /userPreferences/{key}. Tags: User Preferences. Required inputs: key (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -203,8 +196,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteUserPreference", operationDescriptionDeleteUserPreference, inputSchemaDeleteUserPreference, executeDeleteUserPreference);
-    server.tool("delete_user_preference", aliasDescriptionDeleteUserPreference, inputSchemaDeleteUserPreference, executeDeleteUserPreference);
+    registerOperationTool(server, "core_deleteUserPreference", "delete_user_preference", operationDescriptionDeleteUserPreference, aliasDescriptionDeleteUserPreference, inputSchemaDeleteUserPreference, executeDeleteUserPreference);
     const opDeleteUserProfileAttributeDefinition = requireOperation(operationMap, "deleteUserProfileAttributeDefinition");
     const operationDescriptionDeleteUserProfileAttributeDefinition = "[user] User Profile Attribute Definition Delete. (DELETE /userProfileAttributeDefinitions/{name}). Operation ID: deleteUserProfileAttributeDefinition. Custom logic: default OAS execution.";
     const aliasDescriptionDeleteUserProfileAttributeDefinition = "[user] User Profile Attribute Definition Delete. (DELETE /userProfileAttributeDefinitions/{name}). Operation ID: deleteUserProfileAttributeDefinition. Custom logic: default OAS execution. Use this alias for DELETE /userProfileAttributeDefinitions/{name}. Tags: Attribute Definitions. Required inputs: name (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -229,8 +221,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_deleteUserProfileAttributeDefinition", operationDescriptionDeleteUserProfileAttributeDefinition, inputSchemaDeleteUserProfileAttributeDefinition, executeDeleteUserProfileAttributeDefinition);
-    server.tool("delete_user_profile_attribute_definition", aliasDescriptionDeleteUserProfileAttributeDefinition, inputSchemaDeleteUserProfileAttributeDefinition, executeDeleteUserProfileAttributeDefinition);
+    registerOperationTool(server, "core_deleteUserProfileAttributeDefinition", "delete_user_profile_attribute_definition", operationDescriptionDeleteUserProfileAttributeDefinition, aliasDescriptionDeleteUserProfileAttributeDefinition, inputSchemaDeleteUserProfileAttributeDefinition, executeDeleteUserProfileAttributeDefinition);
     const opListUserAttributeDefinitions = requireOperation(operationMap, "listUserAttributeDefinitions");
     const operationDescriptionListUserAttributeDefinitions = "[user] User Attribute Definition List. (GET /userAttributeDefinitions). Operation ID: listUserAttributeDefinitions. Custom logic: default OAS execution.";
     const aliasDescriptionListUserAttributeDefinitions = "[user] User Attribute Definition List. (GET /userAttributeDefinitions). Operation ID: listUserAttributeDefinitions. Custom logic: default OAS execution. Use this alias for GET /userAttributeDefinitions. Tags: Attribute Definitions. Required inputs: none. Request body: not used. Call `connect` first if a session is not already configured.";
@@ -254,8 +245,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listUserAttributeDefinitions", operationDescriptionListUserAttributeDefinitions, inputSchemaListUserAttributeDefinitions, executeListUserAttributeDefinitions);
-    server.tool("list_user_attribute_definitions", aliasDescriptionListUserAttributeDefinitions, inputSchemaListUserAttributeDefinitions, executeListUserAttributeDefinitions);
+    registerOperationTool(server, "core_listUserAttributeDefinitions", "list_user_attribute_definitions", operationDescriptionListUserAttributeDefinitions, aliasDescriptionListUserAttributeDefinitions, inputSchemaListUserAttributeDefinitions, executeListUserAttributeDefinitions);
     const opListUserInvitationTokens = requireOperation(operationMap, "listUserInvitationTokens");
     const operationDescriptionListUserInvitationTokens = "[user] User Invitation Token List. (GET /userInvitationTokens). Operation ID: listUserInvitationTokens. Custom logic: default OAS execution.";
     const aliasDescriptionListUserInvitationTokens = "[user] User Invitation Token List. (GET /userInvitationTokens). Operation ID: listUserInvitationTokens. Custom logic: default OAS execution. Use this alias for GET /userInvitationTokens. Tags: Users. Required inputs: none. Request body: not used. Call `connect` first if a session is not already configured.";
@@ -281,8 +271,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listUserInvitationTokens", operationDescriptionListUserInvitationTokens, inputSchemaListUserInvitationTokens, executeListUserInvitationTokens);
-    server.tool("list_user_invitation_tokens", aliasDescriptionListUserInvitationTokens, inputSchemaListUserInvitationTokens, executeListUserInvitationTokens);
+    registerOperationTool(server, "core_listUserInvitationTokens", "list_user_invitation_tokens", operationDescriptionListUserInvitationTokens, aliasDescriptionListUserInvitationTokens, inputSchemaListUserInvitationTokens, executeListUserInvitationTokens);
     const opListUserProfileAttributeDefinitions = requireOperation(operationMap, "listUserProfileAttributeDefinitions");
     const operationDescriptionListUserProfileAttributeDefinitions = "[user] User Profile Attribute Definition List. (GET /userProfileAttributeDefinitions). Operation ID: listUserProfileAttributeDefinitions. Custom logic: default OAS execution.";
     const aliasDescriptionListUserProfileAttributeDefinitions = "[user] User Profile Attribute Definition List. (GET /userProfileAttributeDefinitions). Operation ID: listUserProfileAttributeDefinitions. Custom logic: default OAS execution. Use this alias for GET /userProfileAttributeDefinitions. Tags: Attribute Definitions. Required inputs: none. Request body: not used. Call `connect` first if a session is not already configured.";
@@ -306,8 +295,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listUserProfileAttributeDefinitions", operationDescriptionListUserProfileAttributeDefinitions, inputSchemaListUserProfileAttributeDefinitions, executeListUserProfileAttributeDefinitions);
-    server.tool("list_user_profile_attribute_definitions", aliasDescriptionListUserProfileAttributeDefinitions, inputSchemaListUserProfileAttributeDefinitions, executeListUserProfileAttributeDefinitions);
+    registerOperationTool(server, "core_listUserProfileAttributeDefinitions", "list_user_profile_attribute_definitions", operationDescriptionListUserProfileAttributeDefinitions, aliasDescriptionListUserProfileAttributeDefinitions, inputSchemaListUserProfileAttributeDefinitions, executeListUserProfileAttributeDefinitions);
     const opListUsers = requireOperation(operationMap, "listUsers");
     const operationDescriptionListUsers = "[user] User List. (GET /users). Operation ID: listUsers. Custom logic: default OAS execution.";
     const aliasDescriptionListUsers = "[user] User List. (GET /users). Operation ID: listUsers. Custom logic: default OAS execution. Use this alias for GET /users. Tags: Users. Required inputs: none. Request body: not used. Call `connect` first if a session is not already configured.";
@@ -337,8 +325,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_listUsers", operationDescriptionListUsers, inputSchemaListUsers, executeListUsers);
-    server.tool("list_users", aliasDescriptionListUsers, inputSchemaListUsers, executeListUsers);
+    registerOperationTool(server, "core_listUsers", "list_users", operationDescriptionListUsers, aliasDescriptionListUsers, inputSchemaListUsers, executeListUsers);
     const opPasswordResetToken = requireOperation(operationMap, "passwordResetToken");
     const operationDescriptionPasswordResetToken = "[user] Password Reset Token Create. (POST /users/{username}/passwordResetToken). Operation ID: passwordResetToken. Custom logic: default OAS execution.";
     const aliasDescriptionPasswordResetToken = "[user] Password Reset Token Create. (POST /users/{username}/passwordResetToken). Operation ID: passwordResetToken. Custom logic: default OAS execution. Use this alias for POST /users/{username}/passwordResetToken. Tags: Users. Required inputs: username (path). Request body: optional. Call `connect` first if a session is not already configured.";
@@ -362,8 +349,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_passwordResetToken", operationDescriptionPasswordResetToken, inputSchemaPasswordResetToken, executePasswordResetToken);
-    server.tool("password_reset_token", aliasDescriptionPasswordResetToken, inputSchemaPasswordResetToken, executePasswordResetToken);
+    registerOperationTool(server, "core_passwordResetToken", "password_reset_token", operationDescriptionPasswordResetToken, aliasDescriptionPasswordResetToken, inputSchemaPasswordResetToken, executePasswordResetToken);
     const opResetUserPreferences = requireOperation(operationMap, "resetUserPreferences");
     const operationDescriptionResetUserPreferences = "[user] User Preferences Reset. (POST /userPreferences/reset). Operation ID: resetUserPreferences. Custom logic: default OAS execution.";
     const aliasDescriptionResetUserPreferences = "[user] User Preferences Reset. (POST /userPreferences/reset). Operation ID: resetUserPreferences. Custom logic: default OAS execution. Use this alias for POST /userPreferences/reset. Tags: User Preferences. Required inputs: none. Request body: not used. Call `connect` first if a session is not already configured.";
@@ -386,8 +372,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_resetUserPreferences", operationDescriptionResetUserPreferences, inputSchemaResetUserPreferences, executeResetUserPreferences);
-    server.tool("reset_user_preferences", aliasDescriptionResetUserPreferences, inputSchemaResetUserPreferences, executeResetUserPreferences);
+    registerOperationTool(server, "core_resetUserPreferences", "reset_user_preferences", operationDescriptionResetUserPreferences, aliasDescriptionResetUserPreferences, inputSchemaResetUserPreferences, executeResetUserPreferences);
     const opRetrieveMe = requireOperation(operationMap, "retrieveMe");
     const operationDescriptionRetrieveMe = "[user] Me Retrieve. (GET /me). Operation ID: retrieveMe. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveMe = "[user] Me Retrieve. (GET /me). Operation ID: retrieveMe. Custom logic: default OAS execution. Use this alias for GET /me. Tags: Me. Required inputs: none. Request body: not used. Call `connect` first if a session is not already configured.";
@@ -411,8 +396,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveMe", operationDescriptionRetrieveMe, inputSchemaRetrieveMe, executeRetrieveMe);
-    server.tool("retrieve_me", aliasDescriptionRetrieveMe, inputSchemaRetrieveMe, executeRetrieveMe);
+    registerOperationTool(server, "core_retrieveMe", "retrieve_me", operationDescriptionRetrieveMe, aliasDescriptionRetrieveMe, inputSchemaRetrieveMe, executeRetrieveMe);
     const opRetrieveUser = requireOperation(operationMap, "retrieveUser");
     const operationDescriptionRetrieveUser = "[user] User Retrieve. (GET /users/{username}). Operation ID: retrieveUser. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveUser = "[user] User Retrieve. (GET /users/{username}). Operation ID: retrieveUser. Custom logic: default OAS execution. Use this alias for GET /users/{username}. Tags: Users. Required inputs: username (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -437,8 +421,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveUser", operationDescriptionRetrieveUser, inputSchemaRetrieveUser, executeRetrieveUser);
-    server.tool("retrieve_user", aliasDescriptionRetrieveUser, inputSchemaRetrieveUser, executeRetrieveUser);
+    registerOperationTool(server, "core_retrieveUser", "retrieve_user", operationDescriptionRetrieveUser, aliasDescriptionRetrieveUser, inputSchemaRetrieveUser, executeRetrieveUser);
     const opRetrieveUserAttributeDefinition = requireOperation(operationMap, "retrieveUserAttributeDefinition");
     const operationDescriptionRetrieveUserAttributeDefinition = "[user] User Attribute Definition Retrieve. (GET /userAttributeDefinitions/{name}). Operation ID: retrieveUserAttributeDefinition. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveUserAttributeDefinition = "[user] User Attribute Definition Retrieve. (GET /userAttributeDefinitions/{name}). Operation ID: retrieveUserAttributeDefinition. Custom logic: default OAS execution. Use this alias for GET /userAttributeDefinitions/{name}. Tags: Attribute Definitions. Required inputs: name (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -463,8 +446,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveUserAttributeDefinition", operationDescriptionRetrieveUserAttributeDefinition, inputSchemaRetrieveUserAttributeDefinition, executeRetrieveUserAttributeDefinition);
-    server.tool("retrieve_user_attribute_definition", aliasDescriptionRetrieveUserAttributeDefinition, inputSchemaRetrieveUserAttributeDefinition, executeRetrieveUserAttributeDefinition);
+    registerOperationTool(server, "core_retrieveUserAttributeDefinition", "retrieve_user_attribute_definition", operationDescriptionRetrieveUserAttributeDefinition, aliasDescriptionRetrieveUserAttributeDefinition, inputSchemaRetrieveUserAttributeDefinition, executeRetrieveUserAttributeDefinition);
     const opRetrieveUserInvitationToken = requireOperation(operationMap, "retrieveUserInvitationToken");
     const operationDescriptionRetrieveUserInvitationToken = "[user] User Invitation Token Retrieve. (GET /userInvitationTokens/{id}). Operation ID: retrieveUserInvitationToken. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveUserInvitationToken = "[user] User Invitation Token Retrieve. (GET /userInvitationTokens/{id}). Operation ID: retrieveUserInvitationToken. Custom logic: default OAS execution. Use this alias for GET /userInvitationTokens/{id}. Tags: Users. Required inputs: id (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -489,8 +471,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveUserInvitationToken", operationDescriptionRetrieveUserInvitationToken, inputSchemaRetrieveUserInvitationToken, executeRetrieveUserInvitationToken);
-    server.tool("retrieve_user_invitation_token", aliasDescriptionRetrieveUserInvitationToken, inputSchemaRetrieveUserInvitationToken, executeRetrieveUserInvitationToken);
+    registerOperationTool(server, "core_retrieveUserInvitationToken", "retrieve_user_invitation_token", operationDescriptionRetrieveUserInvitationToken, aliasDescriptionRetrieveUserInvitationToken, inputSchemaRetrieveUserInvitationToken, executeRetrieveUserInvitationToken);
     const opRetrieveUserPreference = requireOperation(operationMap, "retrieveUserPreference");
     const operationDescriptionRetrieveUserPreference = "[user] User Preference Retrieve. (GET /userPreferences/{key}). Operation ID: retrieveUserPreference. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveUserPreference = "[user] User Preference Retrieve. (GET /userPreferences/{key}). Operation ID: retrieveUserPreference. Custom logic: default OAS execution. Use this alias for GET /userPreferences/{key}. Tags: User Preferences. Required inputs: key (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -514,8 +495,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveUserPreference", operationDescriptionRetrieveUserPreference, inputSchemaRetrieveUserPreference, executeRetrieveUserPreference);
-    server.tool("retrieve_user_preference", aliasDescriptionRetrieveUserPreference, inputSchemaRetrieveUserPreference, executeRetrieveUserPreference);
+    registerOperationTool(server, "core_retrieveUserPreference", "retrieve_user_preference", operationDescriptionRetrieveUserPreference, aliasDescriptionRetrieveUserPreference, inputSchemaRetrieveUserPreference, executeRetrieveUserPreference);
     const opRetrieveUserPreferences = requireOperation(operationMap, "retrieveUserPreferences");
     const operationDescriptionRetrieveUserPreferences = "[user] Retrieve All. (GET /userPreferences). Operation ID: retrieveUserPreferences. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveUserPreferences = "[user] Retrieve All. (GET /userPreferences). Operation ID: retrieveUserPreferences. Custom logic: default OAS execution. Use this alias for GET /userPreferences. Tags: User Preferences. Required inputs: none. Request body: not used. Call `connect` first if a session is not already configured.";
@@ -538,8 +518,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveUserPreferences", operationDescriptionRetrieveUserPreferences, inputSchemaRetrieveUserPreferences, executeRetrieveUserPreferences);
-    server.tool("retrieve_user_preferences", aliasDescriptionRetrieveUserPreferences, inputSchemaRetrieveUserPreferences, executeRetrieveUserPreferences);
+    registerOperationTool(server, "core_retrieveUserPreferences", "retrieve_user_preferences", operationDescriptionRetrieveUserPreferences, aliasDescriptionRetrieveUserPreferences, inputSchemaRetrieveUserPreferences, executeRetrieveUserPreferences);
     const opRetrieveUserProfileAttributeDefinition = requireOperation(operationMap, "retrieveUserProfileAttributeDefinition");
     const operationDescriptionRetrieveUserProfileAttributeDefinition = "[user] User Profile Attribute Definition Retrieve. (GET /userProfileAttributeDefinitions/{name}). Operation ID: retrieveUserProfileAttributeDefinition. Custom logic: default OAS execution.";
     const aliasDescriptionRetrieveUserProfileAttributeDefinition = "[user] User Profile Attribute Definition Retrieve. (GET /userProfileAttributeDefinitions/{name}). Operation ID: retrieveUserProfileAttributeDefinition. Custom logic: default OAS execution. Use this alias for GET /userProfileAttributeDefinitions/{name}. Tags: Attribute Definitions. Required inputs: name (path). Request body: not used. Call `connect` first if a session is not already configured.";
@@ -564,8 +543,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_retrieveUserProfileAttributeDefinition", operationDescriptionRetrieveUserProfileAttributeDefinition, inputSchemaRetrieveUserProfileAttributeDefinition, executeRetrieveUserProfileAttributeDefinition);
-    server.tool("retrieve_user_profile_attribute_definition", aliasDescriptionRetrieveUserProfileAttributeDefinition, inputSchemaRetrieveUserProfileAttributeDefinition, executeRetrieveUserProfileAttributeDefinition);
+    registerOperationTool(server, "core_retrieveUserProfileAttributeDefinition", "retrieve_user_profile_attribute_definition", operationDescriptionRetrieveUserProfileAttributeDefinition, aliasDescriptionRetrieveUserProfileAttributeDefinition, inputSchemaRetrieveUserProfileAttributeDefinition, executeRetrieveUserProfileAttributeDefinition);
     const opUpdateMe = requireOperation(operationMap, "updateMe");
     const operationDescriptionUpdateMe = "[user] Me Update. (PUT /me). Operation ID: updateMe. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateMe = "[user] Me Update. (PUT /me). Operation ID: updateMe. Custom logic: default OAS execution. Use this alias for PUT /me. Tags: Me. Required inputs: none. Request body: required. Call `connect` first if a session is not already configured.";
@@ -589,8 +567,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateMe", operationDescriptionUpdateMe, inputSchemaUpdateMe, executeUpdateMe);
-    server.tool("update_me", aliasDescriptionUpdateMe, inputSchemaUpdateMe, executeUpdateMe);
+    registerOperationTool(server, "core_updateMe", "update_me", operationDescriptionUpdateMe, aliasDescriptionUpdateMe, inputSchemaUpdateMe, executeUpdateMe);
     const opUpdateUser = requireOperation(operationMap, "updateUser");
     const operationDescriptionUpdateUser = "[user] User Update. (PUT /users/{username}). Operation ID: updateUser. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateUser = "[user] User Update. (PUT /users/{username}). Operation ID: updateUser. Custom logic: default OAS execution. Use this alias for PUT /users/{username}. Tags: Users. Required inputs: username (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -615,8 +592,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateUser", operationDescriptionUpdateUser, inputSchemaUpdateUser, executeUpdateUser);
-    server.tool("update_user", aliasDescriptionUpdateUser, inputSchemaUpdateUser, executeUpdateUser);
+    registerOperationTool(server, "core_updateUser", "update_user", operationDescriptionUpdateUser, aliasDescriptionUpdateUser, inputSchemaUpdateUser, executeUpdateUser);
     const opUpdateUserAttributeDefinition = requireOperation(operationMap, "updateUserAttributeDefinition");
     const operationDescriptionUpdateUserAttributeDefinition = "[user] User Attribute Definition Update. (PUT /userAttributeDefinitions/{name}). Operation ID: updateUserAttributeDefinition. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateUserAttributeDefinition = "[user] User Attribute Definition Update. (PUT /userAttributeDefinitions/{name}). Operation ID: updateUserAttributeDefinition. Custom logic: default OAS execution. Use this alias for PUT /userAttributeDefinitions/{name}. Tags: Attribute Definitions. Required inputs: name (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -641,8 +617,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateUserAttributeDefinition", operationDescriptionUpdateUserAttributeDefinition, inputSchemaUpdateUserAttributeDefinition, executeUpdateUserAttributeDefinition);
-    server.tool("update_user_attribute_definition", aliasDescriptionUpdateUserAttributeDefinition, inputSchemaUpdateUserAttributeDefinition, executeUpdateUserAttributeDefinition);
+    registerOperationTool(server, "core_updateUserAttributeDefinition", "update_user_attribute_definition", operationDescriptionUpdateUserAttributeDefinition, aliasDescriptionUpdateUserAttributeDefinition, inputSchemaUpdateUserAttributeDefinition, executeUpdateUserAttributeDefinition);
     const opUpdateUserProfileAttributeDefinition = requireOperation(operationMap, "updateUserProfileAttributeDefinition");
     const operationDescriptionUpdateUserProfileAttributeDefinition = "[user] User Profile Attribute Definition Update. (PUT /userProfileAttributeDefinitions/{name}). Operation ID: updateUserProfileAttributeDefinition. Custom logic: default OAS execution.";
     const aliasDescriptionUpdateUserProfileAttributeDefinition = "[user] User Profile Attribute Definition Update. (PUT /userProfileAttributeDefinitions/{name}). Operation ID: updateUserProfileAttributeDefinition. Custom logic: default OAS execution. Use this alias for PUT /userProfileAttributeDefinitions/{name}. Tags: Attribute Definitions. Required inputs: name (path). Request body: required. Call `connect` first if a session is not already configured.";
@@ -667,8 +642,7 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_updateUserProfileAttributeDefinition", operationDescriptionUpdateUserProfileAttributeDefinition, inputSchemaUpdateUserProfileAttributeDefinition, executeUpdateUserProfileAttributeDefinition);
-    server.tool("update_user_profile_attribute_definition", aliasDescriptionUpdateUserProfileAttributeDefinition, inputSchemaUpdateUserProfileAttributeDefinition, executeUpdateUserProfileAttributeDefinition);
+    registerOperationTool(server, "core_updateUserProfileAttributeDefinition", "update_user_profile_attribute_definition", operationDescriptionUpdateUserProfileAttributeDefinition, aliasDescriptionUpdateUserProfileAttributeDefinition, inputSchemaUpdateUserProfileAttributeDefinition, executeUpdateUserProfileAttributeDefinition);
     const opUpsertUserPreference = requireOperation(operationMap, "upsertUserPreference");
     const operationDescriptionUpsertUserPreference = "[user] User Preference Upsert. (POST /userPreferences). Operation ID: upsertUserPreference. Custom logic: default OAS execution.";
     const aliasDescriptionUpsertUserPreference = "[user] User Preference Upsert. (POST /userPreferences). Operation ID: upsertUserPreference. Custom logic: default OAS execution. Use this alias for POST /userPreferences. Tags: User Preferences. Required inputs: none. Request body: required. Call `connect` first if a session is not already configured.";
@@ -691,6 +665,5 @@ export function registerUserTools(server, runtime) {
             };
         }
     };
-    server.tool("core_upsertUserPreference", operationDescriptionUpsertUserPreference, inputSchemaUpsertUserPreference, executeUpsertUserPreference);
-    server.tool("upsert_user_preference", aliasDescriptionUpsertUserPreference, inputSchemaUpsertUserPreference, executeUpsertUserPreference);
+    registerOperationTool(server, "core_upsertUserPreference", "upsert_user_preference", operationDescriptionUpsertUserPreference, aliasDescriptionUpsertUserPreference, inputSchemaUpsertUserPreference, executeUpsertUserPreference);
 }
