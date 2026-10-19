@@ -7,22 +7,28 @@ export interface KineticSessionConfig {
   agentSlug?: string;
 }
 
+/** Supplies a bearer token; `stale` is one the server just rejected with 401. */
+export type BearerTokenSource = { getToken(stale?: string): Promise<string> };
+
 export class KineticApiClient {
   private baseUrl: string;
-  private authHeader: string;
+  private basicHeader: string | null;
+  private tokens: BearerTokenSource | null;
 
-  constructor(baseUrl: string, authHeader: string) {
+  private constructor(baseUrl: string, basicHeader: string | null, tokens: BearerTokenSource | null) {
     this.baseUrl = baseUrl.replace(/\/+$/, "");
-    this.authHeader = authHeader;
+    this.basicHeader = basicHeader;
+    this.tokens = tokens;
   }
 
   static withBasicAuth(baseUrl: string, username: string, password: string): KineticApiClient {
     const header = "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
-    return new KineticApiClient(baseUrl, header);
+    return new KineticApiClient(baseUrl, header, null);
   }
 
-  static withBearerToken(baseUrl: string, token: string): KineticApiClient {
-    return new KineticApiClient(baseUrl, `Bearer ${token}`);
+  /** Bearer auth from a token source; a 401 gets a fresh token and one retry. */
+  static withBearerTokens(baseUrl: string, tokens: BearerTokenSource): KineticApiClient {
+    return new KineticApiClient(baseUrl, null, tokens);
   }
 
   async request(method: string, path: string, options?: { query?: Record<string, any>; body?: any; headers?: Record<string, string> }): Promise<any> {
@@ -46,16 +52,30 @@ export class KineticApiClient {
       method !== "GET" &&
       method !== "HEAD";
 
-    const response = await fetch(url.toString(), {
-      method,
-      headers: {
-        Authorization: this.authHeader,
-        Accept: "application/json",
-        ...(hasBody ? { "Content-Type": "application/json" } : {}),
-        ...(options?.headers ?? {}),
-      },
-      body: hasBody ? JSON.stringify(options.body) : undefined,
-    });
+    const send = (authorization: string) =>
+      fetch(url.toString(), {
+        method,
+        headers: {
+          Authorization: authorization,
+          Accept: "application/json",
+          ...(hasBody ? { "Content-Type": "application/json" } : {}),
+          ...(options?.headers ?? {}),
+        },
+        body: hasBody ? JSON.stringify(options.body) : undefined,
+      });
+
+    let response: Response;
+    if (this.tokens) {
+      // 7.x Integrator tokens last 5 minutes and can be revoked; sign in again once on a 401.
+      const token = await this.tokens.getToken();
+      response = await send(`Bearer ${token}`);
+      if (response.status === 401) {
+        await response.body?.cancel();
+        response = await send(`Bearer ${await this.tokens.getToken(token)}`);
+      }
+    } else {
+      response = await send(this.basicHeader as string);
+    }
 
     if (!response.ok) {
       const text = await response.text();
@@ -68,41 +88,4 @@ export class KineticApiClient {
     }
     return response.text();
   }
-}
-
-/**
- * Obtain an OAuth 2.0 bearer token for the Integrator API using the
- * implicit grant flow. The token is extracted from the redirect Location header.
- */
-export async function obtainOAuthToken(serverUrl: string, username: string, password: string): Promise<{ token: string; expiresAt: number }> {
-  const authUrl = `${serverUrl.replace(/\/+$/, "")}/app/oauth/authorize?grant_type=implicit&response_type=token&client_id=system`;
-  const basicAuth = "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
-
-  const response = await fetch(authUrl, {
-    method: "GET",
-    headers: { Authorization: basicAuth },
-    redirect: "manual",
-  });
-
-  const location = response.headers.get("location");
-  if (!location) {
-    throw new Error(`OAuth authorize did not return a redirect (status ${response.status})`);
-  }
-
-  const fragment = location.split("#")[1];
-  if (!fragment) {
-    throw new Error("OAuth redirect missing fragment with access_token");
-  }
-
-  const params = new URLSearchParams(fragment);
-  const token = params.get("access_token");
-  if (!token) {
-    throw new Error("OAuth redirect fragment missing access_token");
-  }
-
-  const expiresIn = parseInt(params.get("expires_in") ?? "43200", 10);
-  // Subtract 30s buffer for safety
-  const expiresAt = Date.now() + (expiresIn - 30) * 1000;
-
-  return { token, expiresAt };
 }

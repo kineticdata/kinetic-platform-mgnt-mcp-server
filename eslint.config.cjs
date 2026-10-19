@@ -16,7 +16,7 @@ module.exports = defineConfig([
   },
   js.configs.recommended,
   {
-    files: ["scripts/**/*.js", "eslint.config.cjs"],
+    files: ["scripts/**/*.js", "test/**/*.mjs", "eslint.config.cjs"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
