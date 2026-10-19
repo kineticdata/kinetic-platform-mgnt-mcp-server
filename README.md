@@ -260,6 +260,23 @@ values; they are never silently ignored.
 | `KINETIC_PASSWORD` | yes, for API calls | Space password. |
 | `KINETIC_AGENT_SLUG` | no | Retained in the session config for compatibility. Defaults to `system`. |
 | `KINETIC_ALLOW_SELF_SIGNED` | no | `true` sets `NODE_TLS_REJECT_UNAUTHORIZED=0`. Development only. |
+| `KINETIC_PLATFORM_VERSION` | no | Skips version detection, e.g. `6.1.7` or `7.0.0`. Only needed if the version endpoints are blocked. |
+
+### Kinetic Platform 6.x and 7.x
+
+The server works with both. On the first Integrator call it asks the space
+which version it runs (`/app/integrator/api/version`, no sign-in needed, then
+`/app/api/v1/version`). The version decides one thing: how to sign in to the
+Integrator. Core API calls use Basic auth on both versions.
+
+| | 6.x | 7.x |
+| --- | --- | --- |
+| Integrator sign-in | OAuth implicit grant with Basic auth; the token lasts 12 hours | `/app/login.do` session, then the authorization code flow with PKCE; the token lasts 5 minutes and is renewed from the session as needed |
+
+If the version can't be read, the 6.x sign-in is tried first and the 7.x one
+after it. A space that signs people in only through SSO can't use the
+Integrator tools; they need a local account with a password. `connect`
+reports the detected version.
 
 HTTP/SSE mode only: `MCP_HTTP_HOST` (default `127.0.0.1`), `MCP_HTTP_PORT`
 (default `3000`), `MCP_HTTP_USER` and `MCP_HTTP_PASS` (both required).
@@ -412,7 +429,9 @@ src/
   index.ts                      transports, TLS opt-out, credential preflight
   server.ts                     mode dispatch, session/client cache, connect tool
   client/
-    kinetic-client.ts           HTTP client, basic auth + Integrator OAuth
+    kinetic-client.ts           HTTP client, basic auth + bearer tokens (401 → one retry)
+    integrator-auth.ts          Integrator sign-in: 6.x implicit grant, 7.x login + PKCE
+    platform.ts                 platform version detection
     oas.ts                      spec loading and operation extraction
   tools/
     tool-config.ts              KINETIC_MCP_* parsing, warnings, startup log

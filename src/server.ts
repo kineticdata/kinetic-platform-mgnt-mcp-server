@@ -4,8 +4,11 @@ import { fileURLToPath } from "node:url";
 import { z } from "zod";
 import type { KineticApi, OasOperation, OasSpec } from "./client/oas.js";
 import { extractOperations, loadOasSpec, loadOasSpecIfExists } from "./client/oas.js";
-import { KineticApiClient, obtainOAuthToken } from "./client/kinetic-client.js";
+import { KineticApiClient } from "./client/kinetic-client.js";
 import type { KineticSessionConfig } from "./client/kinetic-client.js";
+import { IntegratorTokenProvider } from "./client/integrator-auth.js";
+import { detectPlatform, parseVersion, platformLabel, UNKNOWN_PLATFORM } from "./client/platform.js";
+import type { PlatformVersion } from "./client/platform.js";
 import { registerAllContextTools } from "./tools/contexts/register-all.js";
 import { registerBackgroundJobTools } from "./tools/background-jobs.js";
 import { registerSlimTools, registerGetApiSpec, registerExecuteApi } from "./tools/slim.js";
@@ -21,16 +24,27 @@ import type { ServerMode } from "./tools/tool-config.js";
 
 export type SessionId = string;
 
-export type OAuthTokenCache = {
-  token: string;
-  expiresAt: number;
-};
-
 export type KineticSession = {
   config: KineticSessionConfig;
   clients: Map<KineticApi, KineticApiClient>;
-  oauthToken?: OAuthTokenCache;
+  /** The platform version, detected once per session. It decides the Integrator sign-in. */
+  platform: () => Promise<PlatformVersion>;
 };
+
+function createSession(config: KineticSessionConfig): KineticSession {
+  let detected: Promise<PlatformVersion> | null = null;
+  const basic = "Basic " + Buffer.from(`${config.username}:${config.password}`).toString("base64");
+  const pinned = parseVersion(process.env.KINETIC_PLATFORM_VERSION);
+  const serverUrl = config.serverUrl.replace(/\/+$/, "");
+  return {
+    config,
+    clients: new Map(),
+    platform: () =>
+      (detected ??= pinned
+        ? Promise.resolve({ ...pinned, source: "env" as const })
+        : detectPlatform(serverUrl, { basic }).catch(() => UNKNOWN_PLATFORM)),
+  };
+}
 
 export type ServerContext = {
   sessions: Map<SessionId, KineticSession>;
@@ -146,20 +160,18 @@ function registerConnectTool(server: McpServer, context: ServerContext) {
         password,
         agentSlug: agentSlug ?? "system",
       };
-      const session: KineticSession = {
-        config,
-        clients: new Map(),
-      };
+      const session = createSession(config);
       context.sessions.set(sessionId, session);
 
       try {
         const client = await getOrCreateClient(context, sessionId, "core");
         const me = await client.request("GET", "/me");
+        const platform = await session.platform();
         return {
           content: [
             {
               type: "text" as const,
-              text: `Connected to ${serverUrl}\nAuthenticated as: ${JSON.stringify(me, null, 2)}`,
+              text: `Connected to ${serverUrl} (${platformLabel(platform)})\nAuthenticated as: ${JSON.stringify(me, null, 2)}`,
             },
           ],
         };
@@ -191,36 +203,26 @@ async function getOrCreateClient(context: ServerContext, sessionId: SessionId, a
       throw new Error(missingCredentialsMessage());
     }
 
-    session = {
-      config: { serverUrl, username, password, agentSlug },
-      clients: new Map(),
-    };
+    session = createSession({ serverUrl, username, password, agentSlug });
     context.sessions.set(sessionId, session);
   }
 
-  // Check for a cached client that is still valid
   const existing = session.clients.get(api);
-  if (existing) {
-    // For integrator, check if the OAuth token has expired
-    if (api === "integrator" && session.oauthToken && Date.now() >= session.oauthToken.expiresAt) {
-      session.clients.delete(api);
-    } else {
-      return existing;
-    }
-  }
+  if (existing) return existing;
 
   const baseUrl = buildBaseUrl(context.specs, api, session.config.serverUrl);
   let client: KineticApiClient;
 
   if (api === "integrator") {
-    // Integrator API requires OAuth 2.0 bearer token
-    const { token, expiresAt } = await obtainOAuthToken(
-      session.config.serverUrl,
-      session.config.username,
-      session.config.password,
+    // The Integrator API needs a bearer token; how to get one depends on the
+    // platform version (6.x implicit grant, 7.x login session + PKCE). The
+    // provider signs in lazily on the first request and renews as needed.
+    const { serverUrl, username, password } = session.config;
+    const tokens = new IntegratorTokenProvider(
+      { serverUrl: serverUrl.replace(/\/+$/, ""), username, password },
+      session.platform,
     );
-    session.oauthToken = { token, expiresAt };
-    client = KineticApiClient.withBearerToken(baseUrl, token);
+    client = KineticApiClient.withBearerTokens(baseUrl, tokens);
   } else {
     client = KineticApiClient.withBasicAuth(baseUrl, session.config.username, session.config.password);
   }

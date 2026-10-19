@@ -3,13 +3,28 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { z } from "zod";
 import { extractOperations, loadOasSpec, loadOasSpecIfExists } from "./client/oas.js";
-import { KineticApiClient, obtainOAuthToken } from "./client/kinetic-client.js";
+import { KineticApiClient } from "./client/kinetic-client.js";
+import { IntegratorTokenProvider } from "./client/integrator-auth.js";
+import { detectPlatform, parseVersion, platformLabel, UNKNOWN_PLATFORM } from "./client/platform.js";
 import { registerAllContextTools } from "./tools/contexts/register-all.js";
 import { registerBackgroundJobTools } from "./tools/background-jobs.js";
 import { registerSlimTools, registerGetApiSpec, registerExecuteApi } from "./tools/slim.js";
 import { registerConsolidatedTools } from "./tools/consolidated.js";
 import { invokeDefaultOperation } from "./tools/invocation.js";
 import { countRegisteredTools, logStartupSummary, resolveServerMode, resolveToolNameMode, } from "./tools/tool-config.js";
+function createSession(config) {
+    let detected = null;
+    const basic = "Basic " + Buffer.from(`${config.username}:${config.password}`).toString("base64");
+    const pinned = parseVersion(process.env.KINETIC_PLATFORM_VERSION);
+    const serverUrl = config.serverUrl.replace(/\/+$/, "");
+    return {
+        config,
+        clients: new Map(),
+        platform: () => (detected ??= pinned
+            ? Promise.resolve({ ...pinned, source: "env" })
+            : detectPlatform(serverUrl, { basic }).catch(() => UNKNOWN_PLATFORM)),
+    };
+}
 export function createServerContext() {
     const oasDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "oas");
     const coreSpec = loadOasSpec(oasDir, "core.json");
@@ -98,19 +113,17 @@ function registerConnectTool(server, context) {
             password,
             agentSlug: agentSlug ?? "system",
         };
-        const session = {
-            config,
-            clients: new Map(),
-        };
+        const session = createSession(config);
         context.sessions.set(sessionId, session);
         try {
             const client = await getOrCreateClient(context, sessionId, "core");
             const me = await client.request("GET", "/me");
+            const platform = await session.platform();
             return {
                 content: [
                     {
                         type: "text",
-                        text: `Connected to ${serverUrl}\nAuthenticated as: ${JSON.stringify(me, null, 2)}`,
+                        text: `Connected to ${serverUrl} (${platformLabel(platform)})\nAuthenticated as: ${JSON.stringify(me, null, 2)}`,
                     },
                 ],
             };
@@ -139,30 +152,21 @@ async function getOrCreateClient(context, sessionId, api = "core") {
         if (!serverUrl || !username || !password) {
             throw new Error(missingCredentialsMessage());
         }
-        session = {
-            config: { serverUrl, username, password, agentSlug },
-            clients: new Map(),
-        };
+        session = createSession({ serverUrl, username, password, agentSlug });
         context.sessions.set(sessionId, session);
     }
-    // Check for a cached client that is still valid
     const existing = session.clients.get(api);
-    if (existing) {
-        // For integrator, check if the OAuth token has expired
-        if (api === "integrator" && session.oauthToken && Date.now() >= session.oauthToken.expiresAt) {
-            session.clients.delete(api);
-        }
-        else {
-            return existing;
-        }
-    }
+    if (existing)
+        return existing;
     const baseUrl = buildBaseUrl(context.specs, api, session.config.serverUrl);
     let client;
     if (api === "integrator") {
-        // Integrator API requires OAuth 2.0 bearer token
-        const { token, expiresAt } = await obtainOAuthToken(session.config.serverUrl, session.config.username, session.config.password);
-        session.oauthToken = { token, expiresAt };
-        client = KineticApiClient.withBearerToken(baseUrl, token);
+        // The Integrator API needs a bearer token; how to get one depends on the
+        // platform version (6.x implicit grant, 7.x login session + PKCE). The
+        // provider signs in lazily on the first request and renews as needed.
+        const { serverUrl, username, password } = session.config;
+        const tokens = new IntegratorTokenProvider({ serverUrl: serverUrl.replace(/\/+$/, ""), username, password }, session.platform);
+        client = KineticApiClient.withBearerTokens(baseUrl, tokens);
     }
     else {
         client = KineticApiClient.withBasicAuth(baseUrl, session.config.username, session.config.password);

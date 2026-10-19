@@ -61,9 +61,13 @@ const modeLine = stderr.split("\n").find(l => l.includes("mode=")) || "";
 if (modeLine) console.log(`        ${modeLine.trim()}`);
 
 const has = n => tools.some(t => t.name === n);
+// Each mode names its tools differently: consolidated families, slim's
+// execute_api, or contexts' per-operation aliases.
 const kappsList = has("kapps")
   ? await send(3, "tools/call", { name: "kapps", arguments: { action: "list" } })
-  : await send(3, "tools/call", { name: "execute_api", arguments: { method: "GET", path: "/kapps" } });
+  : has("execute_api")
+    ? await send(3, "tools/call", { name: "execute_api", arguments: { method: "GET", path: "/kapps" } })
+    : await send(3, "tools/call", { name: "list_kapps", arguments: {} });
 isErr(kappsList) ? bad("list kapps", text(kappsList).slice(0, 300)) : ok("list kapps");
 
 const slugs = [...text(kappsList).matchAll(/"slug"\s*:\s*"([a-z0-9-]+)"/g)].map(m => m[1]);
@@ -72,7 +76,9 @@ else {
   ok("found kapps", slugs.slice(0, 5).join(", "));
   const got = has("kapps")
     ? await send(4, "tools/call", { name: "kapps", arguments: { action: "get", identifier: slugs[0] } })
-    : await send(4, "tools/call", { name: "execute_api", arguments: { method: "GET", path: `/kapps/${slugs[0]}` } });
+    : has("execute_api")
+      ? await send(4, "tools/call", { name: "execute_api", arguments: { method: "GET", path: `/kapps/${slugs[0]}` } })
+      : await send(4, "tools/call", { name: "retrieve_kapp", arguments: { kappSlug: slugs[0] } });
   isErr(got) ? bad(`get kapp "${slugs[0]}"`, text(got).slice(0, 300)) : ok(`get kapp "${slugs[0]}" by identifier`);
 }
 
@@ -82,6 +88,14 @@ if (has("forms")) {
   isErr(missing) && /identifier/i.test(t)
     ? ok("missing-identifier error is actionable")
     : bad("missing identifier should return a message naming `identifier`", t.slice(0, 200));
+}
+
+// The Integrator needs a bearer token whose sign-in differs on 6.x and 7.x.
+if (has("execute_api") || has("list_connections")) {
+  const conns = has("execute_api")
+    ? await send(6, "tools/call", { name: "execute_api", arguments: { method: "GET", path: "/api/connections", api: "integrator" } })
+    : await send(6, "tools/call", { name: "list_connections", arguments: {} });
+  isErr(conns) ? bad("list Integrator connections (bearer sign-in)", text(conns).slice(0, 300)) : ok("list Integrator connections (bearer sign-in)");
 }
 
 console.log(`\n  ${fail ? "FAILED" : "ALL PASSED"} — ${pass} passed, ${fail} failed\n`);
